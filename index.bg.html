@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="bg" lang="bg">
+
+<head>
+<meta http-equiv="Content-Type" content="test/html; charset=UTF-8" />
+<meta name="keywords" content="ипотечен калкулатор, ипотека, кредит, заем" />
+<meta name="description" content="Ипотечен калкулатор" />
+<meta name="robots" content="INDEX, FOLLOW" />
+<meta name="robots" content="NOARCHIVE" />
+<meta name="author" content="George D. Sotirov" />
+<title>Ипотечен калкулатор</title>
+<link rel="stylesheet" href="mcalc.css" />
+<link rel="author" href="mailto:gsotirov@obs.bg" />
+<link rel="copyright" href="#Copyright" />
+<link rel="alternate" type="text/html" href="index.en.html" hreflang="en"
+lang="en" title="Mortgage calculator" />
+<script type="text/javascript" src="sprintf.js" defer="defer"></script>
+<script type="text/javascript" src="mcc.js" defer="defer"></script>
+<script type="text/javascript" src="mcalc.js" defer="defer"></script>
+</head>
+
+<body onload="javascript: document.forms.CalcForm.Amount.focus(); lockMonths();">
+<!-- Header //-->
+<div id="Head">
+<h3>Ипотечен калкулатор</h3>
+</div>
+
+<hr />
+
+<!-- Calculator //-->
+<div id="Calc">
+<form action="#" id="CalcForm" method="post"
+onsubmit="javascript: return false" onreset="javascript: doReset();">
+<table id="CalcTable">
+<tbody>
+<tr>
+<td colspan="3">Моля, въведете размера на кредита и годишната лихва по него.
+Изберете валута и срок на кредита в години и/или месеци.</td>
+</tr>
+<tr><td colspan="3">&nbsp;</td></tr>
+<tr>
+<td class="td-right">Размер на кредита</td>
+<td>&nbsp;</td>
+<td>
+<input name="Amount" type="text" size="16" maxlength="16" />&nbsp;
+<select name="Currency" onchange="javascript: showCC();">
+<option selected="selected" value="BGN">Български лев, BGN</option>
+<option value="USD">Щатски долар, USD, $</option>
+<option value="EUR">Евро, EUR, &euro;</option>
+</select>
+</td>
+</tr>
+<tr>
+<td class="td-right">Срок на кредита</td>
+<td>&nbsp;</td>
+<td>
+<select name="PeriodY" onchange="javascript: lockMonths();">
+<option selected="selected" value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+</select>&nbsp;години и&nbsp;
+<select name="PeriodM">
+<option selected="selected" value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+</select>&nbsp;месеца
+</td>
+</tr>
+<!--<tr>
+<td class="td-right">Гратисен период</td>
+<td>&nbsp;</td>
+<td>
+<select name="FreeMonths">
+<option selected="selected" value="0">0</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>&nbsp;месеца
+</td>
+</tr>-->
+<tr>
+<td class="td-right">Годишен лихвен процент</td>
+<td>&nbsp;</td>
+<td><input name="Interest" type="text" size="6" maxlength="10" />&nbsp;%</td>
+</tr>
+<tr>
+<td class="td-right"><span class="bold-text">Месечна вноска</span></td>
+<td>&nbsp;</td>
+<td>
+<span id="Payment" class="red-bold-text-on-light-gray">0.00</span>
+</td>
+</tr>
+<tr>
+<td class="td-right"><span class="bold-text">Връщана сума</span></td>
+<td>&nbsp;</td>
+<td>
+<span id="ReturnAmount" class="red-bold-text-on-light-gray">0.00</span>
+</td>
+</tr>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td colspan="3" class="td-center">
+<button name="Calculate" type="submit"
+onclick="javascript: if (checkForm()) doCalc();">
+<img src="calc.png" width="16" height="16" alt="" />&nbsp;Изчисли
+</button>
+<button name="Clear" type="reset">
+<img src="clear.png" width="16" height="16" alt="" />&nbsp;Изчисти
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+
+<!-- F O O T E R -->
+<div id="Footer">
+<br /><hr />
+<p class="align-center">
+<!-- Valid XHTML 1.0 -->
+<a href="http://validator.w3.org/check/referer">
+<img src="valid-xhtml10.png"
+alt="Valid XHTML 1.0!" title="Valid XHTML 1.0!" height="31" width="88" /></a>
+<!-- Valid CSS -->
+<a href="http://jigsaw.w3.org/css-validator">
+<img src="valid-css.png"
+alt="Valid CSS!" title="Valid CSS!" height="31" width="88" /></a>
+<!-- UTF-8 Encoded -->
+<a href="http://www.unicode.org/">
+<img src="Unicode.png" width="88" height="31"
+alt="Encoded in UTF-8!" title="Encoded in UTF-8!" /></a>
+</p>
+<!-- Copyright -->
+<p class="copyright"><a name="Copyright">Copyright</a> &copy; 2004
+<a href="mailto:gsotirov@obs.bg">Георги Д. Сотиров</a><br />
+Дословно копие и разпространение на цялата страница<br />
+на какъвто и да е носител е позволено без разрешение,<br />
+<b>но само ако това съобщение е запазено</b>.</p>
+</div>
+</body>
+
+</html>

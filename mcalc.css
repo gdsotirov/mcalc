@@ -1,0 +1,82 @@
+/* Mortgage calculator style
+ * Written by George D. Sotirov, gsotirov@obs.bg
+ */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a.link { color: #0000FF; }
+body {
+  font: normal normal normal 12pt/14pt Arial, Helvetica, sans-serif;
+  background-color: #FFFFFF;
+}
+button {
+  background-color: #999999;
+  border: 1px solid #000000;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #000000;
+  font-family: Ariel, Helvetica, sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  text-align: center;
+}
+h1 { font-size: 36pt; }
+h2 { font-size: 30pt; }
+h3 { font-size: 26pt; }
+h4 { font-size: 22pt; }
+h5 { font-size: 18pt; }
+h6 { font-size: 14pt; }
+hr { width: 70%; }
+input, select {
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+  color: #000000;
+}
+input {
+  text-align: right;
+}
+input[disabled=true], select[disabled=true] {
+  background-color: #CCCCCC;
+}
+img { border: 0px none; }
+p { text-align: center; }
+table {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Pseudo classes */
+.copyright {
+  color: #CCCCCC;
+  font: normal normal normal 10pt/12pt Arial, Helvetica, sans-serif;
+  text-decoration: none;
+}
+
+.td-center {
+  text-align: center;
+}
+
+.td-left {
+  text-align: left;
+}
+
+.td-right {
+  width: 50%;
+  text-align: right;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.red-bold-text-on-light-gray {
+  background-color: #DDDDDD;
+  color: #FF0000;
+  font-weight: bold;
+}
