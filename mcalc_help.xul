@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="mcalc_xul.css" type="text/css"?>
+
+<window id         = "MCalcHelp"
+        title      = "MCalc Help"
+        xmlns      = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<script src="mcalc_xul.js" type="application/x-javascript" />
+
+<commandset id="HelpDialogCommands">
+ <command id="help-close:command" oncommand="helpCloseCommand();" />
+</commandset>
+
+<vbox align="center">
+ <description value="Mortgage Calculator" />
+ <description value="version 0.1" />
+ <description value="Copyright (c) 2004 George D. Sotirov" />
+ <description value="Martgage calculator is application for calculating mortgage taxes" />
+ <hbox align="right">
+  <button id="Close" label="Close" command="help-close:command" />
+ </hbox>
+</vbox>
+
+</window>

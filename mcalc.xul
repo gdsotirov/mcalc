@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="mcalc_xul.css" type="text/css"?>
+
+<!--
+ M o r t g a g e   C a l c u l a t o r 0.1
+ Copyright (c) 2004 George D. Sotirov <gsotirov@obs.bg>
+//-->
+
+<window id         = "MCalc"
+        title      = "Mortgage Calculator"
+        xmlns:html = "http://www.w3.org/1999/xhtml"
+        xmlns      = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<script src="mcalc_xul.js" type="application/x-javascript" />
+<script src="mcc.js" type="application/x-javascript" />
+
+<!-- Commands -->
+<commandset id="MenuCommands">
+ <command id="calc-new:command" oncommand="calcNewCommand();" />
+ <command id="calc-quit:command" oncommand="calcQuitCommand();" />
+ <command id="help-contents:command" oncommand="helpContentsCommand();" />
+ <command id="help-about:command" oncommand="helpAboutCommand();" />
+</commandset>
+
+<!-- Menu -->
+<toolbox id="main_toolbox">
+<menubar id="Menu">
+ <menu id="Calc" label="Calculator">
+  <menupopup>
+   <menuitem id      = "CalcNew"
+             label   = "New Calculation"
+             command = "calc-new:command" />
+   <menuseparator />
+   <menuitem id      = "CalcQuit"
+             label   = "Quit"
+             command = "calc-quit:command" />
+  </menupopup>
+ </menu>
+ <menu id="Help" label="Help">
+  <menupopup>
+   <menuitem id      = "HelpContents"
+             label   = "Contents"
+             command = "help-contents:command" />
+   <menuseparator/>
+   <menuitem id      = "HelpAbout"
+             label   = "About..."
+             command = "help-about:command" />
+  </menupopup>
+ </menu>
+</menubar>
+</toolbox>
+
+<!-- Form -->
+<vbox>
+ <hbox>
+  <label>Amount</label>
+  <textbox id="Amount" value="" />
+  <menulist>
+   <menupopup>
+    <menuitem label="BGN, Bulgarian lev" />
+    <menuitem label="EUR, Euro" />
+    <menuitem label="USD, United States Dollar" />
+   </menupopup>
+  </menulist>
+ </hbox>
+ <hbox>
+  <label>Period</label>
+  <menulist>
+   <menupopup>
+    <menuitem label="1" />
+    <menuitem label="2" />
+    <menuitem label="3" />
+    <menuitem label="4" />
+    <menuitem label="5" />
+    <menuitem label="6" />
+    <menuitem label="7" />
+    <menuitem label="8" />
+    <menuitem label="9" />
+    <menuitem label="10" />
+    <menuitem label="11" />
+    <menuitem label="12" />
+    <menuitem label="13" />
+    <menuitem label="14" />
+    <menuitem label="15" />
+    <menuitem label="16" />
+    <menuitem label="17" />
+    <menuitem label="18" />
+    <menuitem label="19" />
+    <menuitem label="20" />
+   </menupopup>
+  </menulist>
+  <label>year(s), </label>
+  <menulist>
+   <menupopup>
+    <menuitem label="1" />
+    <menuitem label="2" />
+    <menuitem label="3" />
+    <menuitem label="4" />
+    <menuitem label="5" />
+    <menuitem label="6" />
+    <menuitem label="7" />
+    <menuitem label="8" />
+    <menuitem label="9" />
+    <menuitem label="10" />
+    <menuitem label="11" />
+   </menupopup>
+  </menulist>
+  <label>month(s)</label>
+ </hbox>
+ <hbox>
+  <label>Yearly interest</label>
+  <textbox id="Interest" value="" />
+  <label>%</label>
+ </hbox>
+ <hbox>
+  <label>Monthly payment</label>
+  <textbox id="Monthly" value="" />
+ </hbox>
+ <hbox>
+  <button id="Calc" label="Calculate" />
+ </hbox>
+</vbox>
+</window>
