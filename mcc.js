@@ -1,7 +1,8 @@
-<!--
-/* Mortgage credit calculations
+/* Mortgage calculator
  * ---
- * Written by George D. Sotirov (gsotirov@obs.bg)
+ * Written by George D. Sotirov (gdsotirov@dir.bg)
+ * Version: 0.1.0
+ * $Id: mcc.js,v 1.2 2005/04/20 18:55:29 gsotirov Exp $
  */
 
 /* Function   : calc_monthly_payment
@@ -32,4 +33,3 @@ function calc_total_return_amount(monthly, periodY, periodM) {
   var ret_amount = total_months * monthly;
   return ret_amount;
 }
-//-->
