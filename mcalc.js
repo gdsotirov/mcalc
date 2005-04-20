@@ -1,4 +1,10 @@
-<!--
+/* Mortgage calculator Web Interface
+ * ---
+ * Written by George D. Sotirov (gdsotirov@dir.bg)
+ * Version: 0.1.0
+ * $Id: mcalc.js,v 1.2 2005/04/20 18:54:33 gsotirov Exp $
+ */
+
 var uisPlsFillAmount = 0;
 var uisPlsCorrAmount = 1;
 var uisPlsChsePeriod = 2;
@@ -6,11 +12,11 @@ var uisPlsFillInterest = 3;
 var uisPlsCorrInterest = 4;
 
 var UIStringsBG = new Array(
-/*  0 */ "Моля, попълнете полето Сума!",
-/*  1 */ "Моля, задайте правилна стойност в полето Сума!\nНапример: 10000, 15500, 20100.55",
+/*  0 */ "Моля, попълнете полето Размер на кредита!",
+/*  1 */ "Моля, задайте правилна стойност в полето Размер на кредита!\nНапример: 10000, 15500, 20100.55",
 /*  2 */ "Моля, изберете срок на кредита в години и/или месеци!",
-/*  3 */ "Моля, попълнете полето Лихва!",
-/*  4 */ "Моля, задайте правилна стойност в полето Лихва!\nНапример: 10.5, 12.75, 11"
+/*  3 */ "Моля, попълнете полето Годишен лихвен процент!",
+/*  4 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11"
 );
 
 var UIStringsEN = new Array(
@@ -62,30 +68,16 @@ function doReset() {
   RetAmount.innerHTML = "0.00";
 }
 
-/*function showCC() {
-  var imgCC = document.getElementById("CurCode");
-  var sel = document.forms.CalcForm.Currency.value;
-
-  switch ( sel ) {
-    case "BGN" :
-      imgCC.src = "bgn.gif";
-      imgCC.alt = "BGN";
-      break;
-    case "USD" :
-      imgCC.src = "usd.gif";
-      imgCC.alt = "USD";
-      break;
-    case "EUR" :
-      imgCC.src = "eur.gif";
-      imgCC.alt = "EUR";
-      break;
-  }
-}*/
-
 function lockMonths() {
   var year = parseInt(document.forms.CalcForm.PeriodY.value);
-  if ( !isNaN(year) )
-    document.forms.CalcForm.PeriodM.disabled = (year == 20);
+  if ( !isNaN(year) ) {
+    document.forms.CalcForm.PeriodM.disabled = (year == 30);
+    var msel = document.getElementById("MonthSelect");
+    if ( year == 30 )
+      msel.style.display = "none";
+    else
+      msel.style.display = "";
+  }
 }
 
 function checkForm() {
@@ -119,8 +111,7 @@ function doCalc() {
   var RetAmount = document.getElementById("ReturnAmount");
   var Cur = document.forms.CalcForm.Currency.value;
   var a = ((retam / amount) * 100) - 100;
-  PaymentID.innerHTML = sprintf("%9.2f %s", payment, Cur);
-  RetAmount.innerHTML = sprintf("%9.2f %s (%9.2f + %5.2f %)", retam, Cur, amount, a);
+  PaymentID.innerHTML = sprintf("%3.2f %s", payment, Cur);
+  RetAmount.innerHTML = sprintf("%3.2f %s (%3.2f + %3.2f&#037;)", retam, Cur, amount, a);
   return true;
 }
-//-->
