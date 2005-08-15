@@ -2,7 +2,7 @@
  * Written by George D. Sotirov, gdsotirov@dir.bg
  *
  * Media: screen, print
- * $Id: mcalc.css,v 1.3 2005/08/15 20:28:50 gsotirov Exp $
+ * $Id: mcalc.css,v 1.4 2005/08/15 20:42:12 gsotirov Exp $
  */
 
 @media screen, print {
@@ -90,7 +90,7 @@
     text-align: right;
   }
 
-  .align-justify {
+  .align-justify, .text {
     text-align: justify;
   }
 
@@ -98,6 +98,10 @@
     background-color: #ddd;
     color: #f00;
     font-weight: bold;
+  }
+
+  .text {
+    text-indent: 2em;
   }
 }
 
