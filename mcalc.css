@@ -2,16 +2,12 @@
  * Written by George D. Sotirov, gdsotirov@dir.bg
  *
  * Media: screen, print
- * $Id: mcalc.css,v 1.2 2005/04/20 18:52:46 gsotirov Exp $
+ * $Id: mcalc.css,v 1.3 2005/08/15 20:28:50 gsotirov Exp $
  */
 
 @media screen, print {
-  a {
-    color: inherit;
-  }
-
-  a.link {
-    color: #0000FF;
+  a[href] {
+    text-decoration: underline;
   }
 
   body {
@@ -20,14 +16,30 @@
   }
 
   button {
-    background-color: #999999;
-    border: 1px solid #000000;
-    color: #FFFFFF;
+    background-color: #999;
+    border: 1px solid #000;
+    color: #fff;
     font-weight: bold;
   }
 
+  div.row {
+    clear: both;
+  }
+
+  div.row span.label, div.row span.input {
+    float: left;
+    margin: 0.2em;
+    padding: 0.1em;
+  }
+
+  div.row span.label {
+    clear: left;
+    text-align: right;
+    width: 50%;
+  }
+
   h1, h2, h3, h4, h5, h6 {
-    color: #000000;
+    color: #000;
     font-family: Ariel, Helvetica, sans-serif;
     font-style: normal;
     font-variant: normal;
@@ -36,9 +48,9 @@
   }
 
   input, select {
-    background-color: #FFFFFF;
-    border: 1px solid #000000;
-    color: #000000;
+    background-color: #fff;
+    border: 1px solid #000;
+    color: #000;
   }
 
   input {
@@ -46,7 +58,7 @@
   }
 
   input[disabled], select[disabled] {
-    background-color: #CCCCCC;
+    background-color: #ccc;
   }
 
   img {
@@ -60,41 +72,59 @@
 
   /* Pseudo classes */
   .copyright {
-    color: #CCCCCC;
+    color: #ccc;
     font: normal normal normal small Arial, Helvetica, sans-serif;
     text-align: center;
     text-decoration: none;
   }
 
-  .td-center, .align-center {
+  .align-center {
     text-align: center;
   }
 
-  .td-left {
+  .align-left {
     text-align: left;
   }
 
-  .td-right {
-    width: 50%;
+  .align-right {
     text-align: right;
   }
 
-  .bold-text {
-    font-weight: bold;
+  .align-justify {
+    text-align: justify;
   }
 
   .red-bold-text-on-light-gray {
-    background-color: #DDDDDD;
-    color: #FF0000;
+    background-color: #ddd;
+    color: #f00;
     font-weight: bold;
   }
 }
 
 @media screen {
+  input, select {
+    background-color: #eee;
+  }
+
+  input:hover, input:focus, select:hover, select:focus {
+    background-color: #fff;
+  }
+
+  button:hover, button:focus {
+    border-style: outset;
+  }
+
+  .no_screen {
+    display: none;
+  }
 }
 
 @media print {
   input, select {
     border: 0 none;
+  }
+
+  .no_print {
+    display: none;
   }
 }
