@@ -1,8 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * Version: 0.1.0
- * $Id: mcalc.js,v 1.2 2005/04/20 18:54:33 gsotirov Exp $
+ * $Id: mcalc.js,v 1.3 2005/08/15 20:28:33 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -61,11 +60,22 @@ function checkField(fld, type, uisFill, uisCorr) {
   return true;
 }
 
+function removeAllChilds(node) {
+  if ( node )
+    while ( node.firstChild )
+      node.removeChild(node.firstChild);
+}
+
 function doReset() {
-  var PaymentID = document.getElementById("Payment");
+  var Payment = document.getElementById("Payment");
   var RetAmount = document.getElementById("ReturnAmount");
-  PaymentID.innerHTML = "0.00";
-  RetAmount.innerHTML = "0.00";
+  var TotalRaise = document.getElementById("TotalRaise");
+  removeAllChilds(Payment);
+  removeAllChilds(RetAmount);
+  removeAllChilds(TotalRaise);
+  Payment.appendChild(document.createTextNode(sprintf("%1.2f", 0.0)));
+  RetAmount.appendChild(document.createTextNode(sprintf("%1.2f", 0.0)));
+  TotalRaise.appendChild(document.createTextNode(sprintf("%1.2f", 0.0)));
 }
 
 function lockMonths() {
@@ -107,11 +117,17 @@ function doCalc() {
 
   var payment = calc_monthly_payment(interest, amount, periodY, periodM);
   var retam = calc_total_return_amount(payment, periodY, periodM);
-  var PaymentID = document.getElementById("Payment");
+  var Payment = document.getElementById("Payment");
   var RetAmount = document.getElementById("ReturnAmount");
+  var TotalRaise = document.getElementById("TotalRaise");
   var Cur = document.forms.CalcForm.Currency.value;
   var a = ((retam / amount) * 100) - 100;
-  PaymentID.innerHTML = sprintf("%3.2f %s", payment, Cur);
-  RetAmount.innerHTML = sprintf("%3.2f %s (%3.2f + %3.2f&#037;)", retam, Cur, amount, a);
+
+  removeAllChilds(Payment);
+  removeAllChilds(RetAmount);
+  removeAllChilds(TotalRaise);
+  Payment.appendChild(document.createTextNode(sprintf("%3.2f %s", payment, Cur)));
+  RetAmount.appendChild(document.createTextNode(sprintf("%3.2f %s", retam, Cur)));
+  TotalRaise.appendChild(document.createTextNode(sprintf("%3.2f %%", a)));
   return true;
 }
