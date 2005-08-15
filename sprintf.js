@@ -12,6 +12,11 @@
  *        for anything.
  ********************************************************************************/
 
+/* Modified by Georgi D. Sotirov <gdsotirov@dir.bg>
+ *
+ * 2005-08-15 Added support for %% which should escape % character
+ */
+
 function sprintf(fstring) {
   var pad = function(str, ch, len) {
     var ps = '';
@@ -161,19 +166,24 @@ function sprintf(fstring) {
     return processFlags(flags,width,rs,0);
   }
 
-  farr = fstring.split('%');
-  retstr = farr[0];
-  fpRE = /^([-+ #]*)(\d*)\.?(\d*)([cdieEfFgGosuxX])(.*)$/;
-
-  for ( var i = 1; i < farr.length; i++ ) {
-    fps = fpRE.exec(farr[i]);
-    if ( !fps )
-      continue;
-    if ( arguments[i] != null )
-      retstr += converters[fps[4]](fps[1], fps[2], fps[3], arguments[i]);
-    retstr += fps[5];
+  converters['%'] = function(flags, width, precision, arg) {
+    return '%';
   }
 
-  return retstr;
+  var fpRE = /([^%]*)%([-+ #]*)(\d*)\.?(\d*)([cdieEfFgGosuxX%])([^%]*)/g;
+  var retstr = "";
+  var index = 1;
+
+  while ( fps = fpRE.exec(fstring) ) {
+    if ( arguments[index] || fps[5] == '%' )
+      retstr += converters[fps[5]](fps[2], fps[3], fps[4], arguments[index]);
+    retstr = fps[1] + retstr + fps[6];
+    if ( fps[5] != '%' )
+      ++index;
+  }
+  if (index != 1)
+    return retstr;
+  else
+    return fstring;
 }
 
