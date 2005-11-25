@@ -2,7 +2,7 @@
  * Written by George D. Sotirov, gdsotirov@dir.bg
  *
  * Media: screen, print
- * $Id: mcalc.css,v 1.4 2005/08/15 20:42:12 gsotirov Exp $
+ * $Id: mcalc.css,v 1.5 2005/11/25 22:00:06 gsotirov Exp $
  */
 
 @media screen, print {
@@ -11,8 +11,9 @@
   }
 
   body {
+    background-color: #fff;
+    color: #000;
     font: normal normal normal medium Arial, Helvetica, sans-serif;
-    background-color: #FFFFFF;
   }
 
   button {
@@ -20,6 +21,10 @@
     border: 1px solid #000;
     color: #fff;
     font-weight: bold;
+  }
+
+  div#Footer {
+    text-align: center;
   }
 
   div.row {
@@ -39,7 +44,6 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: #000;
     font-family: Ariel, Helvetica, sans-serif;
     font-style: normal;
     font-variant: normal;
@@ -59,6 +63,7 @@
 
   input[disabled], select[disabled] {
     background-color: #ccc;
+    color: inherit;
   }
 
   img {
@@ -72,8 +77,14 @@
 
   /* Pseudo classes */
   .copyright {
+    background-color: inherit;
     color: #ccc;
     font: normal normal normal small Arial, Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .terms {
     text-align: center;
     text-decoration: none;
   }
@@ -108,10 +119,12 @@
 @media screen {
   input, select {
     background-color: #eee;
+    color: inherit;
   }
 
   input:hover, input:focus, select:hover, select:focus {
     background-color: #fff;
+    color: inherit;
   }
 
   button:hover, button:focus {
