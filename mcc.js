@@ -1,35 +1,36 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * Version: 0.1.0
- * $Id: mcc.js,v 1.2 2005/04/20 18:55:29 gsotirov Exp $
+ * $Id: mcc.js,v 1.3 2005/12/05 21:37:04 gsotirov Exp $
  */
 
-/* Function   : calc_monthly_payment
- * Description: Calculate monthly payment for the mortgage credit.
+/* Function   : calc_period_payment
+ * Description: Calculate period payment for annuity mortgages
  * Parameters : interest - the yearly interest for the credit
  *              amount   - the amount for the credit
- *              period   - the period for the credit
+ *              periods  - the periods for the credit
  */
-function calc_monthly_payment(interest, amount, periodY, periodM) {
-  var mi = interest / 100 / 12;
-  var months = periodY * 12 + periodM;
-  var a1 = Math.pow(mi + 1, months);
-  var a2 = 1 / a1;
-  var a3 = 1 - a2;
-  var a4 = a3 / mi;
-  var p = amount / a4;
-  return p;
+function calc_period_payment(interest, amount, periods) {
+  var period_interest = interest / 100 / 12;
+  return (period_interest * amount) / (1 - Math.pow(1 + period_interest, -periods));
+}
+
+/* Function   : calc_total_amount
+ * Description: Calculate total amount that can be given
+ * Parameters : interest - the yearly interest for the credit
+ *              payment  - the period payment
+ *              periods  - the periods for the credit
+ */
+function calc_total_amount(interest, payment, periods) {
+  var period_interest = interest / 100 / 12;
+  return (payment * (1 - Math.pow(1 + period_interest, -periods))) / period_interest;
 }
 
 /* Function   : calc_total_return_amount
- * Description: Calculate total return amount for the period of the credit.
+ * Description: Calculate total return amount from the monthly payment.
  * Parameters : monthly - monthly payment
- *              periodY - period in years
- *              periodM - period in months
+ *              periods - periods
  */
-function calc_total_return_amount(monthly, periodY, periodM) {
-  var total_months = periodY * 12 + periodM;
-  var ret_amount = total_months * monthly;
-  return ret_amount;
+function calc_total_return_amount(monthly, periods) {
+  return periods * monthly;
 }
