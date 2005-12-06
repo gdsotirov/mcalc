@@ -11,9 +11,9 @@
 <meta name="robots" content="INDEX, FOLLOW" />
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
-<meta name="version" content="0.1.2" />
-<meta name="CVS" content="$Id: index.en.html,v 1.7 2005/12/04 08:14:58 gsotirov Exp $" />
-<title>Ипотечен калкулатор</title>
+<meta name="version" content="0.1.4" />
+<meta name="CVS" content="$Id: index.en.html,v 1.8 2005/12/06 20:10:52 gsotirov Exp $" />
+<title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
 <link rel="author" href="mailto:Georgi Sotirov &lt;gdsotirov@dir.bg&gt;" />
@@ -26,30 +26,25 @@
 
 <body onload="javascript: document.forms.CalcForm.Amount.focus(); lockMonths();">
 <div id="Head">
-<h1>Ипотечен калкулатор</h1>
+<h1>Mortgage Calculator</h1>
 <p class="align-center">
-<a href="index.bg" hreflang="bg" lang="bg">Български</a>
+<a href="index.bg.html" hreflang="bg" lang="bg">Български</a>
 </p>
 </div>
 
 <div id="Calc">
-<p class="no_print align-center">Please, enter the amount of the credit and
-the yearly interest. Select currency and period of the credit in years
-and/or months.</p>
-<form action="#" id="CalcForm" enctype="application/x-www-form-urlencoded" method="post" onsubmit="javascript: return false" onreset="javascript: doReset();">
+<p class="no_print align-center">Please, select the type of the calculation
+with the radio buttons. If you wish to calculate Payment the button in front
+of Amount should be pushed and viceversa.</p>
+<form action="#" id="CalcForm" enctype="application/x-www-form-urlencoded" method="post" onsubmit="javascript: return false" onreset="javascript: Reset();">
 <div class="row">
-<label for="Amount"><span class="label">Amount of the credit:</span></label>
+<label for="Amount"><span class="label"><input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Amount:</span></label>
 <span class="input">
-<input id="Amount" name="Amount" type="text" size="16" maxlength="16" />&nbsp;
-<select name="Currency" onchange="javascript: showCC();">
-<option value="BGN">&nbsp; BGN Bulgarian Lev</option>
-<option value="USD">$ USD US Dollar</option>
-<option value="EUR">&euro; EUR Euro</option>
-</select></span>
+<input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: Calc('payment')" /></span>
 </div>
 
 <div class="row">
-<label for="PeriodY"><span class="label">Period of the credit:</span></label>
+<label for="TermY"><span class="label">Term:</span></label>
 <span class="input">
 <select id="TermY" name="TermY" onchange="javascript: lockMonths();">
 <option value="0">0</option>
@@ -83,7 +78,7 @@ and/or months.</p>
 <option value="28">28</option>
 <option value="29">29</option>
 <option value="30">30</option>
-</select>&nbsp;години<span id="MonthSelect">&nbsp;и
+</select>&nbsp;years<span id="MonthSelect">&nbsp;and
 <select name="TermM">
 <option value="0">0</option>
 <option value="1">1</option>
@@ -97,33 +92,34 @@ and/or months.</p>
 <option value="9">9</option>
 <option value="10">10</option>
 <option value="11">11</option>
-</select>&nbsp;месеца</span></span>
+</select>&nbsp;months</span></span>
 </div>
 
 <div class="row">
-<label for="Interest"><span class="label">Nominal yearly interest:</span>
+<label for="Interest"><span class="label">Interest:</span>
 <span class="input">
-<input id="Interest" name="Interest" type="text" size="6" maxlength="10" />&nbsp;%</span></label>
+<input id="Interest" name="Interest" type="text" size="6" maxlength="10" title="Interest is the yearly nominal interest" />&nbsp;%</span></label>
 </div>
 
 <div class="row">
-<span class="label">Monthly payment:</span>
-<span id="Payment" class="input red-bold-text-on-light-gray">0.00</span>
+<label for="Payment"><span class="label"><input name="Type" type="radio" value="amount" />&nbsp;Payment:</span></label>
+<span class="input">
+<input id="Payment" name="Payment" type="text" size="8" maxlength="10" /></span>
 </div>
 
 <div class="row">
-<span class="label">Returned amount:</span>
-<span id="ReturnAmount" class="input red-bold-text-on-light-gray">0.00</span>
+<label for="ReturnAmount"><span class="label">Amount returned:</span></label>
+<span id="ReturnAmount" class="input result">0.00</span>
 </div>
 
 <div class="row">
-<span class="label">Total raise:</span>
-<span id="TotalRaise" class="input red-bold-text-on-light-gray">0.00</span>
+<label for="TotalRaise"><span class="label">Total raise:</span></label>
+<span id="TotalRaise" class="input result">0.00</span>
 </div>
 
 <div class="row no_print">
 <span class="label">
-<button name="Calculate" type="submit" onclick="javascript: if (checkForm()) doCalc();"><img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
+<button name="Calculate" type="submit" onclick="javascript: if (checkForm()) Calc('payment');"><img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
 <span class="input">
 <button name="Clear" type="reset"><img src="clear.png" width="16" height="16" alt="" />&nbsp;Clear</button></span>
 </div>
