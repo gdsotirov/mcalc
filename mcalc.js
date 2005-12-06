@@ -1,29 +1,35 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.3 2005/08/15 20:28:33 gsotirov Exp $
+ * $Id: mcalc.js,v 1.4 2005/12/06 20:08:07 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
 var uisPlsCorrAmount = 1;
-var uisPlsChsePeriod = 2;
-var uisPlsFillInterest = 3;
-var uisPlsCorrInterest = 4;
+var uisPlsFillPayment = 2
+var uisPlsCorrPayment = 3;
+var uisPlsChsePeriod = 4;
+var uisPlsFillInterest = 5;
+var uisPlsCorrInterest = 6;
 
 var UIStringsBG = new Array(
-/*  0 */ "Моля, попълнете полето Размер на кредита!",
-/*  1 */ "Моля, задайте правилна стойност в полето Размер на кредита!\nНапример: 10000, 15500, 20100.55",
-/*  2 */ "Моля, изберете срок на кредита в години и/или месеци!",
-/*  3 */ "Моля, попълнете полето Годишен лихвен процент!",
-/*  4 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11"
+/*  0 */ "Моля, попълнете полето Сума!",
+/*  1 */ "Моля, задайте правилна стойност в полето Сума!\nНапример: 10000, 15500, 20100.55",
+/*  2 */ "Моля, попълнете полето Вноска!",
+/*  3 */ "Моля, задайте правилна стойност в полето Вноска!\nНапример: 500, 750, 1200.5",
+/*  4 */ "Моля, изберете срок на кредита в години и/или месеци!",
+/*  5 */ "Моля, попълнете полето Лихва!",
+/*  6 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11"
 );
 
 var UIStringsEN = new Array(
 /*  0 */ "Please, fill in the Amount field!",
 /*  1 */ "Please, fill in correct value in the Amount field! Example: 10000, 15500, 20100.55",
-/*  2 */ "Please, choose the period of the credit in years and/or months!",
-/*  3 */ "Please, fill in the Interest field!",
-/*  4 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55"
+/*  2 */ "Please, fill in the Payment field!",
+/*  3 */ "Please, fill in correct value in the Payment field! Example: 500, 750, 1200.5",
+/*  4 */ "Please, choose the credit term in years and/or months!",
+/*  5 */ "Please, fill in the Interest field!",
+/*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55"
 );
 
 function loadUIString(id) {
@@ -66,16 +72,23 @@ function removeAllChilds(node) {
       node.removeChild(node.firstChild);
 }
 
-function doReset() {
-  var Payment = document.getElementById("Payment");
+function getRadioValue(radio) {
+  var i = 0;
+  while ( i < radio.length ) {
+    if ( radio[i].checked )
+      return radio[i].value;
+    ++i;
+  }
+  return;
+}
+
+function Reset() {
   var RetAmount = document.getElementById("ReturnAmount");
   var TotalRaise = document.getElementById("TotalRaise");
-  removeAllChilds(Payment);
   removeAllChilds(RetAmount);
   removeAllChilds(TotalRaise);
-  Payment.appendChild(document.createTextNode(sprintf("%1.2f", 0.0)));
-  RetAmount.appendChild(document.createTextNode(sprintf("%1.2f", 0.0)));
-  TotalRaise.appendChild(document.createTextNode(sprintf("%1.2f", 0.0)));
+  RetAmount.appendChild(document.createTextNode(sprintf("%1.2f", "0.0")));
+  TotalRaise.appendChild(document.createTextNode(sprintf("%1.2f", "0.0")));
 }
 
 function lockMonths() {
@@ -86,15 +99,21 @@ function lockMonths() {
     if ( year == 30 )
       msel.style.display = "none";
     else
-      msel.style.display = "";
+      msel.style.display = "inline";
   }
 }
 
 function checkForm() {
   var form = document.forms.CalcForm;
+  var type = getRadioValue(form.Type);
 
-  if ( !checkField(form.Amount, "float", uisPlsFillAmount, uisPlsCorrAmount) )
-    return false;
+  if ( type == "payment" ) {
+    if ( !checkField(form.Amount, "float", uisPlsFillAmount, uisPlsCorrAmount) )
+      return false;
+  }
+  else if ( !checkField(form.Payment, "float", uisPlsFillPayment, uisPlsCorrPayment) )
+      return false;
+
   var PeriodY = parseInt(form.PeriodY.value);
   var PeriodM = parseInt(form.PeriodM.value);
   if ( PeriodY == 0 && PeriodM == 0 ) {
@@ -108,26 +127,38 @@ function checkForm() {
   return true;
 }
 
-function doCalc() {
+function Calc(type) {
   var form = document.forms.CalcForm;
+  var type = getRadioValue(form.Type);
   var amount = parseFloat(form.Amount.value);
   var periodY = parseInt(form.PeriodY.value);
-  var periodM = parseInt(form.PeriodM.value);
+  var periodM = 0;
+  if (periodY < 30)
+    periodM = parseInt(form.PeriodM.value);
   var interest = parseFloat(form.Interest.value);
+  var payment = parseFloat(form.Payment.value);
 
-  var payment = calc_monthly_payment(interest, amount, periodY, periodM);
-  var retam = calc_total_return_amount(payment, periodY, periodM);
+  var periods = periodY * 12 + periodM;
+  var Amount = document.getElementById("Amount");
   var Payment = document.getElementById("Payment");
+  if ( type == "payment" ) {
+    payment = calc_period_payment(interest, amount, periods);
+    Payment.value = sprintf("%3.2f", payment);
+  }
+  else {
+    amount = calc_total_amount(interest, payment, periods);
+    Amount.value = sprintf("%3.2f", amount);
+  }
+  var retam = calc_total_return_amount(payment, periods);
+
   var RetAmount = document.getElementById("ReturnAmount");
   var TotalRaise = document.getElementById("TotalRaise");
-  var Cur = document.forms.CalcForm.Currency.value;
   var a = ((retam / amount) * 100) - 100;
 
-  removeAllChilds(Payment);
   removeAllChilds(RetAmount);
   removeAllChilds(TotalRaise);
-  Payment.appendChild(document.createTextNode(sprintf("%3.2f %s", payment, Cur)));
-  RetAmount.appendChild(document.createTextNode(sprintf("%3.2f %s", retam, Cur)));
+
+  RetAmount.appendChild(document.createTextNode(sprintf("%3.2f", retam)));
   TotalRaise.appendChild(document.createTextNode(sprintf("%3.2f %%", a)));
   return true;
 }
