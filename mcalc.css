@@ -2,7 +2,7 @@
  * Written by George D. Sotirov, gdsotirov@dir.bg
  *
  * Media: screen, print
- * $Id: mcalc.css,v 1.5 2005/11/25 22:00:06 gsotirov Exp $
+ * $Id: mcalc.css,v 1.6 2005/12/06 20:08:27 gsotirov Exp $
  */
 
 @media screen, print {
@@ -105,8 +105,8 @@
     text-align: justify;
   }
 
-  .red-bold-text-on-light-gray {
-    background-color: #ddd;
+  .result {
+    background-color: inherit;
     color: #f00;
     font-weight: bold;
   }
