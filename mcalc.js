@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.4 2005/12/06 20:08:07 gsotirov Exp $
+ * $Id: mcalc.js,v 1.5 2005/12/08 20:58:08 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -46,6 +46,27 @@ function loadUIString(id) {
     return "???";
 }
 
+function formatNumber(number, float) {
+  var htmltags = document.getElementsByTagName("html");
+  var lang = htmltags[0].lang;
+
+  /* Configure number formatting */
+  var num = new NumberFormat();
+  num.setInputDecimal('.');
+  num.setSeparators(true, ' ', '.');
+  num.setPlaces('2', false);
+  num.setCurrency(false);
+  num.setCurrencyPosition(num.LEFT_OUTSIDE);
+  num.setNegativeFormat(num.LEFT_DASH);
+  num.setNegativeRed(false);
+  num.setNumber(number);
+  return num.toFormatted();
+}
+
+function formatField(obj) {
+  obj.value = formatNumber(obj.value.replace(/,/, "."));
+}
+
 function checkField(fld, type, uisFill, uisCorr) {
   if ( fld.value == "" ) {
     alert(loadUIString(uisFill));
@@ -80,6 +101,13 @@ function getRadioValue(radio) {
     ++i;
   }
   return;
+}
+
+function getFloatValue(str) {
+  var htmltags = document.getElementsByTagName("html");
+  var lang = htmltags[0].lang;
+
+  return parseFloat(str.replace(/\s+/, "").replace(/,/, "."));
 }
 
 function Reset() {
@@ -130,35 +158,35 @@ function checkForm() {
 function Calc(type) {
   var form = document.forms.CalcForm;
   var type = getRadioValue(form.Type);
-  var amount = parseFloat(form.Amount.value);
+  var amount = getFloatValue(form.Amount.value);
   var periodY = parseInt(form.PeriodY.value);
   var periodM = 0;
   if (periodY < 30)
     periodM = parseInt(form.PeriodM.value);
   var interest = parseFloat(form.Interest.value);
-  var payment = parseFloat(form.Payment.value);
+  var payment = getFloatValue(form.Payment.value);
 
   var periods = periodY * 12 + periodM;
   var Amount = document.getElementById("Amount");
   var Payment = document.getElementById("Payment");
   if ( type == "payment" ) {
     payment = calc_period_payment(interest, amount, periods);
-    Payment.value = sprintf("%3.2f", payment);
+    Payment.value = formatNumber(payment, true);
   }
   else {
     amount = calc_total_amount(interest, payment, periods);
-    Amount.value = sprintf("%3.2f", amount);
+    Amount.value = formatNumber(amount, true);
   }
   var retam = calc_total_return_amount(payment, periods);
 
   var RetAmount = document.getElementById("ReturnAmount");
   var TotalRaise = document.getElementById("TotalRaise");
-  var a = ((retam / amount) * 100) - 100;
+  var raise = ((retam / amount) * 100) - 100;
 
   removeAllChilds(RetAmount);
   removeAllChilds(TotalRaise);
 
-  RetAmount.appendChild(document.createTextNode(sprintf("%3.2f", retam)));
-  TotalRaise.appendChild(document.createTextNode(sprintf("%3.2f %%", a)));
+  RetAmount.appendChild(document.createTextNode(formatNumber(retam, true)));
+  TotalRaise.appendChild(document.createTextNode(formatNumber(raise, true) + " %"));
   return true;
 }

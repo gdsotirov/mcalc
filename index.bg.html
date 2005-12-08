@@ -12,14 +12,14 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.8 2005/12/06 20:10:52 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.9 2005/12/08 20:58:08 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
 <link rel="author" href="mailto:gdsotirov@dir.bg" />
 <link rel="copyright" href="#Copyright" />
 <link rel="alternate" type="text/html" href="index.en.html" hreflang="en" lang="en" title="Mortgage calculator" />
-<script type="text/javascript" src="sprintf.js" defer="defer"></script>
+<script type="text/javascript" src="NumberFormat.js" defer="defer"></script>
 <script type="text/javascript" src="mcc.js" defer="defer"></script>
 <script type="text/javascript" src="mcalc.js" defer="defer"></script>
 </head>
@@ -40,7 +40,7 @@
 <div class="row">
 <label for="Amount"><span class="label"><input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Сума:</span></label>
 <span class="input">
-<input id="Amount" name="Amount" type="text" size="16" maxlength="16" /></span>
+<input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: formatField(document.forms.CalcForm.Amount)" /></span>
 </div>
 
 <div class="row">
@@ -104,17 +104,17 @@
 <div class="row">
 <label for="Payment"><span class="label"><input name="Type" type="radio" value="amount" />&nbsp;Вноска:</span></label>
 <span class="input">
-<input id="Payment" name="Payment" type="text" size="8" maxlength="10" /></span>
+<input id="Payment" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment)" /></span>
 </div>
 
 <div class="row">
 <label for="ReturnAmount"><span class="label">Връщана сума:</span></label>
-<span id="ReturnAmount" class="input result">0.00</span>
+<span id="ReturnAmount" class="input result"></span>
 </div>
 
 <div class="row">
 <span class="label">Общо оскъпяване:</span>
-<span id="TotalRaise" class="input result">0.00</span>
+<span id="TotalRaise" class="input result"></span>
 </div>
 
 <div class="row no_print">

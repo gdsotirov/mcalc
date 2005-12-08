@@ -12,14 +12,14 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.en.html,v 1.8 2005/12/06 20:10:52 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.9 2005/12/08 20:58:08 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
 <link rel="author" href="mailto:Georgi Sotirov &lt;gdsotirov@dir.bg&gt;" />
 <link rel="copyright" href="#Copyright" />
 <link rel="alternate" type="text/html" href="index.bg.html" hreflang="bg" lang="bg" title="Ипотечен калкулатор" />
-<script type="text/javascript" src="sprintf.js" defer="defer"></script>
+<script type="text/javascript" src="NumberFormat.js" defer="defer"></script>
 <script type="text/javascript" src="mcc.js" defer="defer"></script>
 <script type="text/javascript" src="mcalc.js" defer="defer"></script>
 </head>
@@ -40,7 +40,7 @@ of Amount should be pushed and viceversa.</p>
 <div class="row">
 <label for="Amount"><span class="label"><input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Amount:</span></label>
 <span class="input">
-<input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: Calc('payment')" /></span>
+<input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: formatField(document.forms.CalcForm.Amount)" /></span>
 </div>
 
 <div class="row">
@@ -104,17 +104,17 @@ of Amount should be pushed and viceversa.</p>
 <div class="row">
 <label for="Payment"><span class="label"><input name="Type" type="radio" value="amount" />&nbsp;Payment:</span></label>
 <span class="input">
-<input id="Payment" name="Payment" type="text" size="8" maxlength="10" /></span>
+<input id="Payment" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment)" /></span>
 </div>
 
 <div class="row">
 <label for="ReturnAmount"><span class="label">Amount returned:</span></label>
-<span id="ReturnAmount" class="input result">0.00</span>
+<span id="ReturnAmount" class="input result"></span>
 </div>
 
 <div class="row">
 <label for="TotalRaise"><span class="label">Total raise:</span></label>
-<span id="TotalRaise" class="input result">0.00</span>
+<span id="TotalRaise" class="input result"></span>
 </div>
 
 <div class="row no_print">
