@@ -12,7 +12,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.en.html,v 1.9 2005/12/08 20:58:08 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.9.2.1 2005/12/10 17:53:13 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -117,16 +117,29 @@ of Amount should be pushed and viceversa.</p>
 <span id="TotalRaise" class="input result"></span>
 </div>
 
+<div class="row">
+<span class="label">Table</span>
+<span class="input"><input id="EnableTable" name="EnableTable" type="checkbox" onchange="javascript: showTable();" /></span>
+</div>
+
+<div class="row">
+<br />
+</div>
+
 <div class="row no_print">
 <span class="label">
 <button name="Calculate" type="submit" onclick="javascript: if (checkForm()) Calc('payment');"><img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
 <span class="input">
 <button name="Clear" type="reset"><img src="clear.png" width="16" height="16" alt="" />&nbsp;Clear</button></span>
 </div>
+
 <div class="row">
 <br />
 </div>
+
 </form>
+<div id="TableContainer">
+</div>
 </div>
 
 <!-- F O O T E R -->
