@@ -1,7 +1,7 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcc.js,v 1.3 2005/12/05 21:37:04 gsotirov Exp $
+ * $Id: mcc.js,v 1.3.2.1 2005/12/10 17:51:08 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -33,4 +33,26 @@ function calc_total_amount(interest, payment, periods) {
  */
 function calc_total_return_amount(monthly, periods) {
   return periods * monthly;
+}
+
+/* Function   : calc_table
+ * Description: Build mortgage table with payments and amounts
+ * Parameters : amount - the amount of the credit
+ *              payment - period payment for the mortgage
+ *              interest - mortgage interest in percents
+ *              periods - the periods count
+ */
+function calc_table(amount, payment, interest, periods) {
+  var period_interest = interest / 100 / 12;
+  var balance = amount;
+  var Rows = new Array();
+
+  for ( var i = 0; i < periods; ++i ) {
+    var int = period_interest * balance;
+    var new_balance = balance + int - payment;
+    Rows[i] = new Array(i+1, balance, int, (payment - int), payment, new_balance);
+    balance = new_balance;
+  }
+
+  return Rows;
 }
