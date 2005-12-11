@@ -1,7 +1,7 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcc.js,v 1.3 2005/12/05 21:37:04 gsotirov Exp $
+ * $Id: mcc.js,v 1.4 2005/12/11 09:48:04 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -11,8 +11,15 @@
  *              periods  - the periods for the credit
  */
 function calc_period_payment(interest, amount, periods) {
-  var period_interest = interest / 100 / 12;
-  return (period_interest * amount) / (1 - Math.pow(1 + period_interest, -periods));
+  var peyment = 0.0;
+  if ( interest > 0.0 ) {
+    var period_interest = interest / 100 / 12;
+    payment = (period_interest * amount) / (1 - Math.pow(1 + period_interest, -periods));
+  }
+  else
+    payment = amount / periods;
+
+  return payment;
 }
 
 /* Function   : calc_total_amount
@@ -22,8 +29,15 @@ function calc_period_payment(interest, amount, periods) {
  *              periods  - the periods for the credit
  */
 function calc_total_amount(interest, payment, periods) {
-  var period_interest = interest / 100 / 12;
-  return (payment * (1 - Math.pow(1 + period_interest, -periods))) / period_interest;
+  var amount = 0.0;
+  if ( interest > 0.0 ) {
+    var period_interest = interest / 100 / 12;
+    amount = (payment * (1 - Math.pow(1 + period_interest, -periods))) / period_interest;
+  }
+  else
+    amount = payment * periods;
+
+  return amount;
 }
 
 /* Function   : calc_total_return_amount
