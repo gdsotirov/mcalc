@@ -2,7 +2,7 @@
  * Written by George D. Sotirov, gdsotirov@dir.bg
  *
  * Media: screen, print
- * $Id: mcalc.css,v 1.6 2005/12/06 20:08:27 gsotirov Exp $
+ * $Id: mcalc.css,v 1.7 2005/12/11 21:07:46 gsotirov Exp $
  */
 
 @media screen, print {
@@ -73,6 +73,30 @@
   table {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  table.tbThinBorder {
+    border-top: 1px solid #000;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left: 1px solid #000;
+  }
+
+  table.tbThinBorder th, table.tbThinBorder td {
+    border-top-style: none;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-left-style: none;
+    padding: 0.1em;
+  }
+
+  table#Table td {
+    text-align: right;
+  }
+
+  table#Table th {
+    background-color: #ccc;
+    color: inherit;
   }
 
   /* Pseudo classes */

@@ -12,7 +12,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.en.html,v 1.9 2005/12/08 20:58:08 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.10 2005/12/11 21:07:46 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -36,7 +36,7 @@
 <p class="no_print align-center">Please, select the type of the calculation
 with the radio buttons. If you wish to calculate Payment the button in front
 of Amount should be pushed and viceversa.</p>
-<form action="#" id="CalcForm" enctype="application/x-www-form-urlencoded" method="post" onsubmit="javascript: return false" onreset="javascript: Reset();">
+<form action="#" enctype="application/x-www-form-urlencoded" id="CalcForm" method="post" name="CalcForm" onsubmit="javascript: return false" onreset="javascript: Reset();">
 <div class="row">
 <label for="Amount"><span class="label"><input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Amount:</span></label>
 <span class="input">
@@ -117,16 +117,29 @@ of Amount should be pushed and viceversa.</p>
 <span id="TotalRaise" class="input result"></span>
 </div>
 
+<div class="row">
+<label for="EnableTable"><span class="label">Table:</span></label>
+<span class="input"><input id="EnableTable" name="EnableTable" type="checkbox" onchange="javascript: showTable();" /></span>
+</div>
+
+<div class="row">
+<br />
+</div>
+
 <div class="row no_print">
 <span class="label">
 <button name="Calculate" type="submit" onclick="javascript: if (checkForm()) Calc('payment');"><img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
 <span class="input">
 <button name="Clear" type="reset"><img src="clear.png" width="16" height="16" alt="" />&nbsp;Clear</button></span>
 </div>
+
 <div class="row">
 <br />
 </div>
+
 </form>
+<div id="TableContainer">
+</div>
 </div>
 
 <!-- F O O T E R -->
