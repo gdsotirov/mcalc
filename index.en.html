@@ -12,7 +12,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.en.html,v 1.10 2005/12/11 21:07:46 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.10.2.1 2005/12/12 22:03:35 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -95,10 +95,19 @@ of Amount should be pushed and viceversa.</p>
 </select>&nbsp;months</span></span>
 </div>
 
-<div class="row">
-<label for="Interest"><span class="label">Interest:</span>
+<div id="Terms">
+
+<div class="row" id="Term_0" name="Term">
+<label for="Interest_0"><span class="label">Interest:</span></label>
 <span class="input">
-<input id="Interest" name="Interest" type="text" size="6" maxlength="10" title="Interest is the yearly nominal interest" />&nbsp;%</span></label>
+<input id="Interest_0" name="Interest" type="text" size="6" maxlength="10" title="Interest is the yearly nominal interest for the term" />&nbsp;%&nbsp;for&nbsp;<input id="InterestPeriod_0" name="InterestPeriod" type="text" size="3" maxlenth="10" />&nbsp;month(s)&nbsp;</span>
+</div>
+</div>
+
+</div>
+<div class="row no_print">
+<span class="label"></span>
+<span class="input"><a href="#" onclick="javascript: addPeriod()">Add term</a></span>
 </div>
 
 <div class="row">
