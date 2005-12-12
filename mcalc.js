@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.6.2.1 2005/12/12 19:57:57 gsotirov Exp $
+ * $Id: mcalc.js,v 1.6.2.2 2005/12/12 22:21:32 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -17,6 +17,11 @@ var uisInterest = 9;
 var uisCapital = 10;
 var uisPayment = 11;
 var uisNewBalance = 12;
+var uisRemove = 13;
+var uisfor = 14;
+var uisMonthMonths = 15;
+var uisInterestTitle = 16;
+var uisTermTitle = 17;
 
 var UIStringsBG = new Array(
 /*  0 */ "Моля, попълнете полето Сума!",
@@ -31,7 +36,12 @@ var UIStringsBG = new Array(
 /*  9 */ "Лихва",
 /* 10 */ "Главница",
 /* 11 */ "Вноска",
-/* 12 */ "Ново салдо"
+/* 12 */ "Оставащо",
+/* 13 */ "Премахване",
+/* 14 */ "за",
+/* 15 */ "месец(а)",
+/* 16 */ "Лихвата това е номиналния годишен лихвен процент за периода",
+/* 17 */ "За какъв период от периода на кредита е в сила този лихвен процент"
 );
 
 var UIStringsEN = new Array(
@@ -47,7 +57,12 @@ var UIStringsEN = new Array(
 /*  9 */ "Interest",
 /* 10 */ "Capital",
 /* 11 */ "Payment",
-/* 12 */ "New balance"
+/* 12 */ "Outstanding",
+/* 13 */ "Remove",
+/* 14 */ "for",
+/* 15 */ "month(s)",
+/* 16 */ "Interest is the yearly nominal interest in percents for the term",
+/* 17 */ "For what term in the credit term is this interest in force"
 );
 
 function loadUIString(id) {
@@ -189,9 +204,9 @@ function addPeriod() {
   interest_input.setAttribute("type", "text");
   interest_input.setAttribute("size", "6");
   interest_input.setAttribute("maxlength", "10");
-  interest_input.setAttribute("title", "Лихвата това е номиналния годишен лихвен процент за периода");
+  interest_input.setAttribute("title", loadUIString(uisInterestTitle));
   span_input.appendChild(interest_input);
-  var new_text = document.createTextNode(" % за ");
+  var new_text = document.createTextNode(" % " + loadUIString(uisfor) + " ");
   span_input.appendChild(new_text);
   var period_input = document.createElement("input");
   period_input.setAttribute("id", "InterestPeriod_" + next_id);
@@ -199,14 +214,14 @@ function addPeriod() {
   period_input.setAttribute("type", "text");
   period_input.setAttribute("size", "3");
   period_input.setAttribute("maxlength", "10");
-  period_input.setAttribute("title", "За какъв период от периода на кредита е в сила този лихвен процент");
+  period_input.setAttribute("title", loadUIString(uisTermTitle));
   span_input.appendChild(period_input);
-  var new_text2 = document.createTextNode(" месец(а) ");
+  var new_text2 = document.createTextNode(" " + loadUIString(uisMonthMonths) + " ");
   span_input.appendChild(new_text2);
   var remove_link = document.createElement("a");
   remove_link.setAttribute("href", "#");
   remove_link.setAttribute("onclick", "javascript: removePeriod(\"Term_" + next_id + "\")");
-  var remove_link_text = document.createTextNode("Премахване");
+  var remove_link_text = document.createTextNode(loadUIString(uisRemove));
   remove_link.appendChild(remove_link_text);
   var remove_link_span = document.createElement("span");
   remove_link_span.setAttribute("class", "no_print");
@@ -218,7 +233,7 @@ function addPeriod() {
   new_div.setAttribute("name", "Term");
   new_div.appendChild(label);
   new_div.appendChild(span_input);
-  
+
   var element = document.getElementById("Terms");
   element.appendChild(new_div);
 }
