@@ -12,7 +12,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.10 2005/12/11 21:07:46 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.10.2.1 2005/12/12 19:12:06 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -95,10 +95,19 @@
 </select>&nbsp;месеца</span></span>
 </div>
 
-<div class="row">
-<label for="Interest"><span class="label">Лихва:</span>
+<div id="Terms">
+
+<div class="row" id="Term_0" name="Term">
+<label for="Interest_0"><span class="label">Лихва:</span></label>
 <span class="input">
-<input id="Interest" name="Interest" type="text" size="6" maxlength="10" title="Лихвата това е номиналния годишен лихвен процент" />&nbsp;%</span></label>
+<input id="Interest_0" name="Interest" type="text" size="6" maxlength="10" title="Лихвата това е номиналния годишен лихвен процент за периода" />&nbsp;%&nbsp;за&nbsp;<input id="InterestPeriod_0" name="InterestPeriod" type="text" size="3" maxlenth="10" />&nbsp;месец(а)&nbsp;</span>
+</div>
+</div>
+
+</div>
+<div class="row no_print">
+<span class="label"></span>
+<span class="input"><a href="#" onclick="javascript: addPeriod()">Добавяне на период</a></span>
 </div>
 
 <div class="row">
