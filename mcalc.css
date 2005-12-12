@@ -2,7 +2,7 @@
  * Written by George D. Sotirov, gdsotirov@dir.bg
  *
  * Media: screen, print
- * $Id: mcalc.css,v 1.7 2005/12/11 21:07:46 gsotirov Exp $
+ * $Id: mcalc.css,v 1.8 2005/12/12 19:05:04 gsotirov Exp $
  */
 
 @media screen, print {
@@ -163,6 +163,7 @@
 @media print {
   input, select {
     border: 0 none;
+    text-align: left;
   }
 
   .no_print {
