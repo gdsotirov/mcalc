@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.6 2005/12/11 21:07:46 gsotirov Exp $
+ * $Id: mcalc.js,v 1.7 2005/12/12 19:44:10 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -11,12 +11,12 @@ var uisPlsCorrPayment = 3;
 var uisPlsChsePeriod = 4;
 var uisPlsFillInterest = 5;
 var uisPlsCorrInterest = 6;
-var uisPeriod = 7;
+var uisDate = 7;
 var uisBalance = 8;
 var uisInterest = 9;
 var uisCapital = 10;
 var uisPayment = 11;
-var uisNewBalance = 12;
+var uisOutstanding = 12;
 
 var UIStringsBG = new Array(
 /*  0 */ "Моля, попълнете полето Сума!",
@@ -26,12 +26,12 @@ var UIStringsBG = new Array(
 /*  4 */ "Моля, изберете срок на кредита в години и/или месеци!",
 /*  5 */ "Моля, попълнете полето Лихва!",
 /*  6 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11",
-/*  7 */ "Период",
+/*  7 */ "Дата",
 /*  8 */ "Салдо",
 /*  9 */ "Лихва",
 /* 10 */ "Главница",
 /* 11 */ "Вноска",
-/* 12 */ "Ново салдо"
+/* 12 */ "Оставащо"
 );
 
 var UIStringsEN = new Array(
@@ -42,12 +42,12 @@ var UIStringsEN = new Array(
 /*  4 */ "Please, choose the credit term in years and/or months!",
 /*  5 */ "Please, fill in the Interest field!",
 /*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55",
-/*  7 */ "Period",
+/*  7 */ "Date",
 /*  8 */ "Balance",
 /*  9 */ "Interest",
 /* 10 */ "Capital",
 /* 11 */ "Payment",
-/* 12 */ "New balance"
+/* 12 */ "Outstanding"
 );
 
 function loadUIString(id) {
@@ -125,22 +125,13 @@ function getFloatValue(str) {
   var htmltags = document.getElementsByTagName("html");
   var lang = htmltags[0].lang;
 
-  return parseFloat(str.replace(/\s+/, "").replace(/,/, "."));
-}
-
-function Reset() {
-  var RetAmount = document.getElementById("ReturnAmount");
-  var TotalRaise = document.getElementById("TotalRaise");
-  var TableContainer = document.getElementById("TableContainer");
-  removeAllChilds(RetAmount);
-  removeAllChilds(TotalRaise);
-  removeAllChilds(TableContainer);
+  return parseFloat(str.replace(/\s+/, ""));
 }
 
 function lockMonths() {
-  var year = parseInt(document.forms.CalcForm.PeriodY.value);
+  var year = parseInt(document.forms.CalcForm.TermY.value);
   if ( !isNaN(year) ) {
-    document.forms.CalcForm.PeriodM.disabled = (year == 30);
+    document.forms.CalcForm.TermM.disabled = (year == 30);
     var msel = document.getElementById("MonthSelect");
     if ( year == 30 )
       msel.style.display = "none";
@@ -168,11 +159,11 @@ function checkForm() {
   else if ( !checkField(form.Payment, "float", uisPlsFillPayment, uisPlsCorrPayment) )
       return false;
 
-  var PeriodY = parseInt(form.PeriodY.value);
-  var PeriodM = parseInt(form.PeriodM.value);
-  if ( PeriodY == 0 && PeriodM == 0 ) {
+  var TermY = parseInt(form.TermY.value);
+  var TermM = parseInt(form.TermM.value);
+  if ( TermY == 0 && TermM == 0 ) {
     alert(loadUIString(uisPlsChsePeriod));
-    form.PeriodY.focus();
+    form.TermY.focus();
     return false;
   }
   if ( !checkField(form.Interest, "float", uisPlsFillInterest, uisPlsCorrInterest) )
@@ -181,21 +172,30 @@ function checkForm() {
   return true;
 }
 
+function Reset() {
+  var RetAmount = document.getElementById("ReturnAmount");
+  var TotalRaise = document.getElementById("TotalRaise");
+  var TableContainer = document.getElementById("TableContainer");
+  removeAllChilds(RetAmount);
+  removeAllChilds(TotalRaise);
+  removeAllChilds(TableContainer);
+}
+
 function Calc(type) {
   var form = document.forms.CalcForm;
   var type = getRadioValue(form.Type);
   var amount = getFloatValue(form.Amount.value);
-  var periodY = parseInt(form.PeriodY.value);
-  var periodM = 0;
-  if (periodY < 30)
-    periodM = parseInt(form.PeriodM.value);
+  var termY = parseInt(form.TermY.value);
+  var termM = 0;
+  if (termY < 30)
+    termM = parseInt(form.TermM.value);
   var interest = parseFloat(form.Interest.value);
   var payment = getFloatValue(form.Payment.value);
   var enableTable = form.EnableTable.checked;
   var TableContainer = document.getElementById("TableContainer");
   removeAllChilds(TableContainer);
 
-  var periods = periodY * 12 + periodM;
+  var periods = termY * 12 + termM;
   var Amount = document.getElementById("Amount");
   var Payment = document.getElementById("Payment");
   if ( type == "payment" ) {
@@ -224,7 +224,7 @@ function Calc(type) {
     Table.setAttribute("class", "tbThinBorder");
     Table.setAttribute("id", "Table");
     Table.setAttribute("cellspacing", "0");
-    makeTableHeader(Table, loadUIString(uisPeriod), loadUIString(uisBalance),  loadUIString(uisInterest), loadUIString(uisCapital), loadUIString(uisPayment),         loadUIString(uisNewBalance));
+    makeTableHeader(Table, loadUIString(uisDate), loadUIString(uisBalance),  loadUIString(uisInterest), loadUIString(uisCapital), loadUIString(uisPayment), loadUIString(uisOutstanding));
     var TableBody = document.createElement("tbody");
     for ( var i = 0; i < Rows.length; ++i ) {
       var Row = Rows[i];
