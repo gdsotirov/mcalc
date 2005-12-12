@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.6 2005/12/11 21:07:46 gsotirov Exp $
+ * $Id: mcalc.js,v 1.6.2.1 2005/12/12 19:57:57 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -155,6 +155,78 @@ function showTable() {
     tablec.style.display = "block";
   else
     tablec.style.display = "none";
+}
+
+function getNextId(name) {
+  var max = 0;
+  var elements_list = document.getElementsByName(name);
+  for ( var i = 0; i < elements_list.length; ++i ) {
+    var id = parseInt(elements_list[i].id.replace(/[a-zA-z_ ]+/, ""));
+    if ( id > max ) {
+      max = id;
+    }
+  }
+
+  return max + 1;
+}
+
+function addPeriod() {
+  var next_id = getNextId("Term");
+
+  var label = document.createElement("label");
+  label.setAttribute("for", "Interest_" + next_id);
+  var span_label = document.createElement("span");
+  span_label.setAttribute("class", "label");
+  var interest_text = document.createTextNode(loadUIString(uisInterest) + ":");
+  span_label.appendChild(interest_text);
+  label.appendChild(span_label);
+
+  var span_input = document.createElement("span");
+  span_input.setAttribute("class", "input");
+  var interest_input = document.createElement("input");
+  interest_input.setAttribute("id", "Interest_" + next_id);
+  interest_input.setAttribute("name", "Interest");
+  interest_input.setAttribute("type", "text");
+  interest_input.setAttribute("size", "6");
+  interest_input.setAttribute("maxlength", "10");
+  interest_input.setAttribute("title", "Лихвата това е номиналния годишен лихвен процент за периода");
+  span_input.appendChild(interest_input);
+  var new_text = document.createTextNode(" % за ");
+  span_input.appendChild(new_text);
+  var period_input = document.createElement("input");
+  period_input.setAttribute("id", "InterestPeriod_" + next_id);
+  period_input.setAttribute("name", "InterestPeriod");
+  period_input.setAttribute("type", "text");
+  period_input.setAttribute("size", "3");
+  period_input.setAttribute("maxlength", "10");
+  period_input.setAttribute("title", "За какъв период от периода на кредита е в сила този лихвен процент");
+  span_input.appendChild(period_input);
+  var new_text2 = document.createTextNode(" месец(а) ");
+  span_input.appendChild(new_text2);
+  var remove_link = document.createElement("a");
+  remove_link.setAttribute("href", "#");
+  remove_link.setAttribute("onclick", "javascript: removePeriod(\"Term_" + next_id + "\")");
+  var remove_link_text = document.createTextNode("Премахване");
+  remove_link.appendChild(remove_link_text);
+  var remove_link_span = document.createElement("span");
+  remove_link_span.setAttribute("class", "no_print");
+  remove_link_span.appendChild(remove_link);
+  span_input.appendChild(remove_link_span);
+  var new_div = document.createElement("div");
+  new_div.setAttribute("class", "row");
+  new_div.setAttribute("id", "Term_" + next_id);
+  new_div.setAttribute("name", "Term");
+  new_div.appendChild(label);
+  new_div.appendChild(span_input);
+  
+  var element = document.getElementById("Terms");
+  element.appendChild(new_div);
+}
+
+function removePeriod(id) {
+  var parent_element = document.getElementById("Terms");
+  var child_element = document.getElementById(id);
+  parent_element.removeChild(child_element);
 }
 
 function checkForm() {
