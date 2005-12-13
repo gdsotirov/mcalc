@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.6.2.2 2005/12/12 22:21:32 gsotirov Exp $
+ * $Id: mcalc.js,v 1.6.2.3 2005/12/13 19:06:35 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -22,6 +22,7 @@ var uisfor = 14;
 var uisMonthMonths = 15;
 var uisInterestTitle = 16;
 var uisTermTitle = 17;
+var uisPayment = 18;
 
 var UIStringsBG = new Array(
 /*  0 */ "Моля, попълнете полето Сума!",
@@ -41,7 +42,8 @@ var UIStringsBG = new Array(
 /* 14 */ "за",
 /* 15 */ "месец(а)",
 /* 16 */ "Лихвата това е номиналния годишен лихвен процент за периода",
-/* 17 */ "За какъв период от периода на кредита е в сила този лихвен процент"
+/* 17 */ "За какъв период от периода на кредита е в сила този лихвен процент",
+/* 18 */ "Вноска"
 );
 
 var UIStringsEN = new Array(
@@ -62,21 +64,19 @@ var UIStringsEN = new Array(
 /* 14 */ "for",
 /* 15 */ "month(s)",
 /* 16 */ "Interest is the yearly nominal interest in percents for the term",
-/* 17 */ "For what term in the credit term is this interest in force"
+/* 17 */ "For what term in the credit term is this interest in force",
+/* 18 */ "Payment"
 );
 
 function loadUIString(id) {
   var htmltags = document.getElementsByTagName("html");
   var lang = htmltags[0].lang;
 
-  if ( lang == "en" ) {
-    return UIStringsEN[id];
+  switch ( lang ) {
+    case "en": return UIStringsEN[id];
+    case "bg": return UIStringsBG[id];
+    default  : return "?";
   }
-  else if ( lang == "bg" ) {
-    return UIStringsBG[id];
-  }
-  else
-    return "???";
 }
 
 function formatNumber(number) {
@@ -172,6 +172,7 @@ function showTable() {
     tablec.style.display = "none";
 }
 
+/* TODO: Find why in Opera this code doesn't work as expected. */
 function getNextId(name) {
   var max = 0;
   var elements_list = document.getElementsByName(name);
@@ -188,6 +189,7 @@ function getNextId(name) {
 function addPeriod() {
   var next_id = getNextId("Term");
 
+  /* Add interest */
   var label = document.createElement("label");
   label.setAttribute("for", "Interest_" + next_id);
   var span_label = document.createElement("span");
@@ -227,18 +229,45 @@ function addPeriod() {
   remove_link_span.setAttribute("class", "no_print");
   remove_link_span.appendChild(remove_link);
   span_input.appendChild(remove_link_span);
-  var new_div = document.createElement("div");
-  new_div.setAttribute("class", "row");
-  new_div.setAttribute("id", "Term_" + next_id);
-  new_div.setAttribute("name", "Term");
-  new_div.appendChild(label);
-  new_div.appendChild(span_input);
+  var term_div = document.createElement("div");
+  term_div.setAttribute("class", "row");
+  term_div.setAttribute("id", "Term_" + next_id);
+  term_div.appendChild(label);
+  term_div.appendChild(span_input);
 
-  var element = document.getElementById("Terms");
-  element.appendChild(new_div);
+  var terms = document.getElementById("Terms");
+  terms.appendChild(term_div);
+
+  /* Add payment */
+  var payment_text = document.createTextNode(loadUIString(uisPayment) + ":");
+  var span_label = document.createElement("span");
+  span_label.setAttribute("class", "label");
+  span_label.appendChild(payment_text);
+  var label = document.createElement("label");
+  label.setAttribute("for", "Payment_" + next_id);
+  label.appendChild(span_label);
+  var payment_input = document.createElement("input");
+  payment_input.setAttribute("id", "Payment_" + next_id);
+  payment_input.setAttribute("name", "Payment");
+  payment_input.setAttribute("type", "text");
+  payment_input.setAttribute("size", "8");
+  payment_input.setAttribute("maxlength", "10");
+  payment_input.setAttribute("onchange", "javascript: formatField(document.forms.CalcForm.Payment_" + next_id + ")");
+  var span_input = document.createElement("span");
+  span_input.setAttribute("class", "input");
+  span_input.appendChild(payment_input);
+  var payment_div = document.createElement("div");
+  payment_div.setAttribute("class", "row");
+  payment_div.setAttribute("id", "Payment_" + next_id);
+  payment_div.appendChild(label);
+  payment_div.appendChild(span_input);
+
+  var payments = document.getElementById("Payments");
+  payments.appendChild(payment_div);
 }
 
 function removePeriod(id) {
+  //alert("Removing id = " + id);
   var parent_element = document.getElementById("Terms");
   var child_element = document.getElementById(id);
   parent_element.removeChild(child_element);
