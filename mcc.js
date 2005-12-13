@@ -1,7 +1,7 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcc.js,v 1.5 2005/12/11 21:07:46 gsotirov Exp $
+ * $Id: mcc.js,v 1.6 2005/12/13 06:55:37 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -62,9 +62,9 @@ function calc_table(amount, payment, interest, periods) {
   var Rows = new Array();
 
   for ( var i = 0; i < periods; ++i ) {
-    var int = period_interest * balance;
-    var new_balance = balance + int - payment;
-    Rows[i] = new Array(i+1, balance, int, (payment - int), payment, new_balance);
+    var cap = period_interest * balance;
+    var new_balance = balance + cap - payment;
+    Rows[i] = new Array(i+1, balance, cap, (payment - cap), payment, new_balance);
     balance = new_balance;
   }
 
