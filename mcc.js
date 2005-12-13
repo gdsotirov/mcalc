@@ -1,71 +1,95 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcc.js,v 1.5 2005/12/11 21:07:46 gsotirov Exp $
+ * $Id: mcc.js,v 1.5.2.1 2005/12/13 19:11:47 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
  * Description: Calculate period payment for annuity mortgages
- * Parameters : interest - the yearly interest for the credit
- *              amount   - the amount for the credit
- *              periods  - the periods for the credit
+ * Parameters : interests - array of nominal yearly interests for the credit terms
+ *              amount    - the amount of the credit
+ *              periods   - total periods count
  */
-function calc_period_payment(interest, amount, periods) {
-  var peyment = 0.0;
-  if ( interest > 0.0 ) {
-    var period_interest = interest / 100 / 12;
-    payment = (period_interest * amount) / (1 - Math.pow(1 + period_interest, -periods));
+function calc_period_payment(interests, amount, periods) {
+  var payments = new Array();
+  for ( var i = 0; i < interests.length; ++i ) {
+    var interest = interests[i][0];
+    var term_periods = interests[i][1];
+    var term_amount = (term_periods / periods) * amount;
+    if ( interest > 0.0 ) {
+      var term_interest = interest / 100 / 12;
+      var term_payment = (term_interest * term_amount) / (1 - Math.pow(1 + term_interest, -term_periods));
+      payments[i] = new Array(term_payment, term_periods);
+    }
+    else {
+      var term_payment = amount / periods;
+      payments[i] = new Array(term_payment, term_periods);
+    }
   }
-  else
-    payment = amount / periods;
 
-  return payment;
+  return payments;
 }
 
 /* Function   : calc_total_amount
  * Description: Calculate total amount that can be given
- * Parameters : interest - the yearly interest for the credit
- *              payment  - the period payment
- *              periods  - the periods for the credit
+ * Parameters : interests - array of nominal yearly interests for the credit terms
+ *              payments  - array of term payments
+ *              periods   - total periods count
  */
-function calc_total_amount(interest, payment, periods) {
+function calc_total_amount(interests, payments, periods) {
   var amount = 0.0;
-  if ( interest > 0.0 ) {
-    var period_interest = interest / 100 / 12;
-    amount = (payment * (1 - Math.pow(1 + period_interest, -periods))) / period_interest;
+  for ( var i = 0; i < payments.length; ++i ) {
+    var interest = interests[i][0];
+    if ( interest > 0.0 ) {
+      var term_interest = interest / 100 / 12;
+      var term_periods = interests[i][1];
+      var term_payment = payments[i][0];
+      amount += (term_payment * (1 - Math.pow(1 + term_interest, -term_periods))) / term_interest;
+    }
+    else {
+      var term_periods = interests[i][1];
+      amount += payment * periods;
+    }
   }
-  else
-    amount = payment * periods;
 
   return amount;
 }
 
 /* Function   : calc_total_return_amount
- * Description: Calculate total return amount from the monthly payment.
- * Parameters : monthly - monthly payment
- *              periods - periods
+ * Description: Calculate total return amount from the period payments
+ * Parameters : payments - array with term payments
  */
-function calc_total_return_amount(monthly, periods) {
-  return periods * monthly;
+function calc_total_return_amount(payments) {
+  var sum = 0;
+  for ( var i = 0; i < payments.length; ++i) {
+    sum += payments[i][0] * payments[i][1];
+  }
+
+  return sum;
 }
 
 /* Function   : calc_table
  * Description: Build mortgage table with payments and amounts
- * Parameters : amount - the amount of the credit
- *              payment - period payment for the mortgage
- *              interest - mortgage interest in percents
+ * Parameters : amount    - the amount of the credit
+ *              payments  - period payment for the mortgage
+ *              interests - mortgage interest in percents
  *              periods - the periods count
  */
-function calc_table(amount, payment, interest, periods) {
-  var period_interest = interest / 100 / 12;
+function calc_table(amount, payments, interests, periods) {
   var balance = amount;
   var Rows = new Array();
 
+  var term_index = 0;
+  var term_max = interests[term_index][1];
   for ( var i = 0; i < periods; ++i ) {
-    var int = period_interest * balance;
-    var new_balance = balance + int - payment;
-    Rows[i] = new Array(i+1, balance, int, (payment - int), payment, new_balance);
+    var term_interest = interests[term_index][0] / 100 / 12;
+    var term_payment = payments[term_index][0];
+    var cap = term_interest * balance; /* capitalization */
+    var new_balance = balance + cap - term_payment;
+    Rows[i] = new Array(i+1, balance, cap, (term_payment - cap), term_payment, new_balance);
     balance = new_balance;
+    if ( term_max == i + 1 && i + 1 != periods )
+      term_max += interests[++term_index][1];
   }
 
   return Rows;
