@@ -1,7 +1,7 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcc.js,v 1.5.2.1 2005/12/13 19:11:47 gsotirov Exp $
+ * $Id: mcc.js,v 1.5.2.2 2005/12/14 20:30:05 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -35,6 +35,7 @@ function calc_period_payment(interests, amount, periods) {
  * Parameters : interests - array of nominal yearly interests for the credit terms
  *              payments  - array of term payments
  *              periods   - total periods count
+ * TODO: This calculation is not correct always. It should be revised.
  */
 function calc_total_amount(interests, payments, periods) {
   var amount = 0.0;
@@ -68,14 +69,14 @@ function calc_total_return_amount(payments) {
   return sum;
 }
 
-/* Function   : calc_table
- * Description: Build mortgage table with payments and amounts
+/* Function   : build_schedule
+ * Description: Build mortgage amortization schedule
  * Parameters : amount    - the amount of the credit
  *              payments  - period payment for the mortgage
  *              interests - mortgage interest in percents
  *              periods - the periods count
  */
-function calc_table(amount, payments, interests, periods) {
+function build_schedule(amount, payments, interests, periods) {
   var balance = amount;
   var Rows = new Array();
 
@@ -85,9 +86,10 @@ function calc_table(amount, payments, interests, periods) {
     var term_interest = interests[term_index][0] / 100 / 12;
     var term_payment = payments[term_index][0];
     var cap = term_interest * balance; /* capitalization */
-    var new_balance = balance + cap - term_payment;
-    Rows[i] = new Array(i+1, balance, cap, (term_payment - cap), term_payment, new_balance);
-    balance = new_balance;
+    balance = balance + cap - term_payment;
+    var year = parseInt(i / 12) + 1;
+    var month = i % 12 + 1;
+    Rows[i] = new Array(year, month, cap, (term_payment - cap), term_payment, balance);
     if ( term_max == i + 1 && i + 1 != periods )
       term_max += interests[++term_index][1];
   }
