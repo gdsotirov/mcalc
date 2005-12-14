@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.6.2.4 2005/12/14 20:32:50 gsotirov Exp $
+ * $Id: mcalc.js,v 1.6.2.5 2005/12/14 21:35:55 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -153,10 +153,12 @@ function getFloatValue(str) {
 }
 
 function Reset() {
-  var RetAmount = document.getElementById("ReturnAmount");
+  var TotalInterest = document.getElementById("TotalInterest");
+  var TotalPay = document.getElementById("TotalPay");
   var TotalRaise = document.getElementById("TotalRaise");
   var TableContainer = document.getElementById("TableContainer");
-  removeAllChilds(RetAmount);
+  removeAllChilds(TotalInterest);
+  removeAllChilds(TotalPay);
   removeAllChilds(TotalRaise);
   removeAllChilds(TableContainer);
 }
@@ -364,16 +366,20 @@ function Calc(type) {
     amount = calc_total_amount(interests, payments, periods);
     Amount.value = formatNumber(amount);
   }
-  var retam = calc_total_return_amount(payments, periods);
+  var total_pay = calc_total_payments(payments, periods);
+  var total_int = total_pay - amount;
 
-  var RetAmount = document.getElementById("ReturnAmount");
+  var TotalInt = document.getElementById("TotalInterest");
+  var TotalPay = document.getElementById("TotalPay");
   var TotalRaise = document.getElementById("TotalRaise");
-  var raise = ((retam / amount) * 100) - 100;
+  var raise = ((total_pay / amount) * 100) - 100;
 
-  removeAllChilds(RetAmount);
+  removeAllChilds(TotalInt);
+  removeAllChilds(TotalPay);
   removeAllChilds(TotalRaise);
 
-  RetAmount.appendChild(document.createTextNode(formatNumber(retam)));
+  TotalInt.appendChild(document.createTextNode(formatNumber(total_int)));
+  TotalPay.appendChild(document.createTextNode(formatNumber(total_pay)));
   TotalRaise.appendChild(document.createTextNode(formatNumber(raise) + " %"));
 
   if ( enableSchedule ) {
