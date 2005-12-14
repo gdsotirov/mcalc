@@ -12,7 +12,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.10.2.2 2005/12/13 19:01:42 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.10.2.3 2005/12/14 20:51:32 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -20,6 +20,7 @@
 <link rel="copyright" href="#Copyright" />
 <link rel="alternate" type="text/html" href="index.en.html" hreflang="en" lang="en" title="Mortgage calculator" />
 <script type="text/javascript" src="NumberFormat.js" defer="defer"></script>
+<script type="text/javascript" src="sprintf.js" defer="defer"></script>
 <script type="text/javascript" src="mcc.js" defer="defer"></script>
 <script type="text/javascript" src="mcalc.js" defer="defer"></script>
 </head>
@@ -37,6 +38,7 @@
 бутоните. Ако желаете да изчислите Вноска бутона пред Сума трябва да бъде
 натиснат и обратното.</p>
 <form action="#" enctype="application/x-www-form-urlencoded" method="post" id="CalcForm" onsubmit="javascript: return false" onreset="javascript: Reset();">
+<input id="Counter" name="Counter" type="hidden" value="0" />
 <div class="row">
 <label for="Amount"><span class="label"><input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Сума:</span></label>
 <span class="input">
@@ -92,26 +94,26 @@
 <option value="9">9</option>
 <option value="10">10</option>
 <option value="11">11</option>
-</select>&nbsp;месеца</span></span>
+</select>&nbsp;месец(а)</span></span>
 </div>
 
 <div id="Terms">
 
 <div class="row" id="Term_0">
-<label for="Interest_0"><span class="label">Лихва:</span></label>
+<label for="Interest_0"><span class="label">Годишен лихвен процент:</span></label>
 <span class="input">
-<input id="Interest_0" maxlength="10" name="Interest" type="text" size="6" title="Лихвата това е номиналния годишен лихвен процент за периода" />&nbsp;%&nbsp;за&nbsp;<input id="InterestPeriod_0" maxlength="10" name="InterestPeriod" type="text" size="3" />&nbsp;месец(а)&nbsp;</span>
+<input id="Interest_0" maxlength="10" name="Interest" type="text" size="6" title="Лихвата това е номиналния годишен лихвен процент за периода" onchange="javascript: formatField(document.forms.CalcForm.Interest_0)" />&nbsp;%&nbsp;за&nbsp;първите&nbsp;<input id="InterestPeriod_0" maxlength="10" name="InterestPeriod" type="text" size="3" />&nbsp;месец(а)&nbsp;</span>
 </div>
 </div>
 
 <div class="row no_print">
 <span class="label"></span>
-<span class="input"><a href="#" onclick="javascript: addPeriod()" onkeypress="javascript: addPeriod()">Добавяне на период</a></span>
+<span class="input"><a href="#" onclick="javascript: addPeriod()">Добавяне на период</a></span>
 </div>
 
 <div id="Payments">
 
-<div class="row">
+<div class="row" id="Payment_0">
 <label for="Payment_0"><span class="label"><input name="Type" type="radio" value="amount" />&nbsp;Вноска:</span></label>
 <span class="input">
 <input id="Payment_0" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment_0)" /></span>
@@ -119,7 +121,7 @@
 </div>
 
 <div class="row">
-<label for="ReturnAmount"><span class="label">Връщана сума:</span></label>
+<span class="label">Връщана сума:</span>
 <span id="ReturnAmount" class="input result"></span>
 </div>
 
@@ -129,8 +131,8 @@
 </div>
 
 <div class="row">
-<label for="EnableTable"><span class="label">Таблица:</span></label>
-<span class="input"><input id="EnableTable" name="EnableTable" type="checkbox" onchange="javascript: showTable();" /></span>
+<label for="EnableSchedule"><span class="label">Погасителен план:</span></label>
+<span class="input"><input id="EnableSchedule" name="EnableSchedule" type="checkbox" onchange="javascript: showTable();" /></span>
 </div>
 
 <div class="row">
