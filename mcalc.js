@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.6.2.3 2005/12/13 19:06:35 gsotirov Exp $
+ * $Id: mcalc.js,v 1.6.2.4 2005/12/14 20:32:50 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -11,18 +11,21 @@ var uisPlsCorrPayment = 3;
 var uisPlsChsePeriod = 4;
 var uisPlsFillInterest = 5;
 var uisPlsCorrInterest = 6;
-var uisPeriod = 7;
-var uisBalance = 8;
+var uisYear = 7;
+var uisMonth = 8;
 var uisInterest = 9;
 var uisCapital = 10;
 var uisPayment = 11;
 var uisNewBalance = 12;
 var uisRemove = 13;
-var uisfor = 14;
+var uisforthenext = 14;
 var uisMonthMonths = 15;
 var uisInterestTitle = 16;
 var uisTermTitle = 17;
 var uisPayment = 18;
+var uisPlsEnterTerm = 19;
+var uisPlsCorrTerm = 20;
+var uisIncorrTerms = 21;
 
 var UIStringsBG = new Array(
 /*  0 */ "Моля, попълнете полето Сума!",
@@ -31,41 +34,47 @@ var UIStringsBG = new Array(
 /*  3 */ "Моля, задайте правилна стойност в полето Вноска!\nНапример: 500, 750, 1200.5",
 /*  4 */ "Моля, изберете срок на кредита в години и/или месеци!",
 /*  5 */ "Моля, попълнете полето Лихва!",
-/*  6 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11",
-/*  7 */ "Период",
-/*  8 */ "Салдо",
+/*  6 */ "Моля, задайте правилна стойност в полето Лихва!\nНапример: 10.5, 12.75, 11",
+/*  7 */ "Година",
+/*  8 */ "Месец",
 /*  9 */ "Лихва",
 /* 10 */ "Главница",
 /* 11 */ "Вноска",
-/* 12 */ "Оставащо",
+/* 12 */ "Оставащо салдо",
 /* 13 */ "Премахване",
-/* 14 */ "за",
+/* 14 */ "за следващите",
 /* 15 */ "месец(а)",
 /* 16 */ "Лихвата това е номиналния годишен лихвен процент за периода",
 /* 17 */ "За какъв период от периода на кредита е в сила този лихвен процент",
-/* 18 */ "Вноска"
+/* 18 */ "Вноска",
+/* 19 */ "Моля, попълнете периода на действие на тази лихва!",
+/* 20 */ "Моля, задайте правилна стойност в полето за периода на действие на лихвата!",
+/* 21 */ "Сбора от продължителността на периодите (%d) НЕ е равен на общата продължителност на кредита в месеци (%d)!"
 );
 
 var UIStringsEN = new Array(
 /*  0 */ "Please, fill in the Amount field!",
-/*  1 */ "Please, fill in correct value in the Amount field! Example: 10000, 15500, 20100.55",
+/*  1 */ "Please, put in correct value in the Amount field! Example: 10000, 15500, 20100.55",
 /*  2 */ "Please, fill in the Payment field!",
-/*  3 */ "Please, fill in correct value in the Payment field! Example: 500, 750, 1200.5",
+/*  3 */ "Please, put in correct value in the Payment field! Example: 500, 750, 1200.5",
 /*  4 */ "Please, choose the credit term in years and/or months!",
 /*  5 */ "Please, fill in the Interest field!",
-/*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55",
-/*  7 */ "Period",
-/*  8 */ "Balance",
+/*  6 */ "Please, put in correct value in the Interest field! Example: 10000, 15500, 20100.55",
+/*  7 */ "Year",
+/*  8 */ "Month",
 /*  9 */ "Interest",
-/* 10 */ "Capital",
+/* 10 */ "Principal",
 /* 11 */ "Payment",
-/* 12 */ "Outstanding",
+/* 12 */ "Outstanding balance",
 /* 13 */ "Remove",
-/* 14 */ "for",
+/* 14 */ "for the next",
 /* 15 */ "month(s)",
 /* 16 */ "Interest is the yearly nominal interest in percents for the term",
 /* 17 */ "For what term in the credit term is this interest in force",
-/* 18 */ "Payment"
+/* 18 */ "Payment",
+/* 19 */ "Please, fill in the validity term for this interest!",
+/* 20 */ "Please, put in correct value in the validity term field for this interest!",
+/* 21 */ "The sum of the terms periods (%d) is NOT equal to the total term of the credit in months (%d)!"
 );
 
 function loadUIString(id) {
@@ -108,7 +117,7 @@ function checkField(fld, type, uisFill, uisCorr) {
   }
   if ( type != "string" ) {
     if ( type == "float" )
-      val = parseFloat(fld.value);
+      val = parseFloat(fld.value.replace(/\s+/, ""));
     else if ( type == "int" )
       val = parseInt(fld.value);
     if ( isNaN(val) ) {
@@ -166,28 +175,15 @@ function lockMonths() {
 
 function showTable() {
   var tablec = document.getElementById("TableContainer");
-  if ( document.forms.CalcForm.EnableTable.checked )
+  if ( document.forms.CalcForm.EnableSchedule.checked )
     tablec.style.display = "block";
   else
     tablec.style.display = "none";
 }
 
-/* TODO: Find why in Opera this code doesn't work as expected. */
-function getNextId(name) {
-  var max = 0;
-  var elements_list = document.getElementsByName(name);
-  for ( var i = 0; i < elements_list.length; ++i ) {
-    var id = parseInt(elements_list[i].id.replace(/[a-zA-z_ ]+/, ""));
-    if ( id > max ) {
-      max = id;
-    }
-  }
-
-  return max + 1;
-}
-
 function addPeriod() {
-  var next_id = getNextId("Term");
+  var counter = document.getElementById("Counter");
+  var next_id = parseInt(counter.value) + 1;
 
   /* Add interest */
   var label = document.createElement("label");
@@ -207,8 +203,9 @@ function addPeriod() {
   interest_input.setAttribute("size", "6");
   interest_input.setAttribute("maxlength", "10");
   interest_input.setAttribute("title", loadUIString(uisInterestTitle));
+  interest_input.setAttribute("onchange", "javascript: formatField(document.forms.CalcForm.Interest_" + next_id + ")");
   span_input.appendChild(interest_input);
-  var new_text = document.createTextNode(" % " + loadUIString(uisfor) + " ");
+  var new_text = document.createTextNode(" % " + loadUIString(uisforthenext) + " ");
   span_input.appendChild(new_text);
   var period_input = document.createElement("input");
   period_input.setAttribute("id", "InterestPeriod_" + next_id);
@@ -222,7 +219,7 @@ function addPeriod() {
   span_input.appendChild(new_text2);
   var remove_link = document.createElement("a");
   remove_link.setAttribute("href", "#");
-  remove_link.setAttribute("onclick", "javascript: removePeriod(\"Term_" + next_id + "\")");
+  remove_link.setAttribute("onclick", "javascript: removePeriod(\"" + next_id + "\")");
   var remove_link_text = document.createTextNode(loadUIString(uisRemove));
   remove_link.appendChild(remove_link_text);
   var remove_link_span = document.createElement("span");
@@ -264,13 +261,18 @@ function addPeriod() {
 
   var payments = document.getElementById("Payments");
   payments.appendChild(payment_div);
+
+  counter.value = next_id;
 }
 
 function removePeriod(id) {
-  //alert("Removing id = " + id);
-  var parent_element = document.getElementById("Terms");
-  var child_element = document.getElementById(id);
-  parent_element.removeChild(child_element);
+  var terms = document.getElementById("Terms");
+  var term_id = document.getElementById("Term_" + id);
+  terms.removeChild(term_id);
+
+  var payments = document.getElementById("Payments");
+  var payment_id = document.getElementById("Payment_" + id);
+  payments.removeChild(payment_id);
 }
 
 function checkForm() {
@@ -281,18 +283,38 @@ function checkForm() {
     if ( !checkField(form.Amount, "float", uisPlsFillAmount, uisPlsCorrAmount) )
       return false;
   }
-  else if ( !checkField(form.Payment, "float", uisPlsFillPayment, uisPlsCorrPayment) )
-      return false;
+  else {
+    var payment_elements = document.getElementsByName("Payment");
+    for (var i = 0; i < payment_elements.length; ++i ) {
+      if ( !checkField(payment_elements[i], "float", uisPlsFillPayment, uisPlsCorrPayment) )
+        return false;
+    }
+  }
 
   var PeriodY = parseInt(form.PeriodY.value);
   var PeriodM = parseInt(form.PeriodM.value);
+  var periods = PeriodY * 12 + PeriodM;
   if ( PeriodY == 0 && PeriodM == 0 ) {
     alert(loadUIString(uisPlsChsePeriod));
     form.PeriodY.focus();
     return false;
   }
-  if ( !checkField(form.Interest, "float", uisPlsFillInterest, uisPlsCorrInterest) )
+
+  /* check interests and terms */
+  var interest_elements = document.getElementsByName("Interest");
+  var term_elements = document.getElementsByName("InterestPeriod");
+  var entered_term = 0;
+  for ( var i = 0; i < interest_elements.length; ++i ) {
+    if ( !checkField(interest_elements[i], "float", uisPlsFillInterest, uisPlsCorrInterest) )
+      return false;
+    if ( !checkField(term_elements[i], "int", uisPlsEnterTerm, uisPlsCorrTerm) )
+      return false;
+    entered_term += parseInt(term_elements[i].value);
+  }
+  if ( entered_term != periods ) {
+    alert(sprintf(loadUIString(uisIncorrTerms), entered_term, periods));
     return false;
+  }
 
   return true;
 }
@@ -305,24 +327,44 @@ function Calc(type) {
   var periodM = 0;
   if (periodY < 30)
     periodM = parseInt(form.PeriodM.value);
-  var interest = parseFloat(form.Interest.value);
-  var payment = getFloatValue(form.Payment.value);
-  var enableTable = form.EnableTable.checked;
+
+  /* retrive interests */
+  var interest_elements = document.getElementsByName("Interest");
+  var term_elements = document.getElementsByName("InterestPeriod");
+  var interests = new Array();
+  for ( var i = 0; i < interest_elements.length; ++i ) {
+    interests[i] = new Array();
+    interests[i][0] = parseFloat(interest_elements[i].value);
+    interests[i][1] = parseInt(term_elements[i].value);
+  }
+
+  /* retrive payments */
+  var payments = new Array();
+  var payment_elements = document.getElementsByName("Payment");
+  for ( var i = 0; i < payment_elements.length; ++i ) {
+    payments[i] = new Array();
+    payments[i][0] = getFloatValue(payment_elements[i].value);
+    payments[i][1] = parseInt(term_elements[i].value);
+  }
+
+  var enableSchedule = form.EnableSchedule.checked;
   var TableContainer = document.getElementById("TableContainer");
   removeAllChilds(TableContainer);
 
   var periods = periodY * 12 + periodM;
   var Amount = document.getElementById("Amount");
-  var Payment = document.getElementById("Payment");
   if ( type == "payment" ) {
-    payment = calc_period_payment(interest, amount, periods);
-    Payment.value = formatNumber(payment);
+    payments = calc_period_payment(interests, amount, periods);
+    for ( var i = 0; i < payments.length; ++i ) {
+      if ( payment_elements[i] )
+        payment_elements[i].value = formatNumber(payments[i][0]);
+    }
   }
   else {
-    amount = calc_total_amount(interest, payment, periods);
+    amount = calc_total_amount(interests, payments, periods);
     Amount.value = formatNumber(amount);
   }
-  var retam = calc_total_return_amount(payment, periods);
+  var retam = calc_total_return_amount(payments, periods);
 
   var RetAmount = document.getElementById("ReturnAmount");
   var TotalRaise = document.getElementById("TotalRaise");
@@ -334,17 +376,17 @@ function Calc(type) {
   RetAmount.appendChild(document.createTextNode(formatNumber(retam)));
   TotalRaise.appendChild(document.createTextNode(formatNumber(raise) + " %"));
 
-  if ( enableTable ) {
+  if ( enableSchedule ) {
     var Table = document.createElement("table");
-    var Rows = calc_table(amount, payment, interest, periods);
+    var Rows = build_schedule(amount, payments, interests, periods);
     Table.setAttribute("class", "tbThinBorder");
     Table.setAttribute("id", "Table");
     Table.setAttribute("cellspacing", "0");
-    makeTableHeader(Table, loadUIString(uisPeriod), loadUIString(uisBalance),  loadUIString(uisInterest), loadUIString(uisCapital), loadUIString(uisPayment),         loadUIString(uisNewBalance));
+    makeTableHeader(Table, loadUIString(uisYear), loadUIString(uisMonth), loadUIString(uisInterest), loadUIString(uisCapital), loadUIString(uisPayment), loadUIString(uisOutstanding));
     var TableBody = document.createElement("tbody");
     for ( var i = 0; i < Rows.length; ++i ) {
       var Row = Rows[i];
-      makeTableRow(TableBody, Row[0], formatNumber(Row[1]), formatNumber(Row[2]),  formatNumber(Row[3]), formatNumber(Row[4]), formatNumber(Row[5]));
+      makeTableRow(TableBody, Row[0], Row[1], formatNumber(Row[2]), formatNumber(Row[3]),  formatNumber(Row[4]), formatNumber(Row[5]));
     }
     Table.appendChild(TableBody);
     TableContainer.appendChild(Table);
