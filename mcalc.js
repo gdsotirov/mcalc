@@ -1,7 +1,7 @@
 /* Mortgage calculator Web Interface
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcalc.js,v 1.6.2.5 2005/12/14 21:35:55 gsotirov Exp $
+ * $Id: mcalc.js,v 1.6.2.6 2005/12/15 18:12:12 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -26,6 +26,8 @@ var uisPayment = 18;
 var uisPlsEnterTerm = 19;
 var uisPlsCorrTerm = 20;
 var uisIncorrTerms = 21;
+var uisTotalsForYear = 22;
+var uisAmortSchedule = 23;
 
 var UIStringsBG = new Array(
 /*  0 */ "Моля, попълнете полето Сума!",
@@ -49,7 +51,9 @@ var UIStringsBG = new Array(
 /* 18 */ "Вноска",
 /* 19 */ "Моля, попълнете периода на действие на тази лихва!",
 /* 20 */ "Моля, задайте правилна стойност в полето за периода на действие на лихвата!",
-/* 21 */ "Сбора от продължителността на периодите (%d) НЕ е равен на общата продължителност на кредита в месеци (%d)!"
+/* 21 */ "Сбора от продължителността на периодите (%d) НЕ е равен на общата продължителност на кредита в месеци (%d)!",
+/* 22 */ "Общо за година %d",
+/* 23 */ "Погасителен план"
 );
 
 var UIStringsEN = new Array(
@@ -74,7 +78,9 @@ var UIStringsEN = new Array(
 /* 18 */ "Payment",
 /* 19 */ "Please, fill in the validity term for this interest!",
 /* 20 */ "Please, put in correct value in the validity term field for this interest!",
-/* 21 */ "The sum of the terms periods (%d) is NOT equal to the total term of the credit in months (%d)!"
+/* 21 */ "The sum of the terms periods (%d) is NOT equal to the total term of the credit in months (%d)!",
+/* 22 */ "Totals for Year %d",
+/* 23 */ "Amortization schedule"
 );
 
 function loadUIString(id) {
@@ -383,16 +389,31 @@ function Calc(type) {
   TotalRaise.appendChild(document.createTextNode(formatNumber(raise) + " %"));
 
   if ( enableSchedule ) {
+    var schedule_title = document.createElement("h2");
+    schedule_title.appendChild(document.createTextNode(loadUIString(uisAmortSchedule)));
+    TableContainer.appendChild(schedule_title);
     var Table = document.createElement("table");
     var Rows = build_schedule(amount, payments, interests, periods);
     Table.setAttribute("class", "tbThinBorder");
-    Table.setAttribute("id", "Table");
+    Table.setAttribute("id", "Schedule");
     Table.setAttribute("cellspacing", "0");
     makeTableHeader(Table, loadUIString(uisYear), loadUIString(uisMonth), loadUIString(uisInterest), loadUIString(uisCapital), loadUIString(uisPayment), loadUIString(uisOutstanding));
+    var annual_interest = 0.0;
+    var annual_principal = 0.0;
+    var annual_payment = 0.0;
     var TableBody = document.createElement("tbody");
     for ( var i = 0; i < Rows.length; ++i ) {
       var Row = Rows[i];
       makeTableRow(TableBody, Row[0], Row[1], formatNumber(Row[2]), formatNumber(Row[3]),  formatNumber(Row[4]), formatNumber(Row[5]));
+      annual_interest += Row[2];
+      annual_principal += Row[3];
+      annual_payment += Row[4];
+      if ( Row[1] == 12 || i + 1 == Rows.length ) {
+        makeTableRowTotals(TableBody, sprintf(loadUIString(uisTotalsForYear), Row[0]), formatNumber(annual_interest), formatNumber(annual_principal), formatNumber(annual_payment), "---");
+        annual_interest = 0.0;
+        annual_principal = 0.0;
+        annual_payment = 0.0;
+      }
     }
     Table.appendChild(TableBody);
     TableContainer.appendChild(Table);
@@ -417,6 +438,19 @@ function makeTableRow(otable) {
   var new_tr = document.createElement("tr");
   for ( var i = 1; i < arguments.length; ++i ) {
     var new_td = document.createElement("td");
+    new_td.appendChild(document.createTextNode(arguments[i]));
+    new_tr.appendChild(new_td);
+  }
+  otable.appendChild(new_tr);
+}
+
+function makeTableRowTotals(otable) {
+  var new_tr = document.createElement("tr");
+  new_tr.setAttribute("class", "totals");
+  for ( var i = 1; i < arguments.length; ++i ) {
+    var new_td = document.createElement("td");
+    if ( i == 1 )
+      new_td.setAttribute("colspan", "2");
     new_td.appendChild(document.createTextNode(arguments[i]));
     new_tr.appendChild(new_td);
   }
