@@ -1,7 +1,7 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcc.js,v 1.5.2.2 2005/12/14 20:30:05 gsotirov Exp $
+ * $Id: mcc.js,v 1.5.2.3 2005/12/15 18:12:58 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -56,11 +56,11 @@ function calc_total_amount(interests, payments, periods) {
   return amount;
 }
 
-/* Function   : calc_total_return_amount
- * Description: Calculate total return amount from the period payments
+/* Function   : calc_total_payments
+ * Description: Calculate total payments from the period payments
  * Parameters : payments - array with term payments
  */
-function calc_total_return_amount(payments) {
+function calc_total_payments(payments) {
   var sum = 0;
   for ( var i = 0; i < payments.length; ++i) {
     sum += payments[i][0] * payments[i][1];
