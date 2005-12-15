@@ -2,7 +2,7 @@
  * Written by George D. Sotirov, gdsotirov@dir.bg
  *
  * Media: screen, print
- * $Id: mcalc.css,v 1.8 2005/12/12 19:05:04 gsotirov Exp $
+ * $Id: mcalc.css,v 1.8.2.1 2005/12/15 18:14:30 gsotirov Exp $
  */
 
 @media screen, print {
@@ -18,7 +18,7 @@
 
   button {
     background-color: #999;
-    border: 1px solid #000;
+    border: 2px solid #000;
     color: #fff;
     font-weight: bold;
   }
@@ -51,19 +51,19 @@
     text-align: center;
   }
 
-  input, select {
+  input[type=text], input[type=checkbox], select {
     background-color: #fff;
     border: 1px solid #000;
     color: #000;
   }
 
-  input {
+  input[type=text] {
     text-align: right;
   }
 
   input[disabled], select[disabled] {
     background-color: #ccc;
-    color: inherit;
+    color: gray;
   }
 
   img {
@@ -90,11 +90,20 @@
     padding: 0.1em;
   }
 
-  table#Table td {
+  table#Schedule td {
     text-align: right;
   }
 
-  table#Table th {
+  table#Schedule tr.totals {
+    background-color: #eee;
+    color: inherit;
+  }
+
+  table#Schedule tr.totals > td:first-child {
+    font-weight: bold;
+  }
+
+  table#Schedule th {
     background-color: #ccc;
     color: inherit;
   }
@@ -141,7 +150,7 @@
 }
 
 @media screen {
-  input, select {
+  input[type=text], input[type=checkbox], select {
     background-color: #eee;
     color: inherit;
   }
@@ -149,6 +158,12 @@
   input:hover, input:focus, select:hover, select:focus {
     background-color: #fff;
     color: inherit;
+  }
+
+  input[disabled]:hover, input[disabled]:focus, select[disabled]:hover,
+  select[disabled]:focus {
+    background-color: #ccc;
+    color: gray;
   }
 
   button:hover, button:focus {
@@ -161,8 +176,11 @@
 }
 
 @media print {
-  input, select {
+  input[type=text], input[type=checkbox], select {
     border: 0 none;
+  }
+
+  input[type=text] {
     text-align: left;
   }
 
