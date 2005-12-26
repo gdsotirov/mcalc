@@ -1,7 +1,7 @@
 /* Mortgage calculator
  * ---
  * Written by George D. Sotirov (gdsotirov@dir.bg)
- * $Id: mcc.js,v 1.5.2.3 2005/12/15 18:12:58 gsotirov Exp $
+ * $Id: mcc.js,v 1.5.2.4 2005/12/26 16:28:56 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -18,11 +18,11 @@ function calc_period_payment(interests, amount, periods) {
     var term_amount = (term_periods / periods) * amount;
     if ( interest > 0.0 ) {
       var term_interest = interest / 100 / 12;
-      var term_payment = (term_interest * term_amount) / (1 - Math.pow(1 + term_interest, -term_periods));
+      var term_payment = round((term_interest * term_amount) / (1 - Math.pow(1 + term_interest, -term_periods)), 2);
       payments[i] = new Array(term_payment, term_periods);
     }
     else {
-      var term_payment = amount / periods;
+      var term_payment = round(amount / periods, 2);
       payments[i] = new Array(term_payment, term_periods);
     }
   }
@@ -85,7 +85,7 @@ function build_schedule(amount, payments, interests, periods) {
   for ( var i = 0; i < periods; ++i ) {
     var term_interest = interests[term_index][0] / 100 / 12;
     var term_payment = payments[term_index][0];
-    var cap = term_interest * balance; /* capitalization */
+    var cap = round(term_interest * balance, 2); /* capitalization */
     balance = balance + cap - term_payment;
     var year = parseInt(i / 12) + 1;
     var month = i % 12 + 1;
@@ -95,4 +95,8 @@ function build_schedule(amount, payments, interests, periods) {
   }
 
   return Rows;
+}
+
+function round(number, places) {
+  return Math.round(number * Math.pow(10, places)) / Math.pow(10, places);
 }
