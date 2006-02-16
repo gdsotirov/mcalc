@@ -3,7 +3,9 @@
 What is this?
 -------------
 
-Mortgage calculator (mcalc for short) is an web application
+Mortgage calculator (mcalc for short) is an web application which can
+calculate both monthly annuity payment and the amount you can get for a given
+mortgage. It also can show amortization schedule.
 
 The latest version
 ------------------
