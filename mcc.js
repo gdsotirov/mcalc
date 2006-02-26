@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * $Id: mcc.js,v 1.8 2006/02/16 19:13:27 gsotirov Exp $
+ * $Id: mcc.js,v 1.9 2006/02/26 17:03:24 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -77,8 +77,12 @@ function calc_table(amount, payment, interest, periods) {
 
   for ( var i = 0; i < periods; ++i ) {
     var cap = period_interest * balance;
-    var new_balance = balance + cap - payment;
-    Rows[i] = new Array(i+1, balance, cap, (payment - cap), payment, new_balance);
+    if ( periods - 1 == i ) // last iteration
+      Rows[i] = new Array(i+1, balance, cap, balance, balance + cap, 0.0);
+    else {
+      var new_balance = balance + cap - payment;
+      Rows[i] = new Array(i+1, balance, cap, payment - cap, payment, new_balance);
+    }
     balance = new_balance;
   }
 
