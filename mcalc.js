@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * $Id: mcalc.js,v 1.8 2006/02/16 19:13:27 gsotirov Exp $
+ * $Id: mcalc.js,v 1.9 2006/03/01 20:22:52 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -220,7 +220,7 @@ function Calc(type) {
     amount = calc_total_amount(interest, payment, periods);
     Amount.value = formatNumber(amount);
   }
-  var retam = calc_total_return_amount(payment, periods);
+  var retam = calc_total_return_amount(amount, payment, interest, periods);
 
   var RetAmount = document.getElementById("ReturnAmount");
   var TotalRaise = document.getElementById("TotalRaise");

@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * $Id: mcc.js,v 1.9 2006/02/26 17:03:24 gsotirov Exp $
+ * $Id: mcc.js,v 1.10 2006/03/01 20:22:52 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -56,11 +56,27 @@ function calc_total_amount(interest, payment, periods) {
 
 /* Function   : calc_total_return_amount
  * Description: Calculate total return amount from the monthly payment.
- * Parameters : monthly - monthly payment
- *              periods - periods
+ * Parameters : amount - the amount of the credit
+ *              payment - period payment for the mortgage
+ *              interest - mortgage interest in percents
+ *              periods - the periods count
  */
-function calc_total_return_amount(monthly, periods) {
-  return round(periods * monthly, 2);
+function calc_total_return_amount(amount, payment, interest, periods) {
+  var period_interest = interest / 100 / 12;
+  var balance = amount;
+  var ttl_return = 0.0;
+
+  for ( var i = 1; i <= periods; ++i ) {
+    var cap = round(period_interest * balance, 2);
+    if ( periods == i )
+      ttl_return += balance + cap;
+    else {
+      balance = round(balance + cap - payment, 2);
+      ttl_return += payment;
+    }
+  }
+
+  return ttl_return;
 }
 
 /* Function   : calc_table
@@ -75,13 +91,13 @@ function calc_table(amount, payment, interest, periods) {
   var balance = amount;
   var Rows = new Array();
 
-  for ( var i = 0; i < periods; ++i ) {
-    var cap = period_interest * balance;
-    if ( periods - 1 == i ) // last iteration
-      Rows[i] = new Array(i+1, balance, cap, balance, balance + cap, 0.0);
+  for ( var i = 1; i <= periods; ++i ) {
+    var cap = round(period_interest * balance, 2);
+    if ( periods == i ) // last iteration
+      Rows[i-1] = new Array(i, balance, cap, balance, balance + cap, 0.0);
     else {
-      var new_balance = balance + cap - payment;
-      Rows[i] = new Array(i+1, balance, cap, payment - cap, payment, new_balance);
+      var new_balance = round(balance + cap - payment, 2);
+      Rows[i-1] = new Array(i, balance, cap, payment - cap, payment, new_balance);
     }
     balance = new_balance;
   }
