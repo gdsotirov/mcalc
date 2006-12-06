@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * $Id: mcc.js,v 1.10 2006/03/01 20:22:52 gsotirov Exp $
+ * $Id: mcc.js,v 1.11 2006/12/06 19:32:47 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -79,14 +79,14 @@ function calc_total_return_amount(amount, payment, interest, periods) {
   return ttl_return;
 }
 
-/* Function   : calc_table
- * Description: Build mortgage table with payments and amounts
+/* Function   : calc_plan
+ * Description: Build mortgage amortization plan
  * Parameters : amount - the amount of the credit
  *              payment - period payment for the mortgage
  *              interest - mortgage interest in percents
  *              periods - the periods count
  */
-function calc_table(amount, payment, interest, periods) {
+function calc_plan(amount, payment, interest, periods) {
   var period_interest = interest / 100 / 12;
   var balance = amount;
   var Rows = new Array();
