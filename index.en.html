@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.1.4" />
-<meta name="CVS" content="$Id: index.en.html,v 1.12 2006/07/17 21:22:03 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.13 2006/12/06 18:36:40 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -147,7 +147,7 @@ of Amount should be pushed and viceversa.</p>
 
 <div class="row no_print">
 <span class="label">
-<button name="Calculate" type="submit" onclick="javascript: if (checkForm()) Calc('payment');"><img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
+<button name="Calculate" type="submit" onclick="javascript: if (checkForm()) Calc('payment');" onkeypress="javascript: if (checkForm()) Calc('payment');"><img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
 <span class="input">
 <button name="Clear" type="reset"><img src="clear.png" width="16" height="16" alt="" />&nbsp;Clear</button></span>
 </div>
