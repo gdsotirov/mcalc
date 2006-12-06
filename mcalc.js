@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * $Id: mcalc.js,v 1.9 2006/03/01 20:22:52 gsotirov Exp $
+ * $Id: mcalc.js,v 1.10 2006/12/06 19:33:34 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -154,12 +154,12 @@ function lockMonths() {
   }
 }
 
-function showTable() {
-  var tablec = document.getElementById("TableContainer");
-  if ( document.forms.CalcForm.EnableTable.checked )
-    tablec.style.display = "block";
+function showPlan() {
+  var planc = document.getElementById("PlanContainer");
+  if ( document.forms.CalcForm.EnablePlan.checked )
+    planc.style.display = "block";
   else
-    tablec.style.display = "none";
+    planc.style.display = "none";
 }
 
 function checkForm() {
@@ -189,10 +189,10 @@ function checkForm() {
 function Reset() {
   var RetAmount = document.getElementById("ReturnAmount");
   var TotalRaise = document.getElementById("TotalRaise");
-  var TableContainer = document.getElementById("TableContainer");
+  var PlanContainer = document.getElementById("PlanContainer");
   removeAllChilds(RetAmount);
   removeAllChilds(TotalRaise);
-  removeAllChilds(TableContainer);
+  removeAllChilds(PlanContainer);
 }
 
 function Calc(type) {
@@ -205,9 +205,9 @@ function Calc(type) {
     termM = parseInt(form.TermM.value);
   var interest = parseFloat(form.Interest.value);
   var payment = getFloatValue(form.Payment.value);
-  var enableTable = form.EnableTable.checked;
-  var TableContainer = document.getElementById("TableContainer");
-  removeAllChilds(TableContainer);
+  var enablePlan = form.EnablePlan.checked;
+  var PlanContainer = document.getElementById("PlanContainer");
+  removeAllChilds(PlanContainer);
 
   var periods = termY * 12 + termM;
   var Amount = document.getElementById("Amount");
@@ -232,9 +232,9 @@ function Calc(type) {
   RetAmount.appendChild(document.createTextNode(formatNumber(retam)));
   TotalRaise.appendChild(document.createTextNode(formatNumber(raise) + " %"));
 
-  if ( enableTable ) {
+  if ( enablePlan ) {
     var Table = document.createElement("table");
-    var Rows = calc_table(amount, payment, interest, periods);
+    var Rows = calc_plan(amount, payment, interest, periods);
     Table.setAttribute("class", "tbThinBorder");
     Table.setAttribute("id", "Table");
     Table.setAttribute("cellspacing", "0");
@@ -245,7 +245,7 @@ function Calc(type) {
       makeTableRow(TableBody, Row[0], formatNumber(Row[1]), formatNumber(Row[2]),  formatNumber(Row[3]), formatNumber(Row[4]), formatNumber(Row[5]));
     }
     Table.appendChild(TableBody);
-    TableContainer.appendChild(Table);
+    PlanContainer.appendChild(Table);
   }
 
   return true;
