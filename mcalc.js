@@ -1,4 +1,4 @@
-/* Mortgage calculator Web Interface
+/* Mortgage Calculator
  * Copyright (C) 2004-2006  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * $Id: mcalc.js,v 1.10 2006/12/06 19:33:34 gsotirov Exp $
+ * ---------------------------------------------------------------------------
+ * Description: Mortgage Calculator UI JavaScript
+ * Version    : 0.2.4
+ * $Id: mcalc.js,v 1.11 2006/12/07 09:34:30 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;

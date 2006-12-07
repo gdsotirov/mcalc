@@ -1,4 +1,4 @@
-/* Mortgage calculator
+/* Mortgage Calculator
  * Copyright (C) 2004-2006  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
@@ -15,7 +15,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * $Id: mcc.js,v 1.11 2006/12/06 19:32:47 gsotirov Exp $
+ * ---------------------------------------------------------------------------
+ * Description: Mortgage Calculator Core JavaScript
+ * Version    : 0.2.4
+ * $Id: mcc.js,v 1.12 2006/12/07 09:34:30 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
