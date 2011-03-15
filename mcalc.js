@@ -18,7 +18,7 @@
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
  * Version    : 0.2.4
- * $Id: mcalc.js,v 1.11 2006/12/07 09:34:30 gsotirov Exp $
+ * $Id: mcalc.js,v 1.12 2011/03/15 21:14:41 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -142,7 +142,7 @@ function getFloatValue(str) {
   var htmltags = document.getElementsByTagName("html");
   var lang = htmltags[0].lang;
 
-  return parseFloat(str.replace(/\s+/, ""));
+  return parseFloat(str.replace(/\s+/g, ""));
 }
 
 function lockMonths() {
