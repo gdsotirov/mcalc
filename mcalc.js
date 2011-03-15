@@ -17,8 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * Version    : 0.2.4
- * $Id: mcalc.js,v 1.12 2011/03/15 21:14:41 gsotirov Exp $
+ * $Id: mcalc.js,v 1.13 2011/03/15 21:23:55 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;

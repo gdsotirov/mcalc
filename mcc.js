@@ -17,8 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Core JavaScript
- * Version    : 0.2.4
- * $Id: mcc.js,v 1.12 2006/12/07 09:34:30 gsotirov Exp $
+ * $Id: mcc.js,v 1.13 2011/03/15 21:23:55 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
