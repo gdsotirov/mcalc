@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Core JavaScript
- * $Id: mcc.js,v 1.13 2011/03/15 21:23:55 gsotirov Exp $
+ * $Id: mcc.js,v 1.14 2013/08/22 16:52:51 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -89,22 +89,34 @@ function calc_total_return_amount(amount, payment, interest, periods) {
  *              periods - the periods count
  */
 function calc_plan(amount, payment, interest, periods) {
-  var period_interest = interest / 100 / 12;
+  var int_rate_period = interest / 100 / 12;
   var balance = amount;
+  var total_ret_amt  = 0.0;
+  var total_interest = 0.0;
   var Rows = new Array();
 
   for ( var i = 1; i <= periods; ++i ) {
-    var cap = round(period_interest * balance, 2);
-    if ( periods == i ) // last iteration
-      Rows[i-1] = new Array(i, balance, cap, balance, balance + cap, 0.0);
+    var interest = round(int_rate_period * balance, 2); // interest for the period
+    total_interest += interest;
+
+    if ( periods == i ) { // last iteration
+      var last_payment = balance + interest;
+      Rows[i-1] = new Array(i, balance, interest, balance, last_payment, 0.0);
+      total_ret_amt += last_payment;
+    }
     else {
-      var new_balance = round(balance + cap - payment, 2);
-      Rows[i-1] = new Array(i, balance, cap, payment - cap, payment, new_balance);
+      var capital     = payment - interest;
+      var new_balance = round(balance + interest - payment, 2);
+      Rows[i-1] = new Array(i, balance, interest, capital, payment     , new_balance);
+      total_ret_amt += payment;
     }
     balance = new_balance;
   }
 
-  return Rows;
+  return {plan   : Rows,
+          tot_ret: total_ret_amt,
+          tot_int: total_interest
+         };
 }
 
 function round(number, places) {
