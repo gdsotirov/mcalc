@@ -1,5 +1,5 @@
 /* Mortgage Calculator
- * Copyright (C) 2004-2006  Georgi D. Sotirov
+ * Copyright (C) 2004-2013  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Core JavaScript
- * $Id: mcc.js,v 1.14 2013/08/22 16:52:51 gsotirov Exp $
+ * $Id: mcc.js,v 1.15 2013/08/22 16:56:52 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -54,31 +54,6 @@ function calc_total_amount(interest, payment, periods) {
     amount = payment * periods;
 
   return amount;
-}
-
-/* Function   : calc_total_return_amount
- * Description: Calculate total return amount from the monthly payment.
- * Parameters : amount - the amount of the credit
- *              payment - period payment for the mortgage
- *              interest - mortgage interest in percents
- *              periods - the periods count
- */
-function calc_total_return_amount(amount, payment, interest, periods) {
-  var period_interest = interest / 100 / 12;
-  var balance = amount;
-  var ttl_return = 0.0;
-
-  for ( var i = 1; i <= periods; ++i ) {
-    var cap = round(period_interest * balance, 2);
-    if ( periods == i )
-      ttl_return += balance + cap;
-    else {
-      balance = round(balance + cap - payment, 2);
-      ttl_return += payment;
-    }
-  }
-
-  return ttl_return;
 }
 
 /* Function   : calc_plan
