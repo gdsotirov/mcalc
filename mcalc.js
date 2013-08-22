@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.13 2011/03/15 21:23:55 gsotirov Exp $
+ * $Id: mcalc.js,v 1.14 2013/08/22 16:58:27 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -42,11 +42,11 @@ var UIStringsBG = new Array(
 /*  4 */ "Моля, изберете срок на кредита в години и/или месеци!",
 /*  5 */ "Моля, попълнете полето Лихва!",
 /*  6 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11",
-/*  7 */ "Дата",
-/*  8 */ "Салдо",
-/*  9 */ "Лихва",
-/* 10 */ "Главница",
-/* 11 */ "Вноска",
+/*  7 */ "Период",
+/*  8 */ "Салдо главница",
+/*  9 */ "Вноска лихва",
+/* 10 */ "Вноска главница",
+/* 11 */ "Вноска общо",
 /* 12 */ "Оставащо"
 );
 
@@ -58,11 +58,11 @@ var UIStringsEN = new Array(
 /*  4 */ "Please, choose the credit term in years and/or months!",
 /*  5 */ "Please, fill in the Interest field!",
 /*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55",
-/*  7 */ "Date",
-/*  8 */ "Balance",
-/*  9 */ "Interest",
-/* 10 */ "Capital",
-/* 11 */ "Payment",
+/*  7 */ "Period",
+/*  8 */ "Capital Balance",
+/*  9 */ "Interest payment",
+/* 10 */ "Capital payment",
+/* 11 */ "Payment total",
 /* 12 */ "Outstanding"
 );
 
@@ -80,7 +80,7 @@ function loadUIString(id) {
     return "???";
 }
 
-function formatNumber(number) {
+function formatNumber(number, places = 2) {
   var htmltags = document.getElementsByTagName("html");
   var lang = htmltags[0].lang;
 
@@ -88,7 +88,7 @@ function formatNumber(number) {
   var num = new NumberFormat();
   num.setInputDecimal('.');
   num.setSeparators(true, ' ', '.');
-  num.setPlaces('2', false);
+  num.setPlaces(places, false);
   num.setCurrency(false);
   num.setCurrencyPosition(num.LEFT_OUTSIDE);
   num.setNegativeFormat(num.LEFT_DASH);
@@ -222,21 +222,25 @@ function Calc(type) {
     amount = calc_total_amount(interest, payment, periods);
     Amount.value = formatNumber(amount);
   }
-  var retam = calc_total_return_amount(amount, payment, interest, periods);
 
-  var RetAmount = document.getElementById("ReturnAmount");
-  var TotalRaise = document.getElementById("TotalRaise");
-  var raise = ((retam / amount) * 100) - 100;
+  var result = calc_plan(amount, payment, interest, periods);
 
-  removeAllChilds(RetAmount);
+  var TotalReturn   = document.getElementById("TotalReturn");
+  var TotalInterest = document.getElementById("TotalInterest");
+  var TotalRaise    = document.getElementById("TotalRaise");
+  removeAllChilds(TotalReturn);
+  removeAllChilds(TotalInterest);
   removeAllChilds(TotalRaise);
 
-  RetAmount.appendChild(document.createTextNode(formatNumber(retam)));
-  TotalRaise.appendChild(document.createTextNode(formatNumber(raise) + " %"));
+  var raise = ((result.tot_ret / amount) -1 ) * 100;
+  
+  TotalReturn.appendChild(document.createTextNode(formatNumber(result.tot_ret)));
+  TotalInterest.appendChild(document.createTextNode(formatNumber(result.tot_int)));
+  TotalRaise.appendChild(document.createTextNode(formatNumber(raise, 5) + " %"));
 
   if ( enablePlan ) {
     var Table = document.createElement("table");
-    var Rows = calc_plan(amount, payment, interest, periods);
+    var Rows  = result.plan;
     Table.setAttribute("class", "tbThinBorder");
     Table.setAttribute("id", "Table");
     Table.setAttribute("cellspacing", "0");
