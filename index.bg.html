@@ -2,7 +2,7 @@
 
 <!--
   Mortgage Calculator
-  Copyright (C) 2004-2006  Georgi D. Sotirov
+  Copyright (C) 2004-2013  Georgi D. Sotirov
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.17 2011/03/15 21:24:18 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.18 2013/08/22 17:09:25 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -53,7 +53,7 @@
 
 <div id="Calc">
 <p class="no_print align-center">Моля, изберете типа на изчислението с радио
-бутоните. Ако желаете да изчислите Вноска бутона пред Сума трябва да бъде
+бутоните. Ако желаете изчисление по Вноска бутона пред Сума трябва да бъде
 натиснат и обратното.</p>
 <form action="#" enctype="application/x-www-form-urlencoded" method="post" id="CalcForm" name="CalcForm" onsubmit="javascript: return false" onreset="javascript: Reset();">
 <div class="row">
@@ -115,7 +115,7 @@
 </div>
 
 <div class="row">
-<label for="Interest"><span class="label">Лихва:</span>
+<label for="Interest"><span class="label">Лихвен процент:</span>
 <span class="input">
 <input id="Interest" name="Interest" type="text" size="6" maxlength="10" title="Лихвата това е номиналния годишен лихвен процент" />&nbsp;%</span></label>
 </div>
@@ -127,8 +127,13 @@
 </div>
 
 <div class="row">
-<label for="ReturnAmount"><span class="label">Връщана сума:</span></label>
-<span id="ReturnAmount" class="input result"></span>
+<label for="TotalReturn"><span class="label">Общо връщана сума:</span></label>
+<span id="TotalReturn" class="input result"></span>
+</div>
+
+<div class="row">
+<label for="TotalInterest"><span class="label">Общо лихви:</span></label>
+<span id="TotalInterest" class="input result"></span>
 </div>
 
 <div class="row">
