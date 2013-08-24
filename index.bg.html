@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.18 2013/08/22 17:09:25 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.19 2013/08/24 20:22:55 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -127,13 +127,42 @@
 </div>
 
 <div class="row">
-<label for="TotalReturn"><span class="label">Общо връщана сума:</span></label>
-<span id="TotalReturn" class="input result"></span>
+<label for="AnnualTaxRate"><span class="label">Годишна такса:</span></label>
+<span class="input">
+<input id="AnnualTaxRate" name="AnnualTaxRate" type="text" size="4" maxlength="10" /> % от остатъчната главница или
+твърда сума от <input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10" /><br />
+* начислявана в началото на всяка година</span>
 </div>
 
 <div class="row">
-<label for="TotalInterest"><span class="label">Общо лихви:</span></label>
-<span id="TotalInterest" class="input result"></span>
+<label for="MonthlyTaxRate"><span class="label">Месечна такса:</span></label>
+<span class="input">
+<input id="MonthlyTaxRate" name="MonthlyTaxRate" type="text" size="4" maxlength="10" /> % от остатъчната главница или
+твърда сума от <input id="MonthlyTaxAmt" name="MonthlyTaxAmt" type="text" size="6" maxlength="10" /><br />
+* начислявана с всяка вноска (редовно плащане)</span>
+</div>
+
+<div class="row">
+<label for="OneTimeTaxRate"><span class="label">Еднократна такса:</span></label>
+<span class="input">
+<input id="OneTimeTaxRate" name="OneTimeTaxRate" type="text" size="4" maxlength="10" /> % от началната главница или
+твърда сума от <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10" /><br />
+* начислявана при отпускане на кредита</span>
+</div>
+
+<div class="row">
+<label for="TotalInterests"><span class="label">Общо лихви:</span></label>
+<span id="TotalInterests" class="input result"></span>
+</div>
+
+<div class="row">
+<label for="TotalTaxes"><span class="label">Общо такси:</span></label>
+<span id="TotalTaxes" class="input result"></span>
+</div>
+
+<div class="row">
+<label for="TotalReturn"><span class="label">Общо връщана сума:</span></label>
+<span id="TotalReturn" class="input result"></span>
 </div>
 
 <div class="row">
@@ -142,7 +171,7 @@
 </div>
 
 <div class="row">
-<label for="EnablePlan"><span class="label">Погасителен план:</span></label>
+<label for="EnablePlan"><span class="label">Включи погасителен план:</span></label>
 <span class="input"><input id="EnablePlan" name="EnablePlan" type="checkbox" onchange="javascript: showPlan();" /></span>
 </div>
 

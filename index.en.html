@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.en.html,v 1.18 2013/08/22 17:09:25 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.19 2013/08/24 20:22:55 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -117,7 +117,7 @@ button in front of Amount should be pushed and viceversa.</p>
 <div class="row">
 <label for="Interest"><span class="label">Interest rate:</span>
 <span class="input">
-<input id="Interest" name="Interest" type="text" size="6" maxlength="10" title="Interest is the yearly nominal interest" />&nbsp;%</span></label>
+<input id="Interest" name="Interest" type="text" size="4" maxlength="10" title="Interest is the yearly nominal interest" />&nbsp;%</span></label>
 </div>
 
 <div class="row">
@@ -127,13 +127,42 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 <div class="row">
-<label for="TotalReturn"><span class="label">Total amount returned:</span></label>
-<span id="TotalReturn" class="input result"></span>
+<label for="AnnualTaxRate"><span class="label">Annual tax:</span></label>
+<span class="input">
+<input id="AnnualTaxRate" name="AnnualTaxRate" type="text" size="4" maxlength="10" /> % of outstanding principal or
+fixed amount of <input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10" /><br />
+* charged at the begining of each new year</span>
 </div>
 
 <div class="row">
-<label for="TotalInterest"><span class="label">Total interest:</span></label>
+<label for="MonthlyTaxRate"><span class="label">Monthly tax:</span></label>
+<span class="input">
+<input id="MonthlyTaxRate" name="MonthlyTaxRate" type="text" size="4" maxlength="10" /> % of outstanding principal or
+fixed amount of <input id="MonthlyTaxAmt" name="MonthlyTaxAmt" type="text" size="6" maxlength="10" /><br />
+* charged with each installment (regular payment)</span>
+</div>
+
+<div class="row">
+<label for="OneTimeTaxRate"><span class="label">One-time tax:</span></label>
+<span class="input">
+<input id="OneTimeTaxRate" name="OneTimeTaxRate" type="text" size="4" maxlength="10" /> % of initial principal or
+fixed amount of <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10" /><br />
+* charged at credit loan</span>
+</div>
+
+<div class="row">
+<label for="TotalInterest"><span class="label">Total interests:</span></label>
 <span id="TotalInterest" class="input result"></span>
+</div>
+
+<div class="row">
+<label for="TotalTaxes"><span class="label">Total taxes:</span></label>
+<span id="TotalTaxes" class="input result"></span>
+</div>
+
+<div class="row">
+<label for="TotalReturn"><span class="label">Total amount returned:</span></label>
+<span id="TotalReturn" class="input result"></span>
 </div>
 
 <div class="row">
@@ -142,7 +171,7 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 <div class="row">
-<label for="EnablePlan"><span class="label">Amortization plan:</span></label>
+<label for="EnablePlan"><span class="label">Include amortization plan:</span></label>
 <span class="input"><input id="EnablePlan" name="EnablePlan" type="checkbox" onchange="javascript: showPlan();" /></span>
 </div>
 
