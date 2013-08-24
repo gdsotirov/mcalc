@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.15 2013/08/22 17:08:47 gsotirov Exp $
+ * $Id: mcalc.js,v 1.16 2013/08/24 20:25:05 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -33,6 +33,7 @@ var uisInterest = 9;
 var uisCapital = 10;
 var uisPayment = 11;
 var uisOutstanding = 12;
+var uisTaxes   = 13;
 
 var UIStringsBG = new Array(
 /*  0 */ "Моля, попълнете полето Сума!",
@@ -47,7 +48,8 @@ var UIStringsBG = new Array(
 /*  9 */ "Вноска лихва",
 /* 10 */ "Вноска главница",
 /* 11 */ "Вноска общо",
-/* 12 */ "Оставащо"
+/* 12 */ "Оставащо",
+/* 13 */ "Такси",
 );
 
 var UIStringsEN = new Array(
@@ -63,7 +65,8 @@ var UIStringsEN = new Array(
 /*  9 */ "Interest payment",
 /* 10 */ "Capital payment",
 /* 11 */ "Payment total",
-/* 12 */ "Outstanding"
+/* 12 */ "Outstanding",
+/* 13 */ "Taxes"
 );
 
 function loadUIString(id) {
@@ -199,56 +202,85 @@ function Reset() {
 
 function Calc(type) {
   var form = document.forms.CalcForm;
-  var type = getRadioValue(form.Type);
-  var amount = getFloatValue(form.Amount.value);
-  var termY = parseInt(form.TermY.value);
-  var termM = 0;
-  if (termY < 30)
-    termM = parseInt(form.TermM.value);
-  var interest = parseFloat(form.Interest.value);
-  var payment = getFloatValue(form.Payment.value);
+  var credit = new Object();
+
+  credit.type = getRadioValue(form.Type);
+  credit.amount = getFloatValue(form.Amount.value);
+  credit.termY = parseInt(form.TermY.value);
+  credit.termM = 0;
+  if (credit.termY < 30) credit.termM = parseInt(form.TermM.value);
+  credit.int_rate = parseFloat(form.Interest.value);
+  credit.payment = getFloatValue(form.Payment.value);
+
+  credit.annual_tax_rate  = getFloatValue(form.AnnualTaxRate.value);
+  credit.annual_tax_amt   = getFloatValue(form.AnnualTaxAmt.value);
+  credit.monthly_tax_rate = getFloatValue(form.MonthlyTaxRate.value);
+  credit.monthly_tax_amt  = getFloatValue(form.MonthlyTaxAmt.value);
+  credit.onetime_tax_rate = getFloatValue(form.OneTimeTaxRate.value);
+  credit.onetime_tax_amt  = getFloatValue(form.OneTimeTaxAmt.value);
+
   var enablePlan = form.EnablePlan.checked;
   var PlanContainer = document.getElementById("PlanContainer");
   removeAllChilds(PlanContainer);
 
-  var periods = termY * 12 + termM;
+  credit.periods = credit.termY * 12 + credit.termM;
+
   var Amount = document.getElementById("Amount");
   var Payment = document.getElementById("Payment");
-  if ( type == "payment" ) {
-    payment = calc_period_payment(interest, amount, periods);
-    Payment.value = formatNumber(payment);
+
+  if ( credit.type == "payment" ) {
+    credit.payment = calc_period_payment(credit.int_rate, credit.amount, credit.periods);
+    Payment.value = formatNumber(credit.payment);
   }
   else {
-    amount = calc_total_amount(interest, payment, periods);
-    Amount.value = formatNumber(amount);
+    credit.amount = calc_total_amount(credit.int_rate, credit.payment, credit.periods);
+    Amount.value = formatNumber(credit.amount);
   }
 
-  var result = calc_plan(amount, payment, interest, periods);
+  var result = calc_plan(credit);
 
-  var TotalReturn   = document.getElementById("TotalReturn");
-  var TotalInterest = document.getElementById("TotalInterest");
-  var TotalRaise    = document.getElementById("TotalRaise");
+  var TotalInt    = document.getElementById("TotalInterests");
+  var TotalTax    = document.getElementById("TotalTaxes");
+  var TotalReturn = document.getElementById("TotalReturn");
+  var TotalRaise  = document.getElementById("TotalRaise");
+  removeAllChilds(TotalInt);
+  removeAllChilds(TotalTax);
   removeAllChilds(TotalReturn);
-  removeAllChilds(TotalInterest);
   removeAllChilds(TotalRaise);
 
-  var raise = ((result.tot_ret / amount) -1 ) * 100;
+  var raise = ((result.tot_ret / credit.amount) - 1 ) * 100;
   
+  TotalInt.appendChild(document.createTextNode(formatNumber(result.tot_int)));
+  TotalTax.appendChild(document.createTextNode(formatNumber(result.tot_tax)));
   TotalReturn.appendChild(document.createTextNode(formatNumber(result.tot_ret)));
-  TotalInterest.appendChild(document.createTextNode(formatNumber(result.tot_int)));
   TotalRaise.appendChild(document.createTextNode(formatNumber(raise, 5) + " %"));
 
   if ( enablePlan ) {
     var Table = document.createElement("table");
-    var Rows  = result.plan;
+    var Rows  = result.am_tbl;
     Table.setAttribute("class", "tbThinBorder");
     Table.setAttribute("id", "Table");
     Table.setAttribute("cellspacing", "0");
-    makeTableHeader(Table, loadUIString(uisDate), loadUIString(uisBalance),  loadUIString(uisInterest), loadUIString(uisCapital), loadUIString(uisPayment), loadUIString(uisOutstanding));
+    makeTableHeader(Table, loadUIString(uisDate),
+                           loadUIString(uisBalance),
+                           loadUIString(uisInterest),
+                           loadUIString(uisCapital),
+                           loadUIString(uisPayment),
+                           loadUIString(uisOutstanding),
+                           loadUIString(uisTaxes));
     var TableBody = document.createElement("tbody");
     for ( var i = 0; i < Rows.length; ++i ) {
-      var Row = Rows[i];
-      makeTableRow(TableBody, Row[0], formatNumber(Row[1]), formatNumber(Row[2]),  formatNumber(Row[3]), formatNumber(Row[4]), formatNumber(Row[5]));
+      if ( Rows[i] )
+      {
+        var Row = Rows[i];
+        makeTableRow(TableBody, Row[0],
+                                formatNumber(Row[1]),
+                                formatNumber(Row[2]),
+                                formatNumber(Row[3]),
+                                formatNumber(Row[4]),
+                                formatNumber(Row[5]),
+                                formatNumber(Row[6]));
+      }
     }
     Table.appendChild(TableBody);
     PlanContainer.appendChild(Table);
