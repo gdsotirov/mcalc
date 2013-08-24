@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Core JavaScript
- * $Id: mcc.js,v 1.15 2013/08/22 16:56:52 gsotirov Exp $
+ * $Id: mcc.js,v 1.16 2013/08/24 20:23:41 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -63,34 +63,95 @@ function calc_total_amount(interest, payment, periods) {
  *              interest - mortgage interest in percents
  *              periods - the periods count
  */
-function calc_plan(amount, payment, interest, periods) {
-  var int_rate_period = interest / 100 / 12;
-  var balance = amount;
-  var total_ret_amt  = 0.0;
-  var total_interest = 0.0;
+function calc_plan(credit) {
+  var balance = credit.amount;
+  var int_rate_period = credit.int_rate / 100 / 12;
+  var annual_tax    = 0.0;
+  var monthly_tax   = 0.0;
+  var onetime_tax   = 0.0;
+  var total_ret_amt = 0.0;
+  var total_ints    = 0.0;
+  var total_taxes   = 0.0;
   var Rows = new Array();
 
-  for ( var i = 1; i <= periods; ++i ) {
-    var interest = round(int_rate_period * balance, 2); // interest for the period
-    total_interest += interest;
+  /* calculate one time tax */
+  if ( credit.onetime_tax_rate || credit.onetime_tax_amt )
+  {
+    if ( credit.onetime_tax_rate )
+      onetime_tax = round(balance * (credit.onetime_tax_rate / 100), 2);
+    else
+      onetime_tax = round(credit.onetime_tax_amt, 2);
 
-    if ( periods == i ) { // last iteration
+    Rows[0] = new Array(0,
+                        balance,
+                        0.0,
+                        0.0,
+                        0.0,
+                        balance,
+                        onetime_tax);
+
+    total_taxes += onetime_tax;
+    total_ret_amt += onetime_tax;
+  }
+
+  for ( var i = 1; i <= credit.periods; ++i ) {
+    var interest = round(balance * int_rate_period, 2); // interest for the period
+    total_ints += interest;
+
+    /* Monthly tax */
+    if ( credit.monthly_tax_rate || credit.monthly_tax_amt )
+    {
+      if (credit.monthly_tax_rate )
+        monthly_tax = round(balance * (credit.monthly_tax_rate / 100), 2);
+      else
+        monthly_tax = round(credit.monthly_tax_amt, 2);
+
+      total_taxes += monthly_tax;
+      total_ret_amt += monthly_tax;
+    }
+
+    if ( credit.periods == i ) { // last installment
       var last_payment = balance + interest;
-      Rows[i-1] = new Array(i, balance, interest, balance, last_payment, 0.0);
+      Rows[i] = new Array(i,
+                          balance,
+                          interest,
+                          balance,
+                          last_payment,
+                          0.0,
+                          monthly_tax);
       total_ret_amt += last_payment;
     }
     else {
-      var capital     = payment - interest;
-      var new_balance = round(balance + interest - payment, 2);
-      Rows[i-1] = new Array(i, balance, interest, capital, payment     , new_balance);
-      total_ret_amt += payment;
+      var capital     = credit.payment - interest;
+      var new_balance = round(balance + interest - credit.payment, 2);
+      /* Annual tax */
+      if ( (i != 1 && i % 12 == 1)
+           && (credit.annual_tax_rate || credit.annual_tax_amt) )
+      {
+        if ( credit.annual_tax_rate )
+          annual_tax = round(balance * (credit.annual_tax_rate / 100), 2);
+        else
+          annual_tax = round(credit.annual_tax_amt, 2);
+
+        total_taxes += annual_tax;
+      }
+      Rows[i] = new Array(i,
+                          balance,
+                          interest,
+                          capital,
+                          credit.payment,
+                          new_balance,
+                          annual_tax + monthly_tax);
+      total_ret_amt += credit.payment + annual_tax + monthly_tax;
     }
     balance = new_balance;
+    annual_tax = 0.0;
   }
 
-  return {plan   : Rows,
-          tot_ret: total_ret_amt,
-          tot_int: total_interest
+  return {am_tbl : Rows,
+          tot_int: total_ints,
+          tot_tax: total_taxes,
+          tot_ret: total_ret_amt
          };
 }
 
