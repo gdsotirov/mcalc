@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.en.html,v 1.19 2013/08/24 20:22:55 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.20 2013/08/25 08:07:11 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -127,27 +127,36 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 <div class="row">
-<label for="AnnualTaxRate"><span class="label">Annual tax:</span></label>
+<label for="OneTimeTaxRate"><span class="label">One-time taxes:</span></label>
 <span class="input">
-<input id="AnnualTaxRate" name="AnnualTaxRate" type="text" size="4" maxlength="10" /> % of outstanding principal or
-fixed amount of <input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10" /><br />
+<input id="OneTimeTaxRate" name="OneTimeTaxRate" type="text" size="4" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxRate)" />
+% of initial principal<br />and/or fixed amount of
+<input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxAmt)" /><br />
+* charged at credit loan</span>
+</div>
+
+<div class="row">
+<label for="AnnualTaxRate"><span class="label">Annual taxes:</span></label>
+<span class="input">
+<input id="AnnualTaxRate" name="AnnualTaxRate" type="text" size="4" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxRate)" />
+% of outstanding principal<br />and/or fixed amount of
+<input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxAmt)" /><br />
 * charged at the begining of each new year</span>
 </div>
 
 <div class="row">
-<label for="MonthlyTaxRate"><span class="label">Monthly tax:</span></label>
+<label for="MonthlyTaxRate"><span class="label">Monthly taxes:</span></label>
 <span class="input">
-<input id="MonthlyTaxRate" name="MonthlyTaxRate" type="text" size="4" maxlength="10" /> % of outstanding principal or
-fixed amount of <input id="MonthlyTaxAmt" name="MonthlyTaxAmt" type="text" size="6" maxlength="10" /><br />
+<input id="MonthlyTaxRate" name="MonthlyTaxRate" type="text" size="4" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxRate)" />
+% of outstanding principal<br />and/or fixed amount of
+<input id="MonthlyTaxAmt" name="MonthlyTaxAmt" type="text" size="6" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxAmt)" /><br />
 * charged with each installment (regular payment)</span>
-</div>
-
-<div class="row">
-<label for="OneTimeTaxRate"><span class="label">One-time tax:</span></label>
-<span class="input">
-<input id="OneTimeTaxRate" name="OneTimeTaxRate" type="text" size="4" maxlength="10" /> % of initial principal or
-fixed amount of <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10" /><br />
-* charged at credit loan</span>
 </div>
 
 <div class="row">
@@ -211,7 +220,7 @@ fixed amount of <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size=
 </p>
 <p class="terms"><a href="terms.en.html">Terms of use</a></p>
 <!-- Copyright -->
-<p class="copyright"><a name="Copyright">Copyright</a> © 2004-2005
+<p class="copyright"><a name="Copyright">Copyright</a> © 2004-2013
 <a href="mailto:gdsotirov@dir.bg">Georgi D. Sotirov</a><br />
 This application can be copyed, distributed and published in original
 or modified version without any restrictions if the upper copyright notice
