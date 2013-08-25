@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.18 2013/08/25 08:13:33 gsotirov Exp $
+ * $Id: mcalc.js,v 1.19 2013/08/25 08:55:17 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -196,10 +196,12 @@ function doReset() {
   var TotalTax    = document.getElementById("TotalTaxes");
   var TotalReturn = document.getElementById("TotalReturn");
   var TotalRaise  = document.getElementById("TotalRaise");
+  var AmortPlan   = document.getElementById("PlanContainer");
   removeAllChilds(TotalInt);
   removeAllChilds(TotalTax);
   removeAllChilds(TotalReturn);
   removeAllChilds(TotalRaise);
+  removeAllChilds(AmortPlan);
 }
 
 function doCalc(type) {
@@ -222,12 +224,10 @@ function doCalc(type) {
   credit.onetime_tax_amt  = getFloatValue(form.OneTimeTaxAmt.value);
 
   var enablePlan = form.EnablePlan.checked;
-  var PlanContainer = document.getElementById("PlanContainer");
-  removeAllChilds(PlanContainer);
 
   credit.periods = credit.termY * 12 + credit.termM;
 
-  var Amount = document.getElementById("Amount");
+  var Amount  = document.getElementById("Amount");
   var Payment = document.getElementById("Payment");
 
   if ( credit.type == "payment" ) {
@@ -245,6 +245,7 @@ function doCalc(type) {
   var TotalTax    = document.getElementById("TotalTaxes");
   var TotalReturn = document.getElementById("TotalReturn");
   var TotalRaise  = document.getElementById("TotalRaise");
+  var AmortPlan   = document.getElementById("PlanContainer");
   doReset();
 
   var raise = ((result.tot_ret / credit.amount) - 1 ) * 100;
@@ -282,7 +283,7 @@ function doCalc(type) {
       }
     }
     Table.appendChild(TableBody);
-    PlanContainer.appendChild(Table);
+    AmortPlan.appendChild(Table);
   }
 
   return true;
