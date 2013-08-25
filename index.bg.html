@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.22 2013/08/25 08:55:17 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.23 2013/08/25 16:28:04 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -115,9 +115,21 @@
 </div>
 
 <div class="row">
-<label for="Interest"><span class="label">Лихвен процент:</span>
+<label for="Interest"><span class="label">Лихвен процент:</span></label>
 <span class="input">
-<input id="Interest" name="Interest" type="text" size="6" maxlength="10" title="Лихвата това е номиналния годишен лихвен процент" />&nbsp;%</span></label>
+<input id="Interest" name="Interest" type="text" size="6" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.Interest);"
+       title="Номинален годишен лихвен процент" />
+&nbsp;% за първите <input id="IntPeriods" name="IntPeriods" type="text" size="4" /> периода<br />
+<input id="Interest2" name="Interest2" type="text" size="6" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.Interest2);"
+       title="Номинален годишен лихвен процент" />
+&nbsp;% за следващите <input id="IntPeriods2" name="IntPeriods2" type="text" size="4" /> периода<br />
+<input id="Interest3" name="Interest3" type="text" size="6" maxlength="10"
+       onchange="javascript: formatField(document.forms.CalcForm.Interest3);"
+       title="Номинален годишен лихвен процент" />
+&nbsp;% за останалите периоди
+</span>
 </div>
 
 <div class="row">
@@ -130,10 +142,10 @@
 <label for="OneTimeTaxRate"><span class="label">Еднократни такси:</span></label>
 <span class="input">
 <input id="OneTimeTaxRate" name="OneTimeTaxRate" type="text" size="4" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxRate)" />
+       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxRate)" />
 % от началната главница<br /> и/или твърда сума от
 <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxAmt)" /><br />
+       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxAmt)" /><br />
 * начислявани при отпускане на кредита</span>
 </div>
 
@@ -145,7 +157,7 @@
 % от остатъчната главница<br />и/или твърда сума от
 <input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxAmt)" /><br />
-* начислявана в началото на всяка година</span>
+* начислявани в началото на всяка година</span>
 </div>
 
 <div class="row">
@@ -155,8 +167,8 @@
        onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxRate)" />
 % от остатъчната главница<br /> и/или твърда сума от
 <input id="MonthlyTaxAmt" name="MonthlyTaxAmt" type="text" size="6" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxRate)" /><br />
-* начислявана с всяка вноска (редовно плащане)</span>
+       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxAmt)" /><br />
+* начислявани с всяка вноска (редовно плащане)</span>
 </div>
 
 <div class="row">
