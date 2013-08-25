@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.17 2013/08/25 07:46:58 gsotirov Exp $
+ * $Id: mcalc.js,v 1.18 2013/08/25 08:13:33 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -191,16 +191,18 @@ function checkForm() {
   return true;
 }
 
-function Reset() {
-  var RetAmount = document.getElementById("ReturnAmount");
-  var TotalRaise = document.getElementById("TotalRaise");
-  var PlanContainer = document.getElementById("PlanContainer");
-  removeAllChilds(RetAmount);
+function doReset() {
+  var TotalInt    = document.getElementById("TotalInterests");
+  var TotalTax    = document.getElementById("TotalTaxes");
+  var TotalReturn = document.getElementById("TotalReturn");
+  var TotalRaise  = document.getElementById("TotalRaise");
+  removeAllChilds(TotalInt);
+  removeAllChilds(TotalTax);
+  removeAllChilds(TotalReturn);
   removeAllChilds(TotalRaise);
-  removeAllChilds(PlanContainer);
 }
 
-function Calc(type) {
+function doCalc(type) {
   var form = document.forms.CalcForm;
   var credit = new Object();
 
@@ -243,10 +245,7 @@ function Calc(type) {
   var TotalTax    = document.getElementById("TotalTaxes");
   var TotalReturn = document.getElementById("TotalReturn");
   var TotalRaise  = document.getElementById("TotalRaise");
-  removeAllChilds(TotalInt);
-  removeAllChilds(TotalTax);
-  removeAllChilds(TotalReturn);
-  removeAllChilds(TotalRaise);
+  doReset();
 
   var raise = ((result.tot_ret / credit.amount) - 1 ) * 100;
   
