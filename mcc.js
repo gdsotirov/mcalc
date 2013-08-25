@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Core JavaScript
- * $Id: mcc.js,v 1.17 2013/08/25 07:45:42 gsotirov Exp $
+ * $Id: mcc.js,v 1.18 2013/08/25 16:20:21 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -65,7 +65,6 @@ function calc_total_amount(interest, payment, periods) {
  */
 function calc_plan(credit) {
   var balance = credit.amount;
-  var int_rate_period = credit.int_rate / 100 / 12;
   var annual_tax    = 0.0;
   var monthly_tax   = 0.0;
   var onetime_tax   = 0.0;
@@ -95,7 +94,26 @@ function calc_plan(credit) {
   }
 
   for ( var i = 1; i <= credit.periods; ++i ) {
-    var interest = round(balance * int_rate_period, 2); // interest for the period
+    var interest = 0.0;
+    if ( credit.int_periods && i <= credit.int_periods )
+    {
+      interest = round(balance * (credit.int_rate / 100 / 12), 2);
+    }
+    else
+    if ( credit.int_periods2 && i <= (credit.int_periods + credit.int_periods2) )
+    {
+      /* Recalculate for the remaining amount and term */
+      if ( (i - credit.int_periods) == 1 )
+        credit.payment = calc_period_payment(credit.int_rate2, balance, credit.periods - credit.int_periods);
+      interest = round(balance * (credit.int_rate2 / 100 / 12), 2);
+    }
+    else
+    {
+      /* Recalculate for the remaining amount and term */
+      if ( (i - (credit.int_periods + credit.int_periods2)) == 1 )
+        credit.payment = calc_period_payment(credit.int_rate3, balance, credit.periods - (credit.int_periods + credit.int_periods2));
+      interest = round(balance * (credit.int_rate3 / 100 / 12), 2);
+    }
     total_ints += interest;
 
     /* Monthly tax on each installment */
