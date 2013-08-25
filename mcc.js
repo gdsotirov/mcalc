@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Core JavaScript
- * $Id: mcc.js,v 1.16 2013/08/24 20:23:41 gsotirov Exp $
+ * $Id: mcc.js,v 1.17 2013/08/25 07:45:42 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -78,9 +78,9 @@ function calc_plan(credit) {
   if ( credit.onetime_tax_rate || credit.onetime_tax_amt )
   {
     if ( credit.onetime_tax_rate )
-      onetime_tax = round(balance * (credit.onetime_tax_rate / 100), 2);
-    else
-      onetime_tax = round(credit.onetime_tax_amt, 2);
+      onetime_tax += round(balance * (credit.onetime_tax_rate / 100), 2);
+    if ( credit.onetime_tax_amt )
+      onetime_tax += round(credit.onetime_tax_amt, 2);
 
     Rows[0] = new Array(0,
                         balance,
@@ -98,13 +98,13 @@ function calc_plan(credit) {
     var interest = round(balance * int_rate_period, 2); // interest for the period
     total_ints += interest;
 
-    /* Monthly tax */
+    /* Monthly tax on each installment */
     if ( credit.monthly_tax_rate || credit.monthly_tax_amt )
     {
       if (credit.monthly_tax_rate )
-        monthly_tax = round(balance * (credit.monthly_tax_rate / 100), 2);
-      else
-        monthly_tax = round(credit.monthly_tax_amt, 2);
+        monthly_tax += round(balance * (credit.monthly_tax_rate / 100), 2);
+      if (credit.monthly_tax_amt )
+        monthly_tax += round(credit.monthly_tax_amt, 2);
 
       total_taxes += monthly_tax;
       total_ret_amt += monthly_tax;
@@ -124,17 +124,18 @@ function calc_plan(credit) {
     else {
       var capital     = credit.payment - interest;
       var new_balance = round(balance + interest - credit.payment, 2);
-      /* Annual tax */
-      if ( (i != 1 && i % 12 == 1)
+      /* Annual tax on first installment of every new year since the beginning */
+      if ( (i != 1 && i % 12 == 1) /* e.g. every January */
            && (credit.annual_tax_rate || credit.annual_tax_amt) )
       {
         if ( credit.annual_tax_rate )
-          annual_tax = round(balance * (credit.annual_tax_rate / 100), 2);
-        else
-          annual_tax = round(credit.annual_tax_amt, 2);
+          annual_tax += round(balance * (credit.annual_tax_rate / 100), 2);
+        if ( credit.annual_tax_amt )
+          annual_tax += round(credit.annual_tax_amt, 2);
 
         total_taxes += annual_tax;
       }
+
       Rows[i] = new Array(i,
                           balance,
                           interest,
@@ -145,6 +146,7 @@ function calc_plan(credit) {
       total_ret_amt += credit.payment + annual_tax + monthly_tax;
     }
     balance = new_balance;
+    monthly_tax = 0.0;
     annual_tax = 0.0;
   }
 
