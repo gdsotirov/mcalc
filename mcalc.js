@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.16 2013/08/24 20:25:05 gsotirov Exp $
+ * $Id: mcalc.js,v 1.17 2013/08/25 07:46:58 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -49,7 +49,7 @@ var UIStringsBG = new Array(
 /* 10 */ "Вноска главница",
 /* 11 */ "Вноска общо",
 /* 12 */ "Оставащо",
-/* 13 */ "Такси",
+/* 13 */ "Такси"
 );
 
 var UIStringsEN = new Array(
