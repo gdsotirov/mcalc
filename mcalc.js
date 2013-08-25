@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.19 2013/08/25 08:55:17 gsotirov Exp $
+ * $Id: mcalc.js,v 1.20 2013/08/25 16:23:20 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -41,7 +41,7 @@ var UIStringsBG = new Array(
 /*  2 */ "Моля, попълнете полето Вноска!",
 /*  3 */ "Моля, задайте правилна стойност в полето Вноска!\nНапример: 500, 750, 1200.5",
 /*  4 */ "Моля, изберете срок на кредита в години и/или месеци!",
-/*  5 */ "Моля, попълнете полето Лихва!",
+/*  5 */ "Моля, попълнете полетата Лихвен процент!",
 /*  6 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11",
 /*  7 */ "Период",
 /*  8 */ "Салдо главница",
@@ -58,7 +58,7 @@ var UIStringsEN = new Array(
 /*  2 */ "Please, fill in the Payment field!",
 /*  3 */ "Please, fill in correct value in the Payment field! Example: 500, 750, 1200.5",
 /*  4 */ "Please, choose the credit term in years and/or months!",
-/*  5 */ "Please, fill in the Interest field!",
+/*  5 */ "Please, fill in the Interest reate fields!",
 /*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55",
 /*  7 */ "Period",
 /*  8 */ "Capital Balance",
@@ -213,8 +213,21 @@ function doCalc(type) {
   credit.termY = parseInt(form.TermY.value);
   credit.termM = 0;
   if (credit.termY < 30) credit.termM = parseInt(form.TermM.value);
-  credit.int_rate = parseFloat(form.Interest.value);
-  credit.payment = getFloatValue(form.Payment.value);
+  credit.periods = credit.termY * 12 + credit.termM;
+  credit.int_rate     = getFloatValue(form.Interest.value);
+  credit.int_periods  = parseInt(form.IntPeriods.value);
+  credit.int_rate2    = getFloatValue(form.Interest2.value);
+  credit.int_periods2 = parseInt(form.IntPeriods2.value);
+  credit.int_rate3    = getFloatValue(form.Interest3.value);
+  if ( !credit.int_periods ) {
+    credit.int_periods = credit.periods;
+    credit.int_periods2 = 0;
+  }
+  if ( !credit.int_periods2 && credit.int_rate2 )
+  {
+    credit.int_periods2 = credit.periods - credit.int_periods;
+  }
+  credit.payment      = getFloatValue(form.Payment.value);
 
   credit.annual_tax_rate  = getFloatValue(form.AnnualTaxRate.value);
   credit.annual_tax_amt   = getFloatValue(form.AnnualTaxAmt.value);
@@ -224,8 +237,6 @@ function doCalc(type) {
   credit.onetime_tax_amt  = getFloatValue(form.OneTimeTaxAmt.value);
 
   var enablePlan = form.EnablePlan.checked;
-
-  credit.periods = credit.termY * 12 + credit.termM;
 
   var Amount  = document.getElementById("Amount");
   var Payment = document.getElementById("Payment");
@@ -273,13 +284,16 @@ function doCalc(type) {
       if ( Rows[i] )
       {
         var Row = Rows[i];
-        makeTableRow(TableBody, Row[0],
-                                formatNumber(Row[1]),
-                                formatNumber(Row[2]),
-                                formatNumber(Row[3]),
-                                formatNumber(Row[4]),
-                                formatNumber(Row[5]),
-                                formatNumber(Row[6]));
+        var elmnt = makeTableRow(TableBody, Row[0],
+                                 formatNumber(Row[1]),
+                                 formatNumber(Row[2]),
+                                 formatNumber(Row[3]),
+                                 formatNumber(Row[4]),
+                                 formatNumber(Row[5]),
+                                 formatNumber(Row[6]));
+
+        if ( i % 12 == 0 )
+          elmnt.setAttribute("style", "background-color: #eeeeee;");
       }
     }
     Table.appendChild(TableBody);
@@ -309,4 +323,5 @@ function makeTableRow(otable) {
     new_tr.appendChild(new_td);
   }
   otable.appendChild(new_tr);
+  return new_tr;
 }
