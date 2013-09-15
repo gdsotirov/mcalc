@@ -18,7 +18,7 @@
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Styles
  * Media: screen, print
- * $Id: mcalc.css,v 1.12 2011/03/15 21:23:55 gsotirov Exp $
+ * $Id: mcalc.css,v 1.13 2013/09/15 07:30:40 gsotirov Exp $
  */
 
 @media screen, print {
@@ -162,7 +162,10 @@
     color: inherit;
   }
 
-  input:hover, input:focus, select:hover, select:focus {
+  input:hover:enabled,
+  input:focus:enabled,
+  select:hover:enabled,
+  select:focus:enabled {
     background-color: #fff;
     color: inherit;
   }
