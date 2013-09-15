@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.20 2013/08/25 16:23:20 gsotirov Exp $
+ * $Id: mcalc.js,v 1.21 2013/09/15 07:29:52 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -43,7 +43,7 @@ var UIStringsBG = new Array(
 /*  4 */ "Моля, изберете срок на кредита в години и/или месеци!",
 /*  5 */ "Моля, попълнете полетата Лихвен процент!",
 /*  6 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11",
-/*  7 */ "Период",
+/*  7 */ "Месец",
 /*  8 */ "Салдо главница",
 /*  9 */ "Вноска лихва",
 /* 10 */ "Вноска главница",
@@ -60,7 +60,7 @@ var UIStringsEN = new Array(
 /*  4 */ "Please, choose the credit term in years and/or months!",
 /*  5 */ "Please, fill in the Interest reate fields!",
 /*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55",
-/*  7 */ "Period",
+/*  7 */ "Month",
 /*  8 */ "Capital Balance",
 /*  9 */ "Interest payment",
 /* 10 */ "Capital payment",
@@ -84,11 +84,9 @@ function loadUIString(id) {
 }
 
 function formatNumber(number, places = 2) {
-  var htmltags = document.getElementsByTagName("html");
-  var lang = htmltags[0].lang;
+  var num = new NumberFormat();
 
   /* Configure number formatting */
-  var num = new NumberFormat();
   num.setInputDecimal('.');
   num.setSeparators(true, ' ', '.');
   num.setPlaces(places, false);
@@ -97,11 +95,19 @@ function formatNumber(number, places = 2) {
   num.setNegativeFormat(num.LEFT_DASH);
   num.setNegativeRed(false);
   num.setNumber(number);
+
   return num.toFormatted();
 }
 
-function formatField(obj) {
-  obj.value = formatNumber(obj.value.replace(/,/));
+function formatField(obj, places = 2) {
+  if ( obj.value != 0 )
+  {
+    obj.value = formatNumber(obj.value.replace(",", ".").replace(/\s+/g, ""), places);
+  }
+  else
+  {
+    obj.value = "";
+  }
 }
 
 function checkField(fld, type, uisFill, uisCorr) {
@@ -144,7 +150,7 @@ function getFloatValue(str) {
   var htmltags = document.getElementsByTagName("html");
   var lang = htmltags[0].lang;
 
-  return parseFloat(str.replace(/\s+/g, ""));
+  return parseFloat(str.replace(/\s+/g, "").replace(",", "."));
 }
 
 function lockMonths() {
@@ -157,6 +163,23 @@ function lockMonths() {
     else
       msel.style.display = "inline";
   }
+}
+
+function controlRates() {
+  var Interest   = document.getElementById("Interest");
+  var IntPeriods = document.getElementById("IntPeriods");
+  var Interest2  = document.getElementById("Interest2");
+  var IntPeriods2= document.getElementById("IntPeriods2");
+  var Interest3  = document.getElementById("Interest3");
+  
+  IntPeriods.disabled = (Interest.value.length == 0 || Interest.value == "" || Interest.value == 0 );
+  Interest2.disabled  = (   (Interest.value.length == 0   || Interest.value == ""   || Interest.value == 0)
+                         || (IntPeriods.value.length == 0 || IntPeriods.value == "" || IntPeriods.value == 0)
+                        );
+  IntPeriods2.disabled= (Interest2.value.length == 0 || Interest2.value == "" || Interest2.value == 0 );
+  Interest3.disabled  = (   (Interest2.value.length == 0   || Interest2.value == ""   || Interest2.value == 0)
+                         || (IntPeriods2.value.length == 0 || IntPeriods2.value == "" || IntPeriods2.value == 0)
+                        );
 }
 
 function showPlan() {
@@ -192,19 +215,19 @@ function checkForm() {
 }
 
 function doReset() {
-  var TotalInt    = document.getElementById("TotalInterests");
-  var TotalTax    = document.getElementById("TotalTaxes");
-  var TotalReturn = document.getElementById("TotalReturn");
-  var TotalRaise  = document.getElementById("TotalRaise");
-  var AmortPlan   = document.getElementById("PlanContainer");
-  removeAllChilds(TotalInt);
-  removeAllChilds(TotalTax);
-  removeAllChilds(TotalReturn);
-  removeAllChilds(TotalRaise);
-  removeAllChilds(AmortPlan);
+  removeAllChilds(document.getElementById("TotalInterests"));
+  removeAllChilds(document.getElementById("TotalTaxes"));
+  removeAllChilds(document.getElementById("TotalReturn"));
+  removeAllChilds(document.getElementById("TotalRaise"));
+  removeAllChilds(document.getElementById("PlanContainer"));
+
+  document.getElementById("IntPeriods").disabled  = true;
+  document.getElementById("Interest2").disabled   = true;
+  document.getElementById("IntPeriods2").disabled = true;
+  document.getElementById("Interest3").disabled   = true;
 }
 
-function doCalc(type) {
+function doCalc() {
   var form = document.forms.CalcForm;
   var credit = new Object();
 
