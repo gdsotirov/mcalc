@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.en.html,v 1.23 2013/08/25 16:28:04 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.24 2013/09/15 07:31:19 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Default" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -55,9 +55,11 @@
 <p class="no_print align-center">Please, select the type of the calculation
 with the radio buttons. If you wish to calculate by Payment the
 button in front of Amount should be pushed and viceversa.</p>
-<form action="#" enctype="application/x-www-form-urlencoded" id="CalcForm" method="post" name="CalcForm" onsubmit="javascript: return false" onreset="javascript: doReset();">
+<form action="#" enctype="application/x-www-form-urlencoded" id="CalcForm" method="post"
+      name="CalcForm" onsubmit="javascript: return false" onreset="javascript: doReset();">
 <div class="row">
-<label for="Amount"><span class="label"><input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Amount:</span></label>
+<label for="Amount"><span class="label">
+<input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Amount:</span></label>
 <span class="input">
 <input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: formatField(document.forms.CalcForm.Amount)" /></span>
 </div>
@@ -118,17 +120,21 @@ button in front of Amount should be pushed and viceversa.</p>
 <label for="Interest"><span class="label">Interest rate:</span></label>
 <span class="input">
 <input id="Interest" name="Interest" type="text" size="4" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.Interest)"
+       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.Interest);"
        title="Yearly nominal interest rate" />
-&nbsp;% for the first <input id="IntPeriods" name="IntPeriods" type="text" size="4" /> periods<br />
-<input id="Interest2" name="Interest2" type="text" size="6" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.Interest2)"
-       title="Yearly nominal interest rate" />
-&nbsp;% for the next <input id="IntPeriods2" name="IntPeriods2" type="text" size="4" /> periods<br />
-<input id="Interest3" name="Interest3" type="text" size="6" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.Interest3)"
-       title="Yearly nominal interest rate" />
-&nbsp;% for remaining periods 
+&nbsp;%&nbsp;for the first&nbsp;
+<input id="IntPeriods" name="IntPeriods" type="text" size="4" disabled="disabled"
+       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.IntPeriods, 0);" />&nbsp;months<br />
+<input id="Interest2" name="Interest2" type="text" size="4" maxlength="10"
+       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.Interest2);"
+       title="Yearly nominal interest rate" disabled="disabled" />
+&nbsp;%&nbsp;for the next&nbsp;
+<input id="IntPeriods2" name="IntPeriods2" type="text" size="4" disabled="disabled"
+       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.IntPeriods2, 0);" />&nbsp;months<br />
+<input id="Interest3" name="Interest3" type="text" size="4" maxlength="10"
+       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.Interest3)"
+       title="Yearly nominal interest rate" disabled="disabled" />
+&nbsp;%&nbsp;for the remaining period
 </span>
 </div>
 
@@ -146,7 +152,7 @@ button in front of Amount should be pushed and viceversa.</p>
 % of initial principal<br />and/or fixed amount of
 <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxAmt)" /><br />
-* charged at credit loan</span>
+* charged at credit allot</span>
 </div>
 
 <div class="row">
@@ -203,13 +209,11 @@ button in front of Amount should be pushed and viceversa.</p>
 <div class="row no_print">
 <span class="label">
 <button name="Calculate" type="submit"
-        onclick="javascript: if (checkForm()) doCalc('payment');"
-        onkeypress="javascript: if (checkForm()) doCalc('payment');">
+        onclick="javascript: if (checkForm()) doCalc();"
+        onkeypress="javascript: if (checkForm()) doCalc();">
 <img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
 <span class="input">
-<button name="Clear" type="reset"
-        onclick="javascript: doReset();"
-        onkeypress="javascript: doReset()">
+<button name="Clear" type="reset">
 <img src="clear.png" width="16" height="16" alt="" />&nbsp;Clear</button></span>
 </div>
 
