@@ -1,5 +1,5 @@
 /* Mortgage Calculator
- * Copyright (C) 2004-2013  Georgi D. Sotirov
+ * Copyright (C) 2004-2015  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Core JavaScript
- * $Id: mcc.js,v 1.18 2013/08/25 16:20:21 gsotirov Exp $
+ * $Id: mcc.js,v 1.19 2015/08/05 16:08:11 gsotirov Exp $
  */
 
 /* Function   : calc_period_payment
@@ -142,8 +142,9 @@ function calc_plan(credit) {
     else {
       var capital     = credit.payment - interest;
       var new_balance = round(balance + interest - credit.payment, 2);
-      /* Annual tax on first installment of every new year since the beginning */
-      if ( (i != 1 && i % 12 == 1) /* e.g. every January */
+      /* Annual tax on last/first installment of every year since the beginning */
+      /* e.g. every December or January depending on selected type */
+      if ( (i != 1 && i % 12 == credit.annual_tax_type)
            && (credit.annual_tax_rate || credit.annual_tax_amt) )
       {
         if ( credit.annual_tax_rate )
