@@ -1,5 +1,5 @@
 /* Mortgage Calculator
- * Copyright (C) 2004-2013  Georgi D. Sotirov
+ * Copyright (C) 2004-2015  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.21 2013/09/15 07:29:52 gsotirov Exp $
+ * $Id: mcalc.js,v 1.22 2015/08/05 16:07:19 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -254,6 +254,13 @@ function doCalc() {
 
   credit.annual_tax_rate  = getFloatValue(form.AnnualTaxRate.value);
   credit.annual_tax_amt   = getFloatValue(form.AnnualTaxAmt.value);
+  if ( Number(form.AnnualTaxType.value) != 0 ) {
+    credit.annual_tax_type  = 1;
+  }
+  else
+  {
+    credit.annual_tax_type  = 0;
+  }
   credit.monthly_tax_rate = getFloatValue(form.MonthlyTaxRate.value);
   credit.monthly_tax_amt  = getFloatValue(form.MonthlyTaxAmt.value);
   credit.onetime_tax_rate = getFloatValue(form.OneTimeTaxRate.value);
