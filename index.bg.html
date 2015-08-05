@@ -2,7 +2,7 @@
 
 <!--
   Mortgage Calculator
-  Copyright (C) 2004-2013  Georgi D. Sotirov
+  Copyright (C) 2004-2015  Georgi D. Sotirov
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.24 2013/09/15 07:31:19 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.25 2015/08/05 16:06:39 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -163,7 +163,10 @@
 % от остатъчната главница<br />и/или твърда сума от
 <input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxAmt)" /><br />
-* начислявани в началото на всяка година</span>
+* начислявани в <select id="AnnualTaxType" name="AnnualTaxType">
+<option id="AnnualTaxStart" value="0">началото</option>
+<option id="AnnualTaxEnd"   value="1">края</option>
+</select> на всяка година</span>
 </div>
 
 <div class="row">
