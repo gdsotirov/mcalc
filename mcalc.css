@@ -1,5 +1,5 @@
 /* Mortgage Calculator
- * Copyright (C) 2004-2006  Georgi D. Sotirov
+ * Copyright (C) 2004-2015  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator Styles
  * Media: screen, print
- * $Id: mcalc.css,v 1.13 2013/09/15 07:30:40 gsotirov Exp $
+ * $Id: mcalc.css,v 1.14 2015/08/06 16:56:39 gsotirov Exp $
  */
 
 @media screen, print {
@@ -180,12 +180,32 @@
 }
 
 @media print {
+  a[href] {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  div.row span.label {
+    clear: left;
+    text-align: right;
+    width: 30%;
+  }
+
   input[type=text], input[type=checkbox], select {
     border: 0 none;
   }
 
+  input[type=checkbox],
+  input[type=radio] {
+    display: none;
+  }
+
   input[type=text] {
     text-align: left;
+  }
+
+  p {
+    page-break-inside: avoid;
   }
 
   .no_print {
