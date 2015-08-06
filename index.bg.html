@@ -31,7 +31,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.26 2015/08/05 16:15:58 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.27 2015/08/06 17:12:47 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -46,7 +46,7 @@
 <body onload="javascript: document.forms.CalcForm.Amount.focus(); lockMonths();">
 <div id="Head">
 <h1>Ипотечен калкулатор</h1>
-<p class="align-center">
+<p class="align-center no_print">
 <a href="index.en.html" hreflang="en" lang="en">English</a>
 </p>
 </div>
@@ -152,7 +152,7 @@
 % от началната главница<br /> и/или твърда сума от
 <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxAmt)" /><br />
-* начислявани при отпускане на кредита</span>
+* <em>начислявани при отпускане на кредита</em></span>
 </div>
 
 <div class="row">
@@ -163,10 +163,10 @@
 % от остатъчната главница<br />и/или твърда сума от
 <input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxAmt)" /><br />
-* начислявани в <select id="AnnualTaxType" name="AnnualTaxType">
+* <em>начислявани в <select id="AnnualTaxType" name="AnnualTaxType">
 <option id="AnnualTaxEnd"   value="0">края</option>
 <option id="AnnualTaxStart" value="1">началото</option>
-</select> на всяка година</span>
+</select> на всяка година</em></span>
 </div>
 
 <div class="row">
@@ -177,7 +177,7 @@
 % от остатъчната главница<br /> и/или твърда сума от
 <input id="MonthlyTaxAmt" name="MonthlyTaxAmt" type="text" size="6" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxAmt)" /><br />
-* начислявани с всяка вноска (редовно плащане)</span>
+* <em>начислявани с всяка вноска (редовно плащане)</em></span>
 </div>
 
 <div class="row">
@@ -196,11 +196,11 @@
 </div>
 
 <div class="row">
-<span class="label">Общо оскъпяване:</span>
+<label for="TotalRaise"><span class="label">Общо оскъпяване:</span></label>
 <span id="TotalRaise" class="input result"></span>
 </div>
 
-<div class="row">
+<div class="row no_print">
 <label for="EnablePlan"><span class="label">Включи погасителен план:</span></label>
 <span class="input"><input id="EnablePlan" name="EnablePlan" type="checkbox" onchange="javascript: showPlan();" /></span>
 </div>
@@ -232,7 +232,7 @@
 <!-- F O O T E R -->
 <div id="Footer">
 <hr />
-<p class="align-center">
+<p class="align-center no_print">
 <!-- Valid XHTML 1.0 -->
 <a href="http://validator.w3.org/check?uri=referer" hreflang="en">
 <img src="valid-xhtml.png" alt="[Икона Валиден XHTML 1.0]" title="Valid XHTML 1.0!" height="31" width="88" /></a>
@@ -243,9 +243,9 @@
 <a href="http://www.unicode.org/" hreflang="en">
 <img src="unicode.png" alt="[Кодирано в UTF-8]" title="Encoded in UTF-8!" height="31" width="88" /></a>
 </p>
-<p class="terms"><a href="terms.bg.html">Условия за ползване</a></p>
+<p class="terms no_print"><a href="terms.bg.html">Условия за ползване</a></p>
 <!-- Copyright -->
-<p class="copyright"><a name="Copyright">Copyright</a> © 2004-2013
+<p class="copyright"><a name="Copyright">Copyright</a> © 2004-2015
 <a href="mailto:gdsotirov@dir.bg">Георги Д. Сотиров</a><br />
 Това приложение може да бъде копирано, разпространявано и публикувано в първоначален
 или изменен вид без каквито и да е ограничения при условие, че горната бележка за авторските права,
