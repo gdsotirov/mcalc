@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.22 2015/08/05 16:07:19 gsotirov Exp $
+ * $Id: mcalc.js,v 1.23 2015/08/07 07:52:23 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -83,8 +83,12 @@ function loadUIString(id) {
     return "???";
 }
 
-function formatNumber(number, places = 2) {
+function formatNumber(number, places /*= 2 supported only by FF */) {
   var num = new NumberFormat();
+
+  if ( places === undefined ) {
+    places = 2;
+  }
 
   /* Configure number formatting */
   num.setInputDecimal('.');
@@ -99,7 +103,12 @@ function formatNumber(number, places = 2) {
   return num.toFormatted();
 }
 
-function formatField(obj, places = 2) {
+function formatField(obj, places /*= 2 suported only by FF */) {
+  if ( places === undefined )
+  {
+    places = 2;
+  }
+  
   if ( obj.value != 0 )
   {
     obj.value = formatNumber(obj.value.replace(",", ".").replace(/\s+/g, ""), places);
