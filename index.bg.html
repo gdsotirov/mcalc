@@ -30,7 +30,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.30 2015/08/11 16:40:08 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.31 2015/08/12 15:51:12 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
@@ -58,15 +58,15 @@
       onsubmit="javascript: return false" onreset="javascript: doReset();">
 <div class="row">
 <label for="Amount"><span class="label">
-<input checked="checked" name="Type" type="radio" value="payment" />&nbsp;Сума:</span></label>
+<input checked="checked" name="Type" type="radio" value="payment" tabindex="1" />&nbsp;Сума:</span></label>
 <span class="input">
-<input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: formatField(document.forms.CalcForm.Amount)" /></span>
+<input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: formatField(document.forms.CalcForm.Amount)" tabindex="2" /></span>
 </div>
 
 <div class="row">
 <label for="TermY"><span class="label">Срок:</span></label>
 <span class="input">
-<select id="TermY" name="TermY" onchange="javascript: lockMonths();">
+<select id="TermY" name="TermY" onchange="javascript: lockMonths();" tabindex="3">
 <option value="0">0</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -99,7 +99,7 @@
 <option value="29">29</option>
 <option value="30">30</option>
 </select>&nbsp;години<span id="MonthSelect">&nbsp;и
-<select name="TermM">
+<select name="TermM" tabindex="4">
 <option value="0">0</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -119,38 +119,38 @@
 <label for="Interest"><span class="label">Лихвен процент:</span></label>
 <span class="input">
 <input id="Interest" name="Interest" type="text" size="4" maxlength="10"
-       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.Interest);"
-       title="Номинален годишен лихвен процент" />
+       onchange="javascript: controlRates(this); formatField(document.forms.CalcForm.Interest);"
+       title="Номинален годишен лихвен процент" tabindex="5" />
 &nbsp;%&nbsp;за първите&nbsp;
 <input id="IntPeriods" name="IntPeriods" type="text" size="4" disabled="disabled"
-       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.IntPeriods, 0);" />&nbsp;месеца<br />
+       onchange="javascript: controlRates(this); formatField(document.forms.CalcForm.IntPeriods, 0);" tabindex="6" />&nbsp;месеца<br />
 <input id="Interest2" name="Interest2" type="text" size="4" maxlength="10"
-       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.Interest2);"
-       title="Номинален годишен лихвен процент" disabled="disabled" />
+       onchange="javascript: controlRates(this); formatField(document.forms.CalcForm.Interest2)"
+       title="Номинален годишен лихвен процент" disabled="disabled" tabindex="7" />
 &nbsp;%&nbsp;за следващите&nbsp;
 <input id="IntPeriods2" name="IntPeriods2" type="text" size="4" disabled="disabled"
-       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.IntPeriods2, 0);" />&nbsp;месеца<br />
+       onchange="javascript: controlRates(this); formatField(document.forms.CalcForm.IntPeriods2, 0);" tabindex="8" />&nbsp;месеца<br />
 <input id="Interest3" name="Interest3" type="text" size="4" maxlength="10"
-       onchange="javascript: controlRates(); formatField(document.forms.CalcForm.Interest3);"
-       title="Номинален годишен лихвен процент" disabled="disabled" />
+       onchange="javascript: controlRates(this); formatField(document.forms.CalcForm.Interest3)"
+       title="Номинален годишен лихвен процент" disabled="disabled" tabindex="9" />
 &nbsp;%&nbsp;за останалия период
 </span>
 </div>
 
 <div class="row">
-<label for="Payment"><span class="label"><input name="Type" type="radio" value="amount" />&nbsp;Вноска:</span></label>
+<label for="Payment"><span class="label"><input name="Type" type="radio" value="amount" tabindex="10" />&nbsp;Вноска:</span></label>
 <span class="input">
-<input id="Payment" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment)" /></span>
+<input id="Payment" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment)" tabindex="11" /></span>
 </div>
 
 <div class="row">
 <label for="OneTimeTaxRate"><span class="label">Еднократни такси:</span></label>
 <span class="input">
 <input id="OneTimeTaxRate" name="OneTimeTaxRate" type="text" size="4" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxRate)" />
+       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxRate)" tabindex="12" />
 % от началната главница<br /> и/или твърда сума от
 <input id="OneTimeTaxAmt" name="OneTimeTaxAmt" type="text" size="6" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxAmt)" /><br />
+       onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxAmt)" tabindex="13" /><br />
 * <em>начислявани при отпускане на кредита</em></span>
 </div>
 
@@ -158,11 +158,11 @@
 <label for="AnnualTaxRate"><span class="label">Годишни такси:</span></label>
 <span class="input">
 <input id="AnnualTaxRate" name="AnnualTaxRate" type="text" size="4" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxRate)" />
+       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxRate)" tabindex="14" />
 % от остатъчната главница<br />и/или твърда сума от
 <input id="AnnualTaxAmt" name="AnnualTaxAmt" type="text" size="6" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxAmt)" /><br />
-* <em>начислявани в <select id="AnnualTaxType" name="AnnualTaxType">
+       onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxAmt)" tabindex="15" /><br />
+* <em>начислявани в <select id="AnnualTaxType" name="AnnualTaxType" tabindex="16">
 <option id="AnnualTaxEnd"   value="0">края</option>
 <option id="AnnualTaxStart" value="1">началото</option>
 </select> на всяка година</em></span>
@@ -172,10 +172,10 @@
 <label for="MonthlyTaxRate"><span class="label">Месечни такси:</span></label>
 <span class="input">
 <input id="MonthlyTaxRate" name="MonthlyTaxRate" type="text" size="4" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxRate)" />
+       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxRate)" tabindex="17" />
 % от остатъчната главница<br /> и/или твърда сума от
 <input id="MonthlyTaxAmt" name="MonthlyTaxAmt" type="text" size="6" maxlength="10"
-       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxAmt)" /><br />
+       onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxAmt)" tabindex="18" /><br />
 * <em>начислявани с всяка вноска (редовно плащане)</em></span>
 </div>
 
@@ -201,7 +201,7 @@
 
 <div class="row no_print">
 <label for="EnablePlan"><span class="label">Включи погасителен план:</span></label>
-<span class="input"><input id="EnablePlan" name="EnablePlan" type="checkbox" onchange="javascript: showPlan();" /></span>
+<span class="input"><input id="EnablePlan" name="EnablePlan" type="checkbox" onchange="javascript: showPlan();" tabindex="19" /></span>
 </div>
 
 <div class="row">
@@ -213,10 +213,10 @@
 <button name="Calculate" type="submit"
         onclick="javascript: if (checkForm()) doCalc();"
         onkeypress="javascript: if (checkForm()) doCalc();">
-<img src="calc.png" width="16" height="16" alt="" />&nbsp;Изчисли</button></span>
+<img src="calc.png" width="16" height="16" alt="" tabindex="20" />&nbsp;Изчисли</button></span>
 <span class="input">
 <button name="Clear" type="reset">
-<img src="clear.png" width="16" height="16" alt="" />&nbsp;Изчисти</button></span>
+<img src="clear.png" width="16" height="16" alt="" tabindex="21" />&nbsp;Изчисти</button></span>
 </div>
 
 <div class="row">
