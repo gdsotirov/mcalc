@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.24 2015/08/07 11:11:40 gsotirov Exp $
+ * $Id: mcalc.js,v 1.25 2015/08/12 15:31:59 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -339,6 +339,8 @@ function doCalc() {
     Table.appendChild(TableBody);
     AmortPlan.appendChild(Table);
   }
+
+  controlRates();
 
   return true;
 }
