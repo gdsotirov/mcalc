@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="bg">
 
 <head>
-<meta http-equiv="Content-Type" content="test/html; charset=UTF-8" />
+<meta charset="utf-8">
 <!--
   Mortgage Calculator
   Copyright (C) 2004-2015  Georgi D. Sotirov
@@ -30,41 +28,47 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.en.html,v 1.32 2015/08/12 15:51:13 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.en.html,v 1.33 2015/08/12 17:17:45 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Default" type="text/css" />
-<link rel="stylesheet" href="speech.css" media="aural, speech" type="text/css" />
+<link rel="stylesheet" href="speech.css" media="speech" type="text/css" />
 <link rel="author" href="mailto:Georgi$20Sotirov%20%3Cgdsotirov@dir.bg%3E" />
 <link rel="copyright" href="#Copyright" />
 <link rel="alternate" type="text/html" href="index.bg.html" hreflang="bg" lang="bg" title="Ипотечен калкулатор" />
 <script type="text/javascript" src="NumberFormat.js"></script>
 <script type="text/javascript" src="mcc.js"></script>
 <script type="text/javascript" src="mcalc.js"></script>
+<!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
 </head>
 
 <body onload="javascript: document.forms.CalcForm.Amount.focus(); lockMonths();">
-<div id="Head">
+<header>
 <h1>Mortgage Calculator</h1>
-<p class="align-center no_print">
+</header>
+<nav>
 <a href="index.bg.html" hreflang="bg" lang="bg">Български</a>
-</p>
-</div>
+</nav>
 
-<div id="Calc">
-<p class="no_print align-center">Please, select the type of the calculation
+<section id="Calc">
+<h2 class="no_print align-center">Please, select the type of the calculation
 with the radio buttons. If you wish to calculate by Payment the
-button in front of Amount should be pushed and viceversa.</p>
+button in front of Amount should be pushed and viceversa.</h2>
 <form action="#" enctype="application/x-www-form-urlencoded" id="CalcForm" method="post"
       onsubmit="javascript: return false" onreset="javascript: doReset();">
 <div class="row">
-<label for="Amount"><span class="label">
-<input checked="checked" name="Type" type="radio" value="payment" tabindex="1" />&nbsp;Amount:</span></label>
+<span class="label">
+<input checked="checked" name="Type" type="radio" value="payment"
+tabindex="1" />&nbsp;<label for="Amount">Amount:</label></span>
 <span class="input">
-<input id="Amount" name="Amount" type="text" size="16" maxlength="16" onchange="javascript: formatField(document.forms.CalcForm.Amount)" tabindex="2" /></span>
+<input id="Amount" name="Amount" type="text" size="16" maxlength="16"
+       onchange="javascript: formatField(document.forms.CalcForm.Amount)"
+       tabindex="2" autofocus /></span>
 </div>
 
 <div class="row">
-<label for="TermY"><span class="label">Term:</span></label>
+<span class="label"><label for="TermY">Term:</label></span>
 <span class="input">
 <select id="TermY" name="TermY" onchange="javascript: lockMonths();" tabindex="3">
 <option value="0">0</option>
@@ -138,13 +142,15 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 <div class="row">
-<label for="Payment"><span class="label"><input name="Type" type="radio" value="amount" tabindex="10" />&nbsp;Payment:</span></label>
+<span class="label">
+<input name="Type" type="radio" value="amount"
+tabindex="10" />&nbsp;<label for="Payment">Payment:</label></span>
 <span class="input">
 <input id="Payment" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment)" tabindex="11" /></span>
 </div>
 
 <div class="row">
-<label for="OneTimeTaxRate"><span class="label">One-time taxes:</span></label>
+<span class="label"><label for="OneTimeTaxRate">One-time taxes:</label></span>
 <span class="input">
 <input id="OneTimeTaxRate" name="OneTimeTaxRate" type="text" size="4" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.OneTimeTaxRate)" tabindex="12" />
@@ -155,7 +161,7 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 <div class="row">
-<label for="AnnualTaxRate"><span class="label">Annual taxes:</span></label>
+<span class="label"><label for="AnnualTaxRate">Annual taxes:</label></span>
 <span class="input">
 <input id="AnnualTaxRate" name="AnnualTaxRate" type="text" size="4" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.AnnualTaxRate)" tabindex="14" />
@@ -169,7 +175,7 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 <div class="row">
-<label for="MonthlyTaxRate"><span class="label">Monthly taxes:</span></label>
+<span class="label"><label for="MonthlyTaxRate">Monthly taxes:</label></span>
 <span class="input">
 <input id="MonthlyTaxRate" name="MonthlyTaxRate" type="text" size="4" maxlength="10"
        onchange="javascript: formatField(document.forms.CalcForm.MonthlyTaxRate)" tabindex="17" />
@@ -180,27 +186,27 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 <div class="row">
-<label for="TotalInterests"><span class="label">Total interests:</span></label>
+<span class="label">Total interests:</span>
 <span id="TotalInterests" class="input result"></span>
 </div>
 
 <div class="row">
-<label for="TotalTaxes"><span class="label">Total taxes:</span></label>
+<span class="label">Total taxes:</span>
 <span id="TotalTaxes" class="input result"></span>
 </div>
 
 <div class="row">
-<label for="TotalReturn"><span class="label">Total amount returned:</span></label>
+<span class="label">Total amount returned:</span>
 <span id="TotalReturn" class="input result"></span>
 </div>
 
 <div class="row">
-<label for="TotalRaise"><span class="label">Total raise of cost:</span></label>
+<span class="label">Total raise of cost:</span>
 <span id="TotalRaise" class="input result"></span>
 </div>
 
 <div class="row no_print">
-<label for="EnablePlan"><span class="label">Include amortization plan:</span></label>
+<span class="label"><label for="EnablePlan">Include amortization plan:</label></span>
 <span class="input"><input id="EnablePlan" name="EnablePlan" type="checkbox" onchange="javascript: showPlan();" tabindex="19" /></span>
 </div>
 
@@ -224,17 +230,17 @@ button in front of Amount should be pushed and viceversa.</p>
 </div>
 
 </form>
-<div id="PlanContainer">
-</div>
-</div>
 
-<!-- F O O T E R -->
-<div id="Footer">
+<section id="PlanContainer">
+</section>
+</section>
+
+<footer>
 <hr />
 <p class="align-center no_print">
 <!-- Valid XHTML 1.0 -->
 <a href="http://validator.w3.org/check?uri=referer">
-<img src="valid-xhtml.png" alt="[Valid XHTML 1.0 Icon]" title="Valid XHTML 1.0!" height="31" width="88" /></a>
+<img src="valid-html5.png" alt="[Valid HTML 5.0 Icon]" title="Valid HTML 5.0!" height="31" width="88" /></a>
 <!-- Valid CSS -->
 <a href="http://jigsaw.w3.org/css-validator/">
 <img src="valid-css.png" alt="[Valid CSS Icon]" title="Valid CSS!" height="31" width="88" /></a>
@@ -244,7 +250,7 @@ button in front of Amount should be pushed and viceversa.</p>
 </p>
 <p class="terms no_print"><a href="terms.en.html">Terms of use</a></p>
 <!-- Copyright -->
-<p class="copyright"><a name="Copyright">Copyright</a> © 2004-2015
+<p class="copyright"><a id="Copyright">Copyright</a> © 2004-2015
 <a href="mailto:gdsotirov@dir.bg">Georgi D. Sotirov</a><br />
 This application can be copyed, distributed and published in original
 or modified version without any restrictions if the upper copyright notice
@@ -252,7 +258,7 @@ and the current paragraph be included in all such copyes or derivative
 works. When distributing modified version by all means a link to the original
 version should be included or the original and the modified versions should be
 distributed together.</p>
-</div>
+</footer>
 
 </body>
 </html>
