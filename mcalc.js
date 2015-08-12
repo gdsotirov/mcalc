@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.25 2015/08/12 15:31:59 gsotirov Exp $
+ * $Id: mcalc.js,v 1.26 2015/08/12 15:52:54 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -174,13 +174,21 @@ function lockMonths() {
   }
 }
 
-function controlRates() {
+/* See http://stackoverflow.com/a/29883167 */
+function findNextTabStop(el) {
+  var elmnts = document.querySelectorAll('input, button, select');
+  var list = Array.prototype.filter.call(elmnts, function(item) {return item.tabIndex >= "0"});
+  var idx = list.indexOf(el);
+  return list[idx + 1] || list[0];
+}
+
+function controlRates(elmnt) {
   var Interest   = document.getElementById("Interest");
   var IntPeriods = document.getElementById("IntPeriods");
   var Interest2  = document.getElementById("Interest2");
   var IntPeriods2= document.getElementById("IntPeriods2");
   var Interest3  = document.getElementById("Interest3");
-  
+
   IntPeriods.disabled = (Interest.value.length == 0 || Interest.value == "" || Interest.value == 0 );
   Interest2.disabled  = (   (Interest.value.length == 0   || Interest.value == ""   || Interest.value == 0)
                          || (IntPeriods.value.length == 0 || IntPeriods.value == "" || IntPeriods.value == 0)
@@ -189,6 +197,10 @@ function controlRates() {
   Interest3.disabled  = (   (Interest2.value.length == 0   || Interest2.value == ""   || Interest2.value == 0)
                          || (IntPeriods2.value.length == 0 || IntPeriods2.value == "" || IntPeriods2.value == 0)
                         );
+
+  /* Focus on next exlement by tab index */
+  var nextElmnt = findNextTabStop(elmnt);
+  nextElmnt.focus();
 }
 
 function showPlan() {
