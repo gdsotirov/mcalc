@@ -28,7 +28,7 @@
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
 <meta name="version" content="0.2.5" />
-<meta name="CVS" content="$Id: index.bg.html,v 1.34 2015/08/12 17:27:44 gsotirov Exp $" />
+<meta name="CVS" content="$Id: index.bg.html,v 1.35 2015/08/15 06:55:22 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
 <link rel="stylesheet" href="speech.css" media="speech" type="text/css" />
@@ -43,7 +43,7 @@
 <![endif]-->
 </head>
 
-<body onload="javascript: document.forms.CalcForm.Amount.focus(); lockMonths();">
+<body onload="javascript: lockMonths(); lockType()">
 <header>
 <h1>Ипотечен калкулатор</h1>
 </header>
@@ -60,7 +60,7 @@
 <div class="row">
 <span class="label">
 <input checked="checked" name="Type" type="radio" value="payment"
-tabindex="1" />&nbsp;<label for="Amount">Сума:</label></span>
+       onchange="javascript: lockType()" tabindex="1" />&nbsp;<label for="Amount">Сума:</label></span>
 <span class="input">
 <input id="Amount" name="Amount" type="text" size="16" maxlength="16"
        onchange="javascript: formatField(document.forms.CalcForm.Amount)"
@@ -143,8 +143,8 @@ tabindex="1" />&nbsp;<label for="Amount">Сума:</label></span>
 
 <div class="row">
 <span class="label">
-<input name="Type" type="radio" value="amount"
-tabindex="10" />&nbsp;<label for="Payment">Вноска:</label></span>
+<input name="Type" type="radio" value="amount" onchange="javascript: lockType()"
+       tabindex="10" />&nbsp;<label for="Payment">Вноска:</label></span>
 <span class="input">
 <input id="Payment" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment)" tabindex="11" /></span>
 </div>
