@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.26 2015/08/12 15:52:54 gsotirov Exp $
+ * $Id: mcalc.js,v 1.27 2015/08/15 06:54:24 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -172,6 +172,12 @@ function lockMonths() {
     else
       msel.style.display = "inline";
   }
+}
+
+function lockType() {
+  var type_val = getRadioValue(document.forms.CalcForm.Type);
+  document.getElementById("Payment").disabled = (type_val == "payment");
+  document.getElementById("Amount" ).disabled = (type_val == "amount" );
 }
 
 /* See http://stackoverflow.com/a/29883167 */
