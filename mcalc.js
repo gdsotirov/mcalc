@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.27 2015/08/15 06:54:24 gsotirov Exp $
+ * $Id: mcalc.js,v 1.28 2015/08/15 08:01:40 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -252,6 +252,12 @@ function doReset() {
   document.getElementById("Interest2").disabled   = true;
   document.getElementById("IntPeriods2").disabled = true;
   document.getElementById("Interest3").disabled   = true;
+
+  document.forms.CalcForm.TermM.disabled = false;
+  document.getElementById("MonthSelect").style.display = "inline";
+
+  document.getElementById("Payment").disabled = true;
+  document.getElementById("Amount" ).disabled = false;
 }
 
 function doCalc() {
@@ -314,7 +320,11 @@ function doCalc() {
   var TotalReturn = document.getElementById("TotalReturn");
   var TotalRaise  = document.getElementById("TotalRaise");
   var AmortPlan   = document.getElementById("PlanContainer");
-  doReset();
+  removeAllChilds(document.getElementById("TotalInterests"));
+  removeAllChilds(document.getElementById("TotalTaxes"));
+  removeAllChilds(document.getElementById("TotalReturn"));
+  removeAllChilds(document.getElementById("TotalRaise"));
+  removeAllChilds(document.getElementById("PlanContainer"));
 
   var raise = ((result.tot_ret / credit.amount) - 1 ) * 100;
   
@@ -357,8 +367,6 @@ function doCalc() {
     Table.appendChild(TableBody);
     AmortPlan.appendChild(Table);
   }
-
-  controlRates();
 
   return true;
 }
