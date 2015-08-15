@@ -17,7 +17,7 @@
  *
  * ---------------------------------------------------------------------------
  * Description: Mortgage Calculator UI JavaScript
- * $Id: mcalc.js,v 1.28 2015/08/15 08:01:40 gsotirov Exp $
+ * $Id: mcalc.js,v 1.29 2015/08/15 09:34:11 gsotirov Exp $
  */
 
 var uisPlsFillAmount = 0;
@@ -336,7 +336,7 @@ function doCalc() {
   if ( enablePlan ) {
     var Table = document.createElement("table");
     var Rows  = result.am_tbl;
-    /*Table.setAttribute("class", "tbThinBorder"); IE does not apply styles with this */
+    Table.setAttribute("class", "tbThinBorder");
     Table.className = "tbThinBorder";
     Table.setAttribute("id", "Table");
     Table.setAttribute("cellspacing", "0");
