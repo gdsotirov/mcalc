@@ -1,5 +1,5 @@
 /* Mortgage Calculator
- * Copyright (C) 2004-2015  Georgi D. Sotirov
+ * Copyright (C) 2004-2019  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
