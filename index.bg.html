@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <!--
   Mortgage Calculator
-  Copyright (C) 2004-2015  Georgi D. Sotirov
+  Copyright (C) 2004-2019  Georgi D. Sotirov
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 <meta name="robots" content="INDEX, FOLLOW" />
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Георги Д. Сотиров" />
-<meta name="version" content="0.5.0" />
+<meta name="version" content="0.5.1" />
 <meta name="CVS" content="$Id: index.bg.html,v 1.37 2015/08/27 16:44:03 gsotirov Exp $" />
 <title>Ипотечен калкулатор</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Подразбиращ се" type="text/css" />
@@ -126,7 +126,7 @@
 <span class="input">
 <input id="Interest" name="Interest" type="text" size="4" maxlength="10"
        onchange="javascript: controlRates(this); formatField(document.forms.CalcForm.Interest);"
-       title="Номинален годишен лихвен процент" tabindex="5" />
+       title="Годишен номинален лихвен процент" tabindex="5" />
 &nbsp;%&nbsp;за първите&nbsp;
 <input id="IntPeriods" name="IntPeriods" type="text" size="4" disabled="disabled"
        onchange="javascript: controlRates(this); formatField(document.forms.CalcForm.IntPeriods, 0);" tabindex="6" />&nbsp;месеца<br />
@@ -208,7 +208,7 @@
 </div>
 
 <div class="row no_print">
-<span class="label"><label for="EnablePlan">Включи погасителен план:</label></span>
+<span class="label"><label for="EnablePlan">Включване на погасителен план:</label></span>
 <span class="input"><input id="EnablePlan" name="EnablePlan" type="checkbox" onchange="javascript: showPlan();" tabindex="19" /></span>
 </div>
 
@@ -220,11 +220,12 @@
 <span class="label">
 <button name="Calculate" type="submit"
         onclick="javascript: if (checkForm()) doCalc();"
-        onkeypress="javascript: if (checkForm()) doCalc();">
-<img src="calc.png" width="16" height="16" alt="" tabindex="20" />&nbsp;Изчисли</button></span>
+        onkeypress="javascript: if (checkForm()) doCalc();"
+        tabindex="20">
+<img src="calc.png" width="16" height="16" alt="" />&nbsp;Изчисли</button></span>
 <span class="input">
-<button name="Clear" type="reset">
-<img src="clear.png" width="16" height="16" alt="" tabindex="21" />&nbsp;Изчисти</button></span>
+<button name="Clear" type="reset" tabindex="21">
+<img src="clear.png" width="16" height="16" alt="" />&nbsp;Изчисти</button></span>
 </div>
 
 <div class="row">
@@ -247,12 +248,12 @@
 <a href="https://jigsaw.w3.org/css-validator/check/referer" hreflang="en">
 <img src="valid-css.png" alt="[Икона Валиден CSS]" title="Valid CSS!" height="31" width="88" /></a>
 <!-- UTF-8 Encoded -->
-<a href="http://www.unicode.org/" hreflang="en">
+<a href="https://www.unicode.org/" hreflang="en">
 <img src="unicode.png" alt="[Кодирано в UTF-8]" title="Encoded in UTF-8!" height="31" width="88" /></a>
 </p>
 <p class="terms no_print"><a href="terms.bg.html">Условия за ползване</a></p>
 <!-- Copyright -->
-<p class="copyright"><a id="Copyright">Copyright</a> © 2004-2015
+<p class="copyright"><a id="Copyright">Copyright</a> © 2004-2019
 <a href="mailto:gdsotirov@dir.bg">Георги Д. Сотиров</a><br />
 Това приложение може да бъде копирано, разпространявано и публикувано в първоначален
 или изменен вид без каквито и да е ограничения при условие, че горната бележка за авторските права,

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html lang="bg">
+<html lang="en">
 
 <head>
 <meta charset="utf-8">
 <!--
   Mortgage Calculator
-  Copyright (C) 2004-2015  Georgi D. Sotirov
+  Copyright (C) 2004-2019  Georgi D. Sotirov
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 <meta name="robots" content="INDEX, FOLLOW" />
 <meta name="robots" content="NOARCHIVE" />
 <meta name="author" content="Georgi D. Sotirov" />
-<meta name="version" content="0.5.0" />
+<meta name="version" content="0.5.1" />
 <meta name="CVS" content="$Id: index.en.html,v 1.38 2015/08/27 16:44:03 gsotirov Exp $" />
 <title>Mortgage Calculator</title>
 <link rel="stylesheet" href="mcalc.css" media="screen, print" title="Default" type="text/css" />
@@ -145,7 +145,7 @@ button in front of Amount should be pushed and viceversa.</h2>
 
 <div class="row">
 <span class="label">
-<input name="Type" type="radio" value="amount"  onchange="javascript: lockType()"
+<input name="Type" type="radio" value="amount" onchange="javascript: lockType()"
 tabindex="10" />&nbsp;<label for="Payment">Payment:</label></span>
 <span class="input">
 <input id="Payment" name="Payment" type="text" size="8" maxlength="10" onchange="javascript: formatField(document.forms.CalcForm.Payment)" tabindex="11" /></span>
@@ -220,11 +220,12 @@ tabindex="10" />&nbsp;<label for="Payment">Payment:</label></span>
 <span class="label">
 <button name="Calculate" type="submit"
         onclick="javascript: if (checkForm()) doCalc();"
-        onkeypress="javascript: if (checkForm()) doCalc();">
-<img src="calc.png" width="16" height="16" alt="" tabindex="20" />&nbsp;Calculate</button></span>
+        onkeypress="javascript: if (checkForm()) doCalc();"
+        tabindex="20">
+<img src="calc.png" width="16" height="16" alt="" />&nbsp;Calculate</button></span>
 <span class="input">
-<button name="Clear" type="reset">
-<img src="clear.png" width="16" height="16" alt="" tabindex="21" />&nbsp;Clear</button></span>
+<button name="Clear" type="reset" tabindex="21">
+<img src="clear.png" width="16" height="16" alt="" />&nbsp;Clear</button></span>
 </div>
 
 <div class="row">
@@ -252,7 +253,7 @@ tabindex="10" />&nbsp;<label for="Payment">Payment:</label></span>
 </p>
 <p class="terms no_print"><a href="terms.en.html">Terms of use</a></p>
 <!-- Copyright -->
-<p class="copyright"><a id="Copyright">Copyright</a> © 2004-2015
+<p class="copyright"><a id="Copyright">Copyright</a> © 2004-2019
 <a href="mailto:gdsotirov@dir.bg">Georgi D. Sotirov</a><br />
 This application can be copyed, distributed and published in original
 or modified version without any restrictions if the upper copyright notice
