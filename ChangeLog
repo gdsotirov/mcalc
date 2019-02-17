@@ -1,21 +1,33 @@
 Mortgage Calculator Changes Log
-Note: All bugs are avialble from https://sotirov-bg.net/bugzilla/
+
+Note: Bugs could be found at https://sotirov-bg.net/bugzilla/
+
+mcalc 0.5.1 (2019-02-17)
+------------------------------------------------------------------------------
+* Fix: Update speech stylesheet for conformance with CSS 3 specification and
+       so it validates without errors and warnings
+* Fix: Move taborder on the buttons (was on the image instead)
 
 mcalc 0.5.0 (2015-08-27)
 ------------------------------------------------------------------------------
 This is major new release, including many new features and several bug fixes.
-* New: Possiblity for calculcation with one-time, yearly and monthly taxes (see bug 144)
-* New: Possiblity for calcaulation with several interest rates for different periods (see bug 145 and 153)
-* New: Option to calculate periodical taxes on the last installment of the period (see bug 151)
+* New: Possiblity for calculcation with one-time, yearly and monthly
+       taxes (see bug 144)
+* New: Possiblity for calcaulation with several interest rates for different
+       periods (see bug 145 and 153)
+* New: Option to calculate periodical taxes on the last installment of
+       the period (see bug 151)
 * New: Display total amount of interest to be paid (see bug 82 and 152)
 * New: Alternatively enable/disable inputs for amount or payment (see bug 162)
 * New: Improved print layout (see bug 155)
 * New: HTML source is now in HTML5 (see bug 161)
 * New: The calculator now has icon (see bug 163)
 * Fix: Results of calculation were not cleared on reset (see bug 147)
-* Fix: JavaScript issues in Chrome with default function argument and script defer on loading (see bug 154)
+* Fix: JavaScript issues in Chrome with default function argument and script
+       defer on loading (see bug 154)
 * Fix: Amortization table appeared mangled in InternetExplorer (see bug 156)
-* Fix: Move DOCTYPE and charset definitions in the begining to avoid quirks mode of InternetExplorer (see bug 159)
+* Fix: Move DOCTYPE and charset definitions in the begining to avoid quirks
+       mode of InternetExplorer (see bug 159)
 
 mcalc 0.2.5 (2011-03-15)
 ------------------------------------------------------------------------------
@@ -29,7 +41,8 @@ mcalc 0.2.4 (2006-12-07)
 mcalc 0.2.3 (2006-12-06)
 ------------------------------------------------------------------------------
 * The 'table' is now refered as 'amortization plan'
-* The calculate button can now be activated both with the mouse and the keyboard
+* The calculate button can now be activated both with the mouse and
+  the keyboard
 * Fixed HTML syntax warnings
 
 mcalc 0.2.2 (2006-03-03)
