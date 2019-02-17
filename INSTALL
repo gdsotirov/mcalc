@@ -3,14 +3,14 @@
 Installing on a web server
 ---------------------------
 
-You only need to paste the code in the web server root. If you don't use
-content negotiation you may need to fix some links, otherwise the images
-won't be available.
+Download and extract a release archive to into a web server folder or clone
+the repository. Point your browser to the URL. If you use content negotiation
+you may need to fix some links, so you server could provide proper content
+to its clients.
 
 
 Installing in a home directory
 ----------------------------------
 
-Copy the files in a directory in you home folder. You may need to fix some
-links in order for the applicaiton to work. This will be fixed in future
-releases.
+Download and extract a release archive to in your home folder or clone
+the repository. Open index.bg.html or index.en.html in your browser.
