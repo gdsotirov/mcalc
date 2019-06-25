@@ -27,13 +27,15 @@
  *              periods  - the periods for the credit
  */
 function calc_period_payment(interest, amount, periods) {
-  var peyment = 0.0;
+  var payment;
+
   if ( interest > 0.0 ) {
     var period_interest = interest / 100 / 12;
     payment = round((period_interest * amount) / (1 - Math.pow(1 + period_interest, -periods)), 2);
   }
-  else
+  else {
     payment = round(amount / periods, 2);
+  }
 
   return payment;
 }
@@ -45,13 +47,15 @@ function calc_period_payment(interest, amount, periods) {
  *              periods  - the periods for the credit
  */
 function calc_total_amount(interest, payment, periods) {
-  var amount = 0.0;
+  var amount;
+
   if ( interest > 0.0 ) {
     var period_interest = interest / 100 / 12;
     amount = (payment * (1 - Math.pow(1 + period_interest, -periods))) / period_interest;
   }
-  else
+  else {
     amount = payment * periods;
+  }
 
   return amount;
 }
@@ -94,7 +98,8 @@ function calc_plan(credit) {
   }
 
   for ( var i = 1; i <= credit.periods; ++i ) {
-    var interest = 0.0;
+    var interest;
+
     if ( credit.int_periods && i <= credit.int_periods )
     {
       interest = round(balance * (credit.int_rate / 100 / 12), 2);
