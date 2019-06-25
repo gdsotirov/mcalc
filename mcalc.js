@@ -120,6 +120,8 @@ function formatField(obj, places /*= 2 suported only by FF */) {
 }
 
 function checkField(fld, type, uisFill, uisCorr) {
+  var val;
+
   if ( fld.value == "" ) {
     alert(loadUIString(uisFill));
     fld.focus();
@@ -156,9 +158,6 @@ function getRadioValue(radio) {
 }
 
 function getFloatValue(str) {
-  var htmltags = document.getElementsByTagName("html");
-  var lang = htmltags[0].lang;
-
   return parseFloat(str.replace(/\s+/g, "").replace(",", "."));
 }
 
