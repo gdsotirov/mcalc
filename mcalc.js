@@ -103,7 +103,7 @@ function formatNumber(number, places /*= 2 supported only by FF */) {
   return num.toFormatted();
 }
 
-function formatField(obj, places /*= 2 suported only by FF */) {
+function formatField(obj, places /*= 2 supported only by FF */) {
   if ( places === undefined )
   {
     places = 2;
@@ -203,7 +203,7 @@ function controlRates(elmnt) {
                          || (IntPeriods2.value.length == 0 || IntPeriods2.value == "" || IntPeriods2.value == 0)
                         );
 
-  /* Focus on next exlement by tab index */
+  /* Focus on next element by tab index */
   var nextElmnt = findNextTabStop(elmnt);
   nextElmnt.focus();
 }
