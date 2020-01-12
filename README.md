@@ -1,25 +1,21 @@
-			      Mortgage Calculator
+# Mortgage Calculator
 
-What is this?
--------------
+## About
 
-Mortgage calculator (mcalc for short) is an web application which can
+Mortgage calculator (mcalc for short) is an web application that can
 calculate both monthly annuity payment and the amount you can get for a given
 mortgage. It also can show amortization schedule.
 
-The latest version
-------------------
+## Download
 
-The latest version can always be obtained from the Georgi Sotirov's projects
-page at http://sotirov-bg.net/~gsotirov/projects/
+The latest version could be obtained from [releases](https://github.com/gdsotirov/mcalc/releases)
+or from [my FTP server](https://ftp.sotirov-bg.net/pub/mcalc/).
 
-Installation
--------------
+## Installation
 
-Please, see the file called INSTALL for details on the installation.
+Please, see the file [INSTALL.md](INSTALL.md) for instructions.
 
-Copying
---------
+## License
 
-Please, see the file called COPYING.
+Please, see file [COPYING](COPYING).
 
