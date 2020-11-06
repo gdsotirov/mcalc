@@ -1,5 +1,5 @@
 /* Mortgage Calculator
- * Copyright (C) 2004-2019  Georgi D. Sotirov
+ * Copyright (C) 2004-2020  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -178,7 +178,7 @@ function lockType() {
   document.getElementById("Amount" ).disabled = (type_val == "amount" );
 }
 
-/* See http://stackoverflow.com/a/29883167 */
+/* See https://stackoverflow.com/a/29883167 */
 function findNextTabStop(el) {
   var elmnts = document.querySelectorAll('input, button, select');
   var list = Array.prototype.filter.call(elmnts, function(item) {return item.tabIndex >= "0"});
