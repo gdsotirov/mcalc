@@ -82,12 +82,8 @@ function loadUIString(id) {
     return "???";
 }
 
-function formatNumber(number, places /*= 2 supported only by FF */) {
+function formatNumber(number, places = 2) {
   var num = new NumberFormat();
-
-  if ( places === undefined ) {
-    places = 2;
-  }
 
   /* Configure number formatting */
   num.setInputDecimal('.');
@@ -102,12 +98,7 @@ function formatNumber(number, places /*= 2 supported only by FF */) {
   return num.toFormatted();
 }
 
-function formatField(obj, places /*= 2 supported only by FF */) {
-  if ( places === undefined )
-  {
-    places = 2;
-  }
-  
+function formatField(obj, places = 2) {
   if ( obj.value != 0 )
   {
     obj.value = formatNumber(obj.value.replace(",", ".").replace(/\s+/g, ""), places);
