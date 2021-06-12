@@ -1,5 +1,6 @@
-/* Mortgage Calculator
- * Copyright (C) 2004-2020  Georgi D. Sotirov
+/**
+ * Mortgage Calculator
+ * Copyright (C) 2004-2021  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * ---------------------------------------------------------------------------
- * Description: Mortgage Calculator UI JavaScript
+ * @file Mortgage Calculator UI JavaScript
+ * @version 0.5.1
+ * @author Georgi D. Sotirov <gdsotirov@gmail.com>
  */
 
 var uisPlsFillAmount = 0;
@@ -57,7 +60,7 @@ var UIStringsEN = new Array(
 /*  2 */ "Please, fill in the Payment field!",
 /*  3 */ "Please, fill in correct value in the Payment field! Example: 500, 750, 1200.5",
 /*  4 */ "Please, choose the credit term in years and/or months!",
-/*  5 */ "Please, fill in the Interest reate fields!",
+/*  5 */ "Please, fill in the Interest rate fields!",
 /*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55",
 /*  7 */ "Month",
 /*  8 */ "Capital Balance",
@@ -68,6 +71,11 @@ var UIStringsEN = new Array(
 /* 13 */ "Taxes"
 );
 
+/**
+ * Loads UI string base on language setting of html tag
+ * @param {number} id UI string identifier
+ * @returns String in specific language.
+ */
 function loadUIString(id) {
   var htmltags = document.getElementsByTagName("html");
   var lang = htmltags[0].lang;
@@ -78,10 +86,15 @@ function loadUIString(id) {
   else if ( lang == "bg" ) {
     return UIStringsBG[id];
   }
-  else
-    return "???";
+  else return "???";
 }
 
+/**
+ * Formats number with specified precision
+ * @param {number} number Number to format
+ * @param {number} places Precision in decimal places
+ * @returns Formatted string representation of the number
+ */
 function formatNumber(number, places = 2) {
   var num = new NumberFormat();
 
@@ -98,6 +111,11 @@ function formatNumber(number, places = 2) {
   return num.toFormatted();
 }
 
+/**
+ * Formats the value of and HTML input element
+ * @param {object} obj An HTML input element
+ * @param {number} places Precision in decimal places
+ */
 function formatField(obj, places = 2) {
   if ( obj.value != 0 )
   {
@@ -109,6 +127,14 @@ function formatField(obj, places = 2) {
   }
 }
 
+/**
+ * Checks the value of an HTML input element
+ * @param {object} fld An HTML input element
+ * @param {string} type Value type. Either 'float' or 'int'
+ * @param {number} uisFill UI string index for when field value is empty
+ * @param {number} uisCorr UI string index for when field value is wrong
+ * @returns True if the value in the field is correct, otherwise false
+ */
 function checkField(fld, type, uisFill, uisCorr) {
   var val;
 
@@ -117,6 +143,7 @@ function checkField(fld, type, uisFill, uisCorr) {
     fld.focus();
     return false;
   }
+
   if ( type != "string" ) {
     if ( type == "float" )
       val = parseFloat(fld.value);
@@ -128,15 +155,25 @@ function checkField(fld, type, uisFill, uisCorr) {
       return false;
     }
   }
+
   return true;
 }
 
-function removeAllChilds(node) {
-  if ( node )
-    while ( node.firstChild )
-      node.removeChild(node.firstChild);
+/**
+ * Removes all children elements of an element
+ * @param {object} elem An HTML element (any)
+ */
+ function removeAllChildren(elem) {
+  while ( elem.firstChild ) {
+    elem.removeChild(elem.lastChild);
+  }
 }
 
+/**
+ * Retrieves the value of a radio button
+ * @param {object} radio An HTML radio buttons input
+ * @returns The selected radio button value, otherwise undefined
+ */
 function getRadioValue(radio) {
   var i = 0;
   while ( i < radio.length ) {
@@ -147,10 +184,18 @@ function getRadioValue(radio) {
   return;
 }
 
+/**
+ * Parses floating value by first removing spaces and replacing , with .
+ * @param {string} str String with float value
+ * @returns Float value
+ */
 function getFloatValue(str) {
   return parseFloat(str.replace(/\s+/g, "").replace(",", "."));
 }
 
+/**
+ * Hides select for months if maximum term of 30 years is chosen
+ */
 function lockMonths() {
   var year = parseInt(document.forms.CalcForm.TermY.value);
   if ( !isNaN(year) ) {
@@ -163,13 +208,22 @@ function lockMonths() {
   }
 }
 
+/**
+ * Disables either input for Amount or Payment based on the value of Type
+ * radio button, because these are mutually exclusive calculation options
+ */
 function lockType() {
   var type_val = getRadioValue(document.forms.CalcForm.Type);
   document.getElementById("Payment").disabled = (type_val == "payment");
   document.getElementById("Amount" ).disabled = (type_val == "amount" );
 }
 
-/* See https://stackoverflow.com/a/29883167 */
+/**
+ * Finds next element in tab index
+ * @see https://stackoverflow.com/a/29883167
+ * @param {object} el An HTML element
+ * @returns The next element in tab index
+ */
 function findNextTabStop(el) {
   var elmnts = document.querySelectorAll('input, button, select');
   var list = Array.prototype.filter.call(elmnts, function(item) {return item.tabIndex >= "0"});
@@ -177,6 +231,13 @@ function findNextTabStop(el) {
   return list[idx + 1] || list[0];
 }
 
+/**
+ * Enables or disables additional interest rates inputs based on what is
+ * already entered. User first have to set one interest rate for given period
+ * to be able to enter second with second period and finally third for the
+ * remaining period.
+ * @param {object} elmnt An HTML element
+ */
 function controlRates(elmnt) {
   var Interest   = document.getElementById("Interest");
   var IntPeriods = document.getElementById("IntPeriods");
@@ -198,6 +259,9 @@ function controlRates(elmnt) {
   nextElmnt.focus();
 }
 
+/**
+ * Shows or hides amortization table
+ */
 function showPlan() {
   var planc = document.getElementById("PlanContainer");
   if ( document.forms.CalcForm.EnablePlan.checked )
@@ -206,6 +270,10 @@ function showPlan() {
     planc.style.display = "none";
 }
 
+/**
+ * Checks values in calculator form
+ * @returns True if all values are correct, otherwise false
+ */
 function checkForm() {
   var form = document.forms.CalcForm;
   var type = getRadioValue(form.Type);
@@ -230,12 +298,15 @@ function checkForm() {
   return true;
 }
 
+/**
+ * Performs calculator form reset
+ */
 function doReset() {
-  removeAllChilds(document.getElementById("TotalInterests"));
-  removeAllChilds(document.getElementById("TotalTaxes"));
-  removeAllChilds(document.getElementById("TotalReturn"));
-  removeAllChilds(document.getElementById("TotalRaise"));
-  removeAllChilds(document.getElementById("PlanContainer"));
+  removeAllChildren(document.getElementById("TotalInterests"));
+  removeAllChildren(document.getElementById("TotalTaxes"));
+  removeAllChildren(document.getElementById("TotalReturn"));
+  removeAllChildren(document.getElementById("TotalRaise"));
+  removeAllChildren(document.getElementById("PlanContainer"));
 
   document.getElementById("IntPeriods").disabled  = true;
   document.getElementById("Interest2").disabled   = true;
@@ -249,6 +320,10 @@ function doReset() {
   document.getElementById("Amount" ).disabled = false;
 }
 
+/**
+ * Calculates and displays results and optionally amortization table
+ * @returns Always true
+ */
 function doCalc() {
   var form = document.forms.CalcForm;
   var credit = new Object();
@@ -309,14 +384,14 @@ function doCalc() {
   var TotalReturn = document.getElementById("TotalReturn");
   var TotalRaise  = document.getElementById("TotalRaise");
   var AmortPlan   = document.getElementById("PlanContainer");
-  removeAllChilds(document.getElementById("TotalInterests"));
-  removeAllChilds(document.getElementById("TotalTaxes"));
-  removeAllChilds(document.getElementById("TotalReturn"));
-  removeAllChilds(document.getElementById("TotalRaise"));
-  removeAllChilds(document.getElementById("PlanContainer"));
+  removeAllChildren(document.getElementById("TotalInterests"));
+  removeAllChildren(document.getElementById("TotalTaxes"));
+  removeAllChildren(document.getElementById("TotalReturn"));
+  removeAllChildren(document.getElementById("TotalRaise"));
+  removeAllChildren(document.getElementById("PlanContainer"));
 
   var raise = ((result.tot_ret / credit.amount) - 1 ) * 100;
-  
+
   TotalInt.appendChild(document.createTextNode(formatNumber(result.tot_int)));
   TotalTax.appendChild(document.createTextNode(formatNumber(result.tot_tax)));
   TotalReturn.appendChild(document.createTextNode(formatNumber(result.tot_ret)));
@@ -360,6 +435,10 @@ function doCalc() {
   return true;
 }
 
+/**
+ * Constructs results table header
+ * @param {object} otable An HTML table element
+ */
 function makeTableHeader(otable) {
   var new_tr = document.createElement("tr");
   for ( var i = 1; i < arguments.length; ++i ) {
@@ -372,6 +451,10 @@ function makeTableHeader(otable) {
   otable.appendChild(new_thead);
 }
 
+/**
+ * Constructs results table data row
+ * @param {object} otable An HTML table element
+ */
 function makeTableRow(otable) {
   var new_tr = document.createElement("tr");
   for ( var i = 1; i < arguments.length; ++i ) {
@@ -382,3 +465,4 @@ function makeTableRow(otable) {
   otable.appendChild(new_tr);
   return new_tr;
 }
+

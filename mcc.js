@@ -1,5 +1,6 @@
-/* Mortgage Calculator
- * Copyright (C) 2004-2019  Georgi D. Sotirov
+/**
+ * Mortgage Calculator
+ * Copyright (C) 2004-2021  Georgi D. Sotirov
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +17,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  * ---------------------------------------------------------------------------
- * Description: Mortgage Calculator Core JavaScript
+ * @file Mortgage Calculator Core JavaScript
+ * @version 0.5.1
+ * @author Georgi D. Sotirov <gdsotirov@gmail.com>
  */
 
-/* Function   : calc_period_payment
- * Description: Calculate period payment for annuity mortgages
- * Parameters : interest - the yearly interest for the credit
- *              amount   - the amount for the credit
- *              periods  - the periods for the credit
+/**
+ * Calculates the period payment for annuity mortgages
+ * @param {number} interest The yearly interest for the credit
+ * @param {number} amount The amount for the credit
+ * @param {number} periods The periods for the credit
+ * @returns Amount to pay for the period
  */
 function calc_period_payment(interest, amount, periods) {
   var payment;
@@ -39,11 +43,12 @@ function calc_period_payment(interest, amount, periods) {
   return payment;
 }
 
-/* Function   : calc_total_amount
- * Description: Calculate total amount that can be given
- * Parameters : interest - the yearly interest for the credit
- *              payment  - the period payment
- *              periods  - the periods for the credit
+/**
+ * Calculates the total amount that can be given
+ * @param {number} interest The yearly interest for the credit
+ * @param {number} payment The period payment
+ * @param {number} periods The periods for the credit
+ * @returns Total amount that can be given
  */
 function calc_total_amount(interest, payment, periods) {
   var amount;
@@ -59,12 +64,10 @@ function calc_total_amount(interest, payment, periods) {
   return amount;
 }
 
-/* Function   : calc_plan
- * Description: Build mortgage amortization plan
- * Parameters : amount - the amount of the credit
- *              payment - period payment for the mortgage
- *              interest - mortgage interest in percents
- *              periods - the periods count
+/**
+ * Builds mortgage amortization plan
+ * @param {object} credit Object with all details of the credit
+ * @returns An object with amortization table and total amounts
  */
 function calc_plan(credit) {
   var balance = credit.amount;
@@ -180,6 +183,12 @@ function calc_plan(credit) {
          };
 }
 
+/**
+ * Rounds a number to given decimal places
+ * @param {number} number A number
+ * @param {number} places Decimal places
+ * @returns Rounded number
+ */
 function round(number, places) {
   return Math.round(number * Math.pow(10, places)) / Math.pow(10, places);
 }
