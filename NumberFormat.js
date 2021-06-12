@@ -4,42 +4,42 @@ function NumberFormat(num, inputDecimal)
 this.VERSION = 'Number Format v1.5.4';
 this.COMMA = ',';
 this.PERIOD = '.';
-this.DASH = '-'; 
-this.LEFT_PAREN = '('; 
-this.RIGHT_PAREN = ')'; 
-this.LEFT_OUTSIDE = 0; 
-this.LEFT_INSIDE = 1;  
-this.RIGHT_INSIDE = 2;  
-this.RIGHT_OUTSIDE = 3;  
-this.LEFT_DASH = 0; 
-this.RIGHT_DASH = 1; 
-this.PARENTHESIS = 2; 
-this.NO_ROUNDING = -1 
+this.DASH = '-';
+this.LEFT_PAREN = '(';
+this.RIGHT_PAREN = ')';
+this.LEFT_OUTSIDE = 0;
+this.LEFT_INSIDE = 1;
+this.RIGHT_INSIDE = 2;
+this.RIGHT_OUTSIDE = 3;
+this.LEFT_DASH = 0;
+this.RIGHT_DASH = 1;
+this.PARENTHESIS = 2;
+this.NO_ROUNDING = -1
 this.num;
 this.numOriginal;
-this.hasSeparators = false;  
-this.separatorValue;  
-this.inputDecimalValue; 
-this.decimalValue;  
-this.negativeFormat; 
-this.negativeRed; 
-this.hasCurrency;  
-this.currencyPosition;  
-this.currencyValue;  
+this.hasSeparators = false;
+this.separatorValue;
+this.inputDecimalValue;
+this.decimalValue;
+this.negativeFormat;
+this.negativeRed;
+this.hasCurrency;
+this.currencyPosition;
+this.currencyValue;
 this.places;
-this.roundToPlaces; 
-this.truncate; 
+this.roundToPlaces;
+this.truncate;
 this.setNumber = setNumberNF;
 this.toUnformatted = toUnformattedNF;
-this.setInputDecimal = setInputDecimalNF; 
-this.setSeparators = setSeparatorsNF; 
+this.setInputDecimal = setInputDecimalNF;
+this.setSeparators = setSeparatorsNF;
 this.setCommas = setCommasNF;
-this.setNegativeFormat = setNegativeFormatNF; 
-this.setNegativeRed = setNegativeRedNF; 
+this.setNegativeFormat = setNegativeFormatNF;
+this.setNegativeRed = setNegativeRedNF;
 this.setCurrency = setCurrencyNF;
 this.setCurrencyPrefix = setCurrencyPrefixNF;
-this.setCurrencyValue = setCurrencyValueNF; 
-this.setCurrencyPosition = setCurrencyPositionNF; 
+this.setCurrencyValue = setCurrencyValueNF;
+this.setCurrencyPosition = setCurrencyPositionNF;
 this.setPlaces = setPlacesNF;
 this.toFormatted = toFormattedNF;
 this.toPercentage = toPercentageNF;
@@ -57,12 +57,12 @@ this.addSeparators = addSeparatorsNF;
 if (inputDecimal == null) {
 this.setNumber(num, this.PERIOD);
 } else {
-this.setNumber(num, inputDecimal); 
+this.setNumber(num, inputDecimal);
 }
 this.setCommas(true);
-this.setNegativeFormat(this.LEFT_DASH); 
-this.setNegativeRed(false); 
-this.setCurrency(false); 
+this.setNegativeFormat(this.LEFT_DASH);
+this.setNegativeRed(false);
+this.setCurrency(false);
 this.setCurrencyPrefix('$');
 this.setPlaces(2);
 }
@@ -73,7 +73,7 @@ this.inputDecimalValue = val;
 function setNumberNF(num, inputDecimal)
 {
 if (inputDecimal != null) {
-this.setInputDecimal(inputDecimal); 
+this.setInputDecimal(inputDecimal);
 }
 this.numOriginal = num;
 this.num = this.justNumber(num);
@@ -129,9 +129,9 @@ this.currencyPosition = cp
 }
 function setPlacesNF(p, tr)
 {
-this.roundToPlaces = !(p == this.NO_ROUNDING); 
-this.truncate = (tr != null && tr); 
-this.places = (p < 0) ? 0 : p; 
+this.roundToPlaces = !(p == this.NO_ROUNDING);
+this.truncate = (tr != null && tr);
+this.places = (p < 0) ? 0 : p;
 }
 function addSeparatorsNF(nStr, inD, outD, sep)
 {
@@ -149,19 +149,19 @@ nStr = nStr.replace(rgx, '$1' + sep + '$2');
 return nStr + nStrEnd;
 }
 function toFormattedNF()
-{	
-var nNum = this.num; 
+{
+var nNum = this.num;
 var nStr;
 if (this.roundToPlaces) {
 nNum = this.getRounded(nNum);
-nStr = this.preserveZeros(Math.abs(nNum)); 
+nStr = this.preserveZeros(Math.abs(nNum));
 } else {
-nStr = this.expandExponential(Math.abs(nNum)); 
+nStr = this.expandExponential(Math.abs(nNum));
 }
 if (this.hasSeparators) {
 nStr = this.addSeparators(nStr, this.PERIOD, this.decimalValue, this.separatorValue);
 } else {
-nStr = nStr.replace(new RegExp('\\' + this.PERIOD), this.decimalValue); 
+nStr = nStr.replace(new RegExp('\\' + this.PERIOD), this.decimalValue);
 }
 var c0 = '';
 var n0 = '';
@@ -225,11 +225,11 @@ function expandExponentialNF(origVal)
 {
 var places;
 if (isNaN(origVal)) return origVal;
-var newVal = parseFloat(origVal) + ''; 
+var newVal = parseFloat(origVal) + '';
 var eLoc = newVal.toLowerCase().indexOf('e');
 if (eLoc != -1) {
 var plusLoc = newVal.toLowerCase().indexOf('+');
-var negLoc = newVal.toLowerCase().indexOf('-', eLoc); 
+var negLoc = newVal.toLowerCase().indexOf('-', eLoc);
 var justNumber = newVal.substring(0, eLoc);
 if (negLoc != -1) {
   places = newVal.substring(negLoc + 1, newVal.length);
@@ -242,7 +242,7 @@ justNumber = this.moveDecimalAsString(justNumber, false, parseInt(places));
 newVal = justNumber;
 }
 return newVal;
-} 
+}
 function moveDecimalRightNF(val, places)
 {
 var newVal = '';
@@ -266,24 +266,24 @@ return newVal;
 function moveDecimalAsStringNF(val, left, places)
 {
 var spaces = (arguments.length < 3) ? this.places : places;
-if (spaces <= 0) return val; 
+if (spaces <= 0) return val;
 var newVal = val + '';
 var extraZ = this.getZeros(spaces);
 var re1 = new RegExp('([0-9.]+)');
 var re2;
 if (left) {
 newVal = newVal.replace(re1, extraZ + '$1');
-re2 = new RegExp('(-?)([0-9]*)([0-9]{' + spaces + '})(\\.?)');		
+re2 = new RegExp('(-?)([0-9]*)([0-9]{' + spaces + '})(\\.?)');
 newVal = newVal.replace(re2, '$1$2.$3');
 } else {
-var reArray = re1.exec(newVal); 
+var reArray = re1.exec(newVal);
 if (reArray != null) {
-newVal = newVal.substring(0,reArray.index) + reArray[1] + extraZ + newVal.substring(reArray.index + reArray[0].length); 
+newVal = newVal.substring(0,reArray.index) + reArray[1] + extraZ + newVal.substring(reArray.index + reArray[0].length);
 }
 re2 = new RegExp('(-?)([0-9]*)(\\.?)([0-9]{' + spaces + '})');
 newVal = newVal.replace(re2, '$1$2$4.');
 }
-newVal = newVal.replace(/\.$/, ''); 
+newVal = newVal.replace(/\.$/, '');
 return newVal;
 }
 function moveDecimalNF(val, left, places)
@@ -300,7 +300,7 @@ function getRoundedNF(val)
 {
 val = this.moveDecimalRight(val);
 if (this.truncate) {
-val = val >= 0 ? Math.floor(val) : Math.ceil(val); 
+val = val >= 0 ? Math.floor(val) : Math.ceil(val);
 } else {
 val = Math.round(val);
 }
@@ -311,7 +311,7 @@ function preserveZerosNF(val)
 {
 var i;
 val = this.expandExponential(val);
-if (this.places <= 0) return val; 
+if (this.places <= 0) return val;
 var decimalPos = val.indexOf('.');
 if (decimalPos == -1) {
 val += '.';
@@ -333,15 +333,15 @@ var newVal = val + '';
 var isPercentage = false;
 if (newVal.indexOf('%') != -1) {
 newVal = newVal.replace(/\%/g, '');
-isPercentage = true; 
+isPercentage = true;
 }
-var re = new RegExp('[^\\' + this.inputDecimalValue + '\\d\\-\\+\\(\\)eE]', 'g');	
+var re = new RegExp('[^\\' + this.inputDecimalValue + '\\d\\-\\+\\(\\)eE]', 'g');
 newVal = newVal.replace(re, '');
 var tempRe = new RegExp('[' + this.inputDecimalValue + ']', 'g');
-var treArray = tempRe.exec(newVal); 
+var treArray = tempRe.exec(newVal);
 if (treArray != null) {
-var tempRight = newVal.substring(treArray.index + treArray[0].length); 
-newVal = newVal.substring(0,treArray.index) + this.PERIOD + tempRight.replace(tempRe, ''); 
+var tempRight = newVal.substring(treArray.index + treArray[0].length);
+newVal = newVal.substring(0,treArray.index) + this.PERIOD + tempRight.replace(tempRe, '');
 }
 if (newVal.charAt(newVal.length - 1) == this.DASH ) {
 newVal = newVal.substring(0, newVal.length - 1);
