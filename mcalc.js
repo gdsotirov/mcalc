@@ -31,11 +31,13 @@ var uisPlsFillInterest = 5;
 var uisPlsCorrInterest = 6;
 var uisDate = 7;
 var uisBalance = 8;
-var uisInterest = 9;
-var uisCapital = 10;
-var uisPayment = 11;
-var uisOutstanding = 12;
-var uisTaxes   = 13;
+var uisIntRate = 9;
+var uisInterest = 10;
+var uisCapital = 11;
+var uisPayment = 12;
+var uisOutstanding = 13;
+var uisTaxesRate = 14;
+var uisTaxes   = 15;
 
 var UIStringsBG = new Array(
 /*  0 */ "Моля, попълнете полето Сума!",
@@ -47,11 +49,13 @@ var UIStringsBG = new Array(
 /*  6 */ "Моля, задайте правилна стойност в полето Годишен лихвен процент!\nНапример: 10.5, 12.75, 11",
 /*  7 */ "Месец",
 /*  8 */ "Салдо главница",
-/*  9 */ "Вноска лихва",
-/* 10 */ "Вноска главница",
-/* 11 */ "Вноска общо",
-/* 12 */ "Оставащо",
-/* 13 */ "Такси"
+/*  9 */ "Лихвен %",
+/* 10 */ "Вноска лихва",
+/* 11 */ "Вноска главница",
+/* 12 */ "Вноска общо",
+/* 13 */ "Оставащо",
+/* 14 */ "Такси %",
+/* 15 */ "Такси"
 );
 
 var UIStringsEN = new Array(
@@ -64,11 +68,13 @@ var UIStringsEN = new Array(
 /*  6 */ "Please, fill in correct value in the Interest field! Example: 10000, 15500, 20100.55",
 /*  7 */ "Month",
 /*  8 */ "Capital Balance",
-/*  9 */ "Interest payment",
-/* 10 */ "Capital payment",
-/* 11 */ "Payment total",
-/* 12 */ "Outstanding",
-/* 13 */ "Taxes"
+/*  9 */ "Interest rate",
+/* 10 */ "Interest payment",
+/* 11 */ "Capital payment",
+/* 12 */ "Payment total",
+/* 13 */ "Outstanding",
+/* 14 */ "Taxes rate",
+/* 15 */ "Taxes"
 );
 
 /**
@@ -406,10 +412,12 @@ function doCalc() {
     Table.setAttribute("cellspacing", "0");
     makeTableHeader(Table, loadUIString(uisDate),
                            loadUIString(uisBalance),
+                           loadUIString(uisIntRate),
                            loadUIString(uisInterest),
                            loadUIString(uisCapital),
                            loadUIString(uisPayment),
                            loadUIString(uisOutstanding),
+                           loadUIString(uisTaxesRate),
                            loadUIString(uisTaxes));
     var TableBody = document.createElement("tbody");
     for ( var i = 0; i < Rows.length; ++i ) {
@@ -422,7 +430,9 @@ function doCalc() {
                                  formatNumber(Row[3]),
                                  formatNumber(Row[4]),
                                  formatNumber(Row[5]),
-                                 formatNumber(Row[6]));
+                                 formatNumber(Row[6]),
+                                 formatNumber(Row[7]),
+                                 formatNumber(Row[8]));
 
         if ( i % 12 == 0 )
           elmnt.setAttribute("style", "background-color: #eeeeee;");

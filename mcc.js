@@ -92,7 +92,9 @@ function calc_plan(credit) {
                         0.0,
                         0.0,
                         0.0,
+                        0.0,
                         balance,
+                        credit.onetime_tax_rate,
                         onetime_tax);
 
     total_taxes += onetime_tax;
@@ -100,11 +102,14 @@ function calc_plan(credit) {
   }
 
   for ( var i = 1; i <= credit.periods; ++i ) {
-    var interest;
+    var interest = 0.0;
+    var interest_rate = 0.0;
+    var taxes_rate = 0.0;
 
     if ( credit.int_periods && i <= credit.int_periods )
     {
       interest = round(balance * (credit.int_rate / 100 / 12), 2);
+      interest_rate = credit.int_rate
     }
     else
     if ( credit.int_periods2 && i <= (credit.int_periods + credit.int_periods2) )
@@ -113,6 +118,7 @@ function calc_plan(credit) {
       if ( (i - credit.int_periods) == 1 )
         credit.payment = calc_period_payment(credit.int_rate2, balance, credit.periods - credit.int_periods);
       interest = round(balance * (credit.int_rate2 / 100 / 12), 2);
+      interest_rate = credit.int_rate2;
     }
     else
     {
@@ -120,6 +126,7 @@ function calc_plan(credit) {
       if ( (i - (credit.int_periods + credit.int_periods2)) == 1 )
         credit.payment = calc_period_payment(credit.int_rate3, balance, credit.periods - (credit.int_periods + credit.int_periods2));
       interest = round(balance * (credit.int_rate3 / 100 / 12), 2);
+      interest_rate = credit.int_rate3;
     }
     total_ints += interest;
 
@@ -128,6 +135,7 @@ function calc_plan(credit) {
     {
       if (credit.monthly_tax_rate )
         monthly_tax += round(balance * (credit.monthly_tax_rate / 100), 2);
+        taxes_rate += credit.monthly_tax_rate;
       if (credit.monthly_tax_amt )
         monthly_tax += round(credit.monthly_tax_amt, 2);
 
@@ -139,10 +147,12 @@ function calc_plan(credit) {
       var last_payment = balance + interest;
       Rows[i] = new Array(i,
                           balance,
+                          interest_rate,
                           interest,
                           balance,
                           last_payment,
                           0.0,
+                          taxes_rate,
                           monthly_tax);
       total_ret_amt += last_payment;
     }
@@ -156,6 +166,7 @@ function calc_plan(credit) {
       {
         if ( credit.annual_tax_rate )
           annual_tax += round(balance * (credit.annual_tax_rate / 100), 2);
+          taxes_rate += credit.annual_tax_rate;
         if ( credit.annual_tax_amt )
           annual_tax += round(credit.annual_tax_amt, 2);
 
@@ -164,10 +175,12 @@ function calc_plan(credit) {
 
       Rows[i] = new Array(i,
                           balance,
+                          interest_rate,
                           interest,
                           capital,
                           credit.payment,
                           new_balance,
+                          taxes_rate,
                           annual_tax + monthly_tax);
       total_ret_amt += credit.payment + annual_tax + monthly_tax;
     }
