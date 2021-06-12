@@ -140,7 +140,6 @@ function calc_plan(credit) {
         monthly_tax += round(credit.monthly_tax_amt, 2);
 
       total_taxes += monthly_tax;
-      total_ret_amt += monthly_tax;
     }
 
     if ( credit.periods == i ) { // last installment
@@ -154,7 +153,7 @@ function calc_plan(credit) {
                           0.0,
                           taxes_rate,
                           monthly_tax);
-      total_ret_amt += last_payment;
+      total_ret_amt += last_payment + monthly_tax;
     }
     else {
       var capital     = credit.payment - interest;
