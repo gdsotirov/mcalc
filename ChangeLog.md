@@ -2,39 +2,39 @@
 
 mcalc 0.5.1 (2019-02-17)
 ------------------------------------------------------------------------------
-* Fix: Update speech style sheet for conformance with CSS 3 specification and
+* _Fix_: Update speech style sheet for conformance with CSS 3 specification and
        so it validates without errors and warnings
-* Fix: Move tab order on the buttons (was on the image instead)
+* _Fix_: Move tab order on the buttons (was on the image instead)
 
 mcalc 0.5.0 (2015-08-27)
 ------------------------------------------------------------------------------
 This is major new release, including many new features and several bug fixes.
-* New: Possibility for calculation with one-time, yearly and monthly taxes (see
+* _New_: Possibility for calculation with one-time, yearly and monthly taxes (see
        bug [144](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=144))
-* New: Possibility for calculation with several interest rates for different
+* _New_: Possibility for calculation with several interest rates for different
        periods (see bugs [145](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=145)
        and [153](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=153))
-* New: Option to calculate periodical taxes on the last installment of the
+* _New_: Option to calculate periodical taxes on the last installment of the
        period (see bug [151](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=151))
-* New: Display total amount of interest to be paid (see bugs
+* _New_: Display total amount of interest to be paid (see bugs
        [82](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=82) and
        [152](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=152))
-* New: Alternatively enable/disable inputs for amount or payment (see bug
+* _New_: Alternatively enable/disable inputs for amount or payment (see bug
        [162](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=162))
-* New: Improved print layout (see bug
+* _New_: Improved print layout (see bug
        [155](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=155))
-* New: HTML source is now in HTML5 (see bug
+* _New_: HTML source is now in HTML5 (see bug
        [161](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=161))
-* New: The calculator now has icon (see bug
+* _New_: The calculator now has icon (see bug
        [163](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=163))
-* Fix: Results of calculation were not cleared on reset (see bug
+* _Fix_: Results of calculation were not cleared on reset (see bug
        [147](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=147))
-* Fix: JavaScript issues in Chrome with default function argument and script
+* _Fix_: JavaScript issues in Chrome with default function argument and script
        defer on loading (see bug
        [154](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=154))
-* Fix: Amortization table appeared mangled in InternetExplorer (see bug
+* _Fix_: Amortization table appeared mangled in InternetExplorer (see bug
        [156](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=156))
-* Fix: Move DOCTYPE and charset definitions in the beginning to avoid quirks
+* _Fix_: Move DOCTYPE and charset definitions in the beginning to avoid quirks
        mode of InternetExplorer (see bug
        [159](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=159))
 
