@@ -1,5 +1,18 @@
 # Mortgage Calculator Changes Log
 
+mcalc 0.5.2 (2021-06-13)
+------------------------------------------------------------------------------
+* _New_: Add [JSDoc](https://jsdoc.app/) documentation of sources
+* _New_: Add columns with interest rate and taxes rate to make amortization
+       table clearer
+* _Fix_: Calculation of *total amount returned* was wrongly including monthly
+       taxes (if any) for all installments, but the last one. The bug dates
+       back to 2013-08-24 (version [0.5.0](#mcalc-050-2015-08-27)) and was
+       introduced with the implementation of annual, monthly and one-time taxes
+       (see bug [144](https://sotirov-bg.net/bugzilla/show_bug.cgi?id=144))
+* _Fix_: Spelling errors in sources and text. Some code lint
+* _Change_: Change URL scheme from http to https on all links
+
 mcalc 0.5.1 (2019-02-17)
 ------------------------------------------------------------------------------
 * _Fix_: Update speech style sheet for conformance with CSS 3 specification and

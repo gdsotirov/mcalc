@@ -18,7 +18,7 @@
  *
  * ---------------------------------------------------------------------------
  * @file Mortgage Calculator UI JavaScript
- * @version 0.5.1
+ * @version 0.5.2
  * @author Georgi D. Sotirov <gdsotirov@gmail.com>
  */
 
